@@ -1,0 +1,65 @@
+/*@import './base.css';*/
+
+:root{
+  --sans-serif: Roboto, sans-serif;
+  --ala-orange: #c44d34;
+  --ala-light-orange: #e9bcb1;
+  --ala-dark-orange: #883524;
+}
+
+
+html{
+  font-family: Roboto, sans-serif;
+}
+
+
+body{
+  margin:0;
+  padding:0;
+  color:#212121;
+}
+
+a, a[href], a:visited{
+  color:var(--ala-orange) !important;
+}
+a:hover{
+  color:var(--ala-dark-orange) !important;
+}
+
+#app{
+  max-width:1600px;
+  margin:0 auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+/*  margin-bottom: 1rem;*/
+/*  margin-top: 2rem;*/
+}
+
+
+h4{
+  margin-bottom:0.5em;
+}
+
+
+.leaflet-popup-content-wrapper{
+  border-radius:0px !important;
+}
+
+.leaflet-popup-content{
+  margin:0.5em !important;
+  font-size:12px !important;
+}
+
+.leaflet-popup-content main{
+  box-shadow: none !important;
+}
+
