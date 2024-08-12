@@ -27,7 +27,7 @@
           :shadow-anchor="[15,4]"
           :popup-anchor="[0,-30]"
           :icon-url="`${siteRoot}/markers/${o.speciesGroup.toLowerCase()}-marker${focusMarkerId==o.uuid?'-focus':''}.png`"
-          shadow-url="/markers/marker-shadow.png"
+          :shadow-url="`${siteRoot}/markers/marker-shadow.png`"
         />
           
         

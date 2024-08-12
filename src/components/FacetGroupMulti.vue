@@ -6,7 +6,7 @@
             :class="{focus: localFocus == a.label}">
             <div class="bar" :style="{width: 100*a.count/localTotal+'%'}"></div>
             <div class="foreground">
-              <img class="groupIcon" v-if="a.icon" :src="`/icons/${a.icon}`">
+              <img class="groupIcon" v-if="a.icon" :src="`${siteRoot}/icons/${a.icon}`">
               <span class="label">{{a.label}}</span> 
               <span class="count">({{formatCount(a.count)}})</span>
             </div>
@@ -39,7 +39,9 @@
                   stateConservation: {label: "State Conservation Status"},
                   countryConservation: {label: "National Conservation Status"},
                   
-                }
+                },
+          siteRoot: import.meta.env.BASE_URL
+
         }
       },
 
