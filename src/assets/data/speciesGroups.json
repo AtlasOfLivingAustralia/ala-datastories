@@ -1,0 +1,74 @@
+[
+    {
+        "label": "Plants",
+        "fq": "speciesGroup:Plants",
+        "icon": "plant-icon.svg",
+        "id": "plants"
+    },
+    {
+        "label": "Fungi",
+        "fq": "speciesGroup:Fungi",
+        "icon": "fungi-icon.svg",
+        "id": "fungi"
+    },
+    {
+        "label": "Birds",
+        "fq": "speciesGroup:Birds",
+        "icon": "bird-icon.svg",
+        "id": "birds"
+    },
+    {
+        "label": "Mammals",
+        "fq": "speciesGroup:Mammals",
+        "icon": "mammal-icon.svg",
+        "id": "mammals"
+    },
+    {
+        "label": "Snakes and Lizards",
+        "fq": "speciesGroup:Reptiles",
+        "icon": "reptile-icon.svg",
+        "id": "reptiles"
+    },
+    {
+        "label": "Fish and Sharks",
+        "fq": "speciesGroup:Fishes",
+        "icon": "fish-icon.svg",
+        "id": "fishes"
+    },
+    {
+        "label": "Insects, Spiders & Millipedes",
+        "fq": "(speciesGroup:Arthropods NOT speciesGroup:Crustaceans)",
+        "icon": "insect-icon.svg",
+        "id": "insects"
+    },
+    {
+        "label": "Frogs",
+        "fq": "(speciesGroup:Amphibians)",
+        "icon": "amphib-icon.svg",
+        "id": "amphibians"
+    },
+    {
+        "label": "Molluscs, Crabs & Lobsters",
+        "fq": "(speciesGroup:Molluscs OR speciesGroup:Crustaceans)",
+        "icon": "mollusc-icon.svg",
+        "id": "molluscs"
+    },
+    {
+        "label": "Worms, Jellyfish, Sponges & other Invertebrates",
+        "fq": "speciesGroup:Animals NOT (speciesGroup:Mammals OR speciesGroup:Birds OR speciesGroup:Reptiles OR speciesGroup:Fishes OR speciesGroup:Molluscs OR speciesGroup:Arthropods OR speciesGroup:Amphibians)",
+        "icon": "invert-icon.svg",
+        "id": "inverts"
+    },
+    {
+        "label": "Kelp, Diatoms & Allies",
+        "fq": "speciesGroup:Chromista",
+        "icon": "kelp-icon.svg",
+        "id": "chromista"
+    },
+    {
+        "label": "Microbes",
+        "fq": "(speciesGroup:Protozoa OR speciesGroup:Bacteria)",
+        "icon": "microbe-icon.svg",
+        "id": "microbes"
+    }
+]

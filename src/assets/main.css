@@ -2,9 +2,18 @@
 
 :root{
   --sans-serif: Roboto, sans-serif;
+  --ala-black:#212121;
+  --ala-flamingo: #F26649;
+  --ala-flamingo-tint: #f58e79;
   --ala-orange: #c44d34;
   --ala-light-orange: #e9bcb1;
   --ala-dark-orange: #883524;
+  --ala-concrete: #F2F2F2;
+  --ala-darkgrey: #637073;
+  --ala-seafoam: #6BDAD5;
+  --ala-ocean: #003A70;
+/*  ocean at 25% opacity */
+  --ala-ocean-quarter: #003A7029; 
 }
 
 
@@ -26,6 +35,18 @@ a:hover{
   color:var(--ala-dark-orange) !important;
 }
 
+a.newtab::after{
+    content: "";
+    background-image: url(@/assets/img/newtab.png);
+    background-size: 100% 100%;
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    margin: 0 0 0 0.2rem;
+    position: relative;
+    top: 2px;
+}
+
 #app{
   max-width:1600px;
   margin:0 auto;
@@ -37,11 +58,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Lato, sans-serif;
-  font-weight: 700;
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
   line-height: 1.2;
-/*  margin-bottom: 1rem;*/
-/*  margin-top: 2rem;*/
 }
 
 
@@ -55,11 +74,79 @@ h4{
 }
 
 .leaflet-popup-content{
-  margin:0.5em !important;
+  margin:0.25em !important;
   font-size:12px !important;
 }
 
 .leaflet-popup-content main{
   box-shadow: none !important;
 }
+
+/* DATA STORIES */
+
+.datastory-wrapper{
+  margin:0 auto;
+/*  padding:0 1rem;*/
+/*  box-sizing: content-box;*/
+  max-width:1100px;
+
+}
+
+.datastory-outer{
+  padding: 0 1rem;
+}
+
+.datastory-wrapper section{
+  margin-top:5rem;
+}
+
+.datastory-wrapper p, .datastory-wrapper ul{
+  max-width:800px;
+  line-height: 1.5em;
+}
+
+p.interactionTip{
+  font-style: italic;
+  padding:1rem;
+/*  border-left:1px solid var(--ala-concrete);*/
+  background-color: var(--ala-concrete);
+  font-size: 90%;
+  border-radius: 1rem;
+  line-height: 1.25em;
+
+}
+
+
+
+p.intro{
+  font-size: 1.2rem;
+}
+
+/*   colours for national status, following ALA conventions */
+
+  .CE{
+    background-color:#c33;
+    color:#fcc;
+  }
+
+  .EN{
+    background-color: #c63;
+    color:#fc9;
+  }
+
+  .VU{
+    background-color: #c90;
+    color: #ffc;
+  }
+
+  .CD{
+    background-color: #005454;
+    color:white;
+  }
+
+  .EX{
+    background-color: black;
+    color:white;
+  }
+
 
