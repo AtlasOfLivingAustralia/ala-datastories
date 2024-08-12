@@ -26,7 +26,7 @@
           :shadow-size="[30,9]"
           :shadow-anchor="[15,4]"
           :popup-anchor="[0,-30]"
-          :icon-url="`/markers/${o.speciesGroup.toLowerCase()}-marker${focusMarkerId==o.uuid?'-focus':''}.png`"
+          :icon-url="`${siteRoot}/markers/${o.speciesGroup.toLowerCase()}-marker${focusMarkerId==o.uuid?'-focus':''}.png`"
           shadow-url="/markers/marker-shadow.png"
         />
           
@@ -101,8 +101,9 @@
           visible: true,
           format: 'image/png'
 
-        }
-      };
+        },
+        siteRoot: import.meta.env.BASE_URL
+      }
     },
 
     computed:{

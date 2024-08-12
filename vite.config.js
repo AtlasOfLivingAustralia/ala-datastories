@@ -17,6 +17,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  base: '/datastories/',
   build: {
     outDir,
     emptyOutDir:true,

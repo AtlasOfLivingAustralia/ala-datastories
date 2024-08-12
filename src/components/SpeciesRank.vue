@@ -16,7 +16,7 @@
               <!-- <p class="label">Lifeform</p>  -->
              
              <p class="value">
-             	<img v-if="s.icon" class="groupIcon" :src="`/icons/${s.icon}`"/>
+             	<img v-if="s.icon" class="groupIcon" :src="`${siteRoot}/icons/${s.icon}`"/>
              {{s.label}}</p>   
             </div>
 
@@ -113,7 +113,8 @@
 				distMode:"rank",
 				apiState,
 				useStateConservationStatus:false,
-				useNationalConservationStatus:true
+				useNationalConservationStatus:true,
+				siteRoot: import.meta.env.BASE_URL
 			}
 		},
 
