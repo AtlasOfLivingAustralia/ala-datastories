@@ -128,7 +128,8 @@
 
     methods: {
           mapReady (){
-            console.log("map is ready");
+            this.$emit('mapready')
+            // console.log("map is ready");
             this.bounds = this.$refs.map.leafletObject.getBounds();
             // this.radius = this.getRadius();
             // console.log(this.radius)
@@ -137,6 +138,7 @@
           doubleClick(){
             console.log("double click")
             this.$emit("setGeoFocus")
+            console.log(this.zoom)
           },
 
           clickMarker(obs){

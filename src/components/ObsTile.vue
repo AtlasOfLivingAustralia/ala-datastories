@@ -3,27 +3,30 @@
     <img v-if="obsData.thumbnailUrl" :src="obsData.thumbnailUrl">
     <!-- <img class="placeholder" v-if="!obsData.thumbnailUrl" src="../assets/img/ala-logo.png"> -->
     <div class="info">
-      <p v-if="obsData.vernacularName">
-        <a class="newtab" :href="'https://biocache.ala.org.au/occurrences/'+obsData.uuid" target="_blank" title="View this occurrence in the ALA">{{obsData.vernacularName}}</a>
-      </p>
-      <p v-if="obsData.scientificName && !obsData.vernacularName">
-        <a class="newtab" :href="'https://biocache.ala.org.au/occurrences/'+obsData.uuid" target="_blank" title="View this occurrence in the ALA">
-        <em>{{obsData.scientificName}}</em></a>
-      </p>
-      <p v-if="obsData.scientificName && obsData.vernacularName">
-        <em>{{obsData.scientificName}}</em>
-      </p>
+      
+      <div class="head">
+        <p v-if="obsData.vernacularName" class="commonName">
+          <a class="newtab" :href="'https://biocache.ala.org.au/occurrences/'+obsData.uuid" target="_blank" title="View this occurrence in the ALA">{{obsData.vernacularName}}</a>
+        </p>
+        <p v-if="obsData.scientificName && !obsData.vernacularName" class="sciName">
+          <a class="newtab" :href="'https://biocache.ala.org.au/occurrences/'+obsData.uuid" target="_blank" title="View this occurrence in the ALA">
+          <em>{{obsData.scientificName}}</em></a>
+        </p>
+        <p v-if="obsData.scientificName && obsData.vernacularName" class="sciName">
+          {{obsData.scientificName}}
+        </p>
+      </div>
+      
+      <div class="foot">
+        <p class="smaller date">{{formattedDate}}</p>
+        <p class="smaller dataResource">
+          <a class="newtab" :href="'https://collections.ala.org.au/public/show/'+obsData.dataResourceUid" target="_blank" title="View this Data Resource in the ALA">
+            {{obsData.dataResourceName}}
+          </a>
+        </p>
+      </div>
 
-     
-
-       <img v-if="(obsData.taxonRank == 'species' || obsData.taxonRank == 'subspecies' || obsData.taxonRank=='variety') && !popup" class="focusSpeciesButton" src="../assets/img/focus-species.svg" @click="apiState.setFilter({field:'lsid',fieldLabel:'Species',value: obsData.speciesGuid,valueLabel: displayName, fq:'lsid:'+obsData.speciesGuid})" title="Focus on this species">
-
-      <p class="smaller">{{formattedDate}}</p>
-      <p class="smaller">
-        <a class="newtab" :href="'https://collections.ala.org.au/public/show/'+obsData.dataResourceUid" target="_blank" title="View this Data Resource in the ALA">
-          {{obsData.dataResourceName}}
-        </a>
-      </p>
+      <img v-if="(obsData.taxonRank == 'species' || obsData.taxonRank == 'subspecies' || obsData.taxonRank=='variety') && !popup" class="focusSpeciesButton" src="../assets/img/focus-species.svg" @click="apiState.setFilter({field:'lsid',fieldLabel:'Species',value: obsData.speciesGuid,valueLabel: displayName, fq:'lsid:'+obsData.speciesGuid})" title="Focus on this species">
 
        <div class="status" :if="obsData.countryConservation" :class="formatStatus(obsData.countryConservation)" :title="obsData.countryConservation">{{formatStatus(obsData.countryConservation)}}</div>
 
@@ -86,7 +89,7 @@
     background: white;
     box-sizing: border-box;
     box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
-    padding:0.25em 1.25em 0.25em 0.25em;
+    padding:0.25em 1.5em 0.25em 0.25em;
     position:relative;
   }
 
@@ -99,18 +102,14 @@
     border-radius:0.25rem;
   }
 
-  img.placeholder{
-    opacity:0.25;
-    padding:0.5em;
-    box-sizing: border-box;
-  }
-  
   .info{
-    display: inline-block;
-    font-size:0.75rem;
-    float:left;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    font-size:0.8rem;
     padding:0 0.5em;
     color:#637073;
+    justify-content: space-between;
   }
 
   .info p{
@@ -119,8 +118,22 @@
   }
 
   .info p.smaller{
-    font-size:90%;
-    font-weight:300;
+    font-size:0.65rem;
+/*    font-weight:400;*/
+    line-height: 1.0em;
+  }
+
+/*  .info p.date{
+    margin-top:0.2rem;
+  }*/
+
+  .info p.sciName{
+    font-style: italic;
+  }
+
+  .info .foot{
+    opacity:0.75;
+    margin-bottom:0.1rem;
   }
 
   img.focusSpeciesButton{
@@ -138,7 +151,7 @@
     right:0.25rem;
     bottom:0.25rem;
     padding: 0.02rem 0.1rem 0.0rem 0.1rem;
-    font-weight: bold;
+    font-weight: 600;
     user-select: none;
   }
 

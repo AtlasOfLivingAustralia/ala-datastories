@@ -154,9 +154,9 @@
 			'apiState.query'(){
 				if (!apiState.filterState.speciesGroup){
 					this.speciesGroupFilter = {value:'All'}
-					this.getLocalSpeciesAsync();
-					this.getLocalSpeciesAsync("conservation");
 				}
+				this.getLocalSpeciesAsync();
+				this.getLocalSpeciesAsync("conservation");
 
 			}
 		},
@@ -196,6 +196,7 @@
 				if (conservationQuery){ // modify for conservation species lists
 					qparams.q += " AND (countryConservation:*)";
 					qparams.flimit = this.numLocalSpecies; // only load 10 species
+					console.log(qparams.q);
 				}
 
 			    try {
@@ -244,6 +245,8 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-around;
+		gap:1rem;
+
 	}
 
 	.lifeform-wrapper{
@@ -266,11 +269,10 @@
 	}
 
 	.speciesBubble{
-		width:30%;
-		min-width:380px;
+		min-width:360px;
 		padding:0;
+		margin-bottom:2rem;
 		position:relative;
-		margin:1rem;
 		flex:1;
 		flex-grow:0;
 		flex-shrink:1;
@@ -297,7 +299,7 @@
 	.speciesBubble .deeplink{
 		position:absolute;
 		bottom:0;
-		right:1rem;
+		right:0;
 		width:80px;
 		font-size:0.7rem;
 		line-height: 1.0em;
@@ -333,6 +335,11 @@
 	.filterTag.sgSelect.focus{
 		border-color: var(--ala-orange);
 		opacity:1.0;
+	}
+
+	.filterTag.sgSelect:hover{
+		border-color: var(--ala-orange);
+		background-color: var(--ala-light-orange);
 	}
 
 	.filterTag.sgSelect p.value{

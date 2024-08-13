@@ -1,5 +1,8 @@
 <template>
 	<div class="bubbleLayout" :style="{height: size+'px'}">
+		<div class="bubble-bg">
+			<p class="got-none" v-if="speciesData.length == 0">No Species</p>
+		</div>
 		<div class="bubble-wrapper" v-for="b in bubbleLayout" :key="b.data.lsid" :style="{transform:'translate('+(b.x - b.r)+'px,'+(b.y - b.r)+'px)'}" :class="{root: b.children}">
 			<SpeciesBubble :bubble="b" :root="b.children ? true : false"></SpeciesBubble>
 		</div>
@@ -39,6 +42,10 @@
 			bubbleLayout(){
 			    // console.log("bubble layout " + this.speciesData.length)
 				const numBubbles = this.bubbleCount;
+				if (this.speciesData.length == 0){
+					console.log("no data, no bubbles")
+					return;
+				}
 				let bubbleData = {name:"No Species", children: this.speciesData.slice(0,numBubbles)}
 				let rootData = d3.hierarchy(bubbleData);
 
@@ -66,6 +73,20 @@
 		position:relative;
 	}
 
+	.bubbleLayout .bubble-bg{
+		width:100%;
+		height:100%;
+		background-color: var(--ala-lightgrey);
+		border-radius: 50%;
+		position:absolute;
+	}
+	.got-none{
+		text-align: center;
+		position:relative;
+		top:45%;
+	}
+
+
 	.bubbleLayout .bubble-wrapper, .bubbleLayout .label-wrapper {
 		position:absolute;
 		transition: transform 0.5s;
@@ -75,9 +96,9 @@
 		pointer-events: none;
 	}
 
-	.bubbleLayout .bubble-wrapper.root{
+/*	.bubbleLayout .bubble-wrapper.root{
 		background-color: none;
-	}
+	}*/
 
 	.text-wrapper{
 		font-size:75%;

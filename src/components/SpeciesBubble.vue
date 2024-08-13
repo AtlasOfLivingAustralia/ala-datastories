@@ -125,8 +125,9 @@
 	}
 
 	.root .bubble{
-		background-color: var(--ala-ocean-quarter);
-		background-size: cover;
+/*		background-color: var(--ala-ocean-quarter);*/
+/*		background-size: cover;*/
+		background:none;
 		border:none;
 		cursor:default;
 	}

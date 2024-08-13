@@ -1,128 +1,20 @@
 TODO
 
-x- species bubbles up first
-x- fixed map pane
-x- geo focus prompt / default focus locations
-x- refine map / obsTile / counts UI 
-x- focus tags on map?
+x curated starting locations
 
-x- obsTiles - enable subspecies taxon Rank for species focus
+x hover for lifeform buttons in species view
 
-x- species focus link to map - hexmap, obs or both?
+- handle no species in bubbles
 
-x- filter tags - style and interaction
-x- visible circle border on map - for small / species queries especially
+- focus button UI on map
 
--- map pins - icons? 
--- map pins - fix info UI
+- responsive styles 
+	- swipe and facet layout
+	- tidy / size main layout
 
+- ALA header and footer
 
-SPECIES BUBBLES
--- visual polish of bubble UI
--- conservation status in bubbles
-
-x- persistent focus on species bubble
-x- catch image fail to load
+- About this project?
 
 
 
-xx modal / branch between species and facet/data exploration
-
-x lifeform filter in species view should rescope map
-- threatened species - how to surface by status not count?
-x- species focus link to ALA profile page - where? -- on species focus tag
-
--- get conservationStatuses from species profiles
-
-SEARCH for a SPECIES?
-
-OBSTILES
-
--- truncate long provider names
--- extend species selector to varieties 
--- link obsTiles to map pins
--- modal image zoom for obs
-
-FILTERTAGS
-
-
-DATA / FACETS
--- time dimension
-	x- decades
-
-BASE MAP
-? choose base map style ?
-
-icons for facet dimensions to enable short facet tags (mobile)
-
-
-======
-
-RESPONSIVE STYLES - data view / facets
-
-
-=========
-
-PROVENANCE
--- optimise gang gang data
--- responsive styles
--- ticks for resources graph
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-SPECIES GROUPS
-
-
-
-Mammals	65
-Birds	455
-Reptiles	62
-Amphibians	21
-Fishes	88
-Molluscs AND Crustaceans
-
-OTHER Animals (worms, jellies, sponges, starfish)
-	 = Inverts - (molluscs + arthropods )
-	 = Animalia - (mammals + birds + reptiles + fishes + molluscs + arthropods)
-	 - Martin - there are some other vertebrates in this group!
-	 - inverts : (animals - chordates)
-
-Arthropods	2013
-	Insects	1745 AND SPIDERS?
-	= Arthropoda - Crustacea
-Plants	2207
-Fungi
-// Algae, Kelp and allies (Chromista + Algae) // can't do this because many algae also plants!
-Kelp, Diatoms and Allies (Chromista)
-Microbes (Protozoa + Bacteria)
-
-
-
-
-numeric value for threatenedness - and then prioritise?
-a faff and risky - depends on categories
-Martin - check w data team
-
-cover most things
-
-
-dropdowns - old UI
-could be set of buttons instead? expose to the user

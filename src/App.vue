@@ -57,16 +57,10 @@
 
         <h2>ALA Explorer</h2>
         <h4>Browse, discover, facet and filter: a new way to explore the Atlas</h4>
-        <h4>Where should we start?</h4>
+        <h4>Start at one of our favourite spots, or</h4>
 
         <button @click="locateMe">Use my location</button>
-        <button>Surprise me!</button>
 
-        <div v-if="userLocation">
-          <p>Your location data is {{ userLocation.coords.latitude }}, {{ userLocation.coords.longitude}}</p>
-        </div>
-      
-      
       </div>
     </section>
 
@@ -86,9 +80,12 @@
     </section>
 
     <div class="mapWrapper">
-      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="9" ref="hexmap" @set-geo-focus="getGeoFromMap" />
+      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="getGeoFromMap" @mapready="mapInit"/>
 
-      <button class="geoFocus" @click="getGeoFromMap">Focus area</button>
+      <button class="geoFocus" @click="getGeoFromMap">
+        <div class="ring"><p>focus</p></div>
+        <!-- <p class="tip">or double-click map</p> -->
+      </button>
 
       <div class="obsTileWrapper" v-if="occurrenceData">
           <ObsTile v-for="o in occurrenceData.occurrences" :obs-data="o"/>
@@ -109,7 +106,7 @@
         <div class="filterTag" v-for="f in apiState.filters" :class="{group:f.fieldLabel=='Lifeform'}">
           <p class="label">{{f.fieldLabel.includes("Status") ? "status" : f.fieldLabel.toLowerCase() }}</p> 
           <p class="value">
-            <img v-if="f.icon" class="groupIcon" :src="`/icons/${f.icon}`"/>
+            <img v-if="f.icon" class="groupIcon" :src="`${siteRoot}/icons/${f.icon}`"/>
             {{f.valueLabel}} 
             <a v-if="f.fieldLabel=='Species'" class="speciesInfo" :href="'https://bie.ala.org.au/species/'+f.value" target="_blank"><img src="./assets/img/species-info-reverse.svg"></a>
           </p>
@@ -164,14 +161,24 @@
                 occurrenceData:null,
                 filterQuery:{}, // storing the facet query state
                 queryLoaded: false,
-                geoFilter:false,
+                geoFilter:null,
                 apiCache:{},
                 userLocation:null,
                 gettingUserLocation: false,
                 geoLocationError:null,
-                defaultGeoQuery: {lat:-35.704, lon:150.043,radius:50},
+                //defaultGeoQuery: {lat:-35.704, lon:150.043,radius:50},
+                startLocs:[
+                  {label: "Grampians", lat:-37.168114938627575, lon:142.4169731140137, radius:11.466733163674808, zoom:11},
+                  {label: "Woomera", lat:-30.482116463854545, lon:136.91265106201175, radius:24.814581476607216, zoom:10},
+                  {label: "Augusta - SW corner", lat:-34.21148883258428, lon:115.08281707763673, radius:23.81526309920529,zoom:10},
+                  {label: "Daintree", lat:-16.09484060306643, lon:145.3829383850098, radius:13.820092175436397, zoom:11}
+                  ]
+                  ,
+                mapZoom: 9,
+                initLoc:null,
                 apiState,
-                viewMode:"species"
+                viewMode:"species",
+                siteRoot: import.meta.env.BASE_URL
               }
 
     },
@@ -211,17 +218,21 @@
     },
 
     methods: {
+
+      mapInit(){
+        console.log("map init")
+        this.mapZoom = this.initLoc.zoom;
+      },
       
       queryApi(){
         this.queryLoaded = false;
         // check if we have stored data in the cache, use it if so
-        // console.log("API cache: " + JSON.stringify(Object.keys(this.apiCache)))
         if (this.apiCache[this.queryParams.q]){
           this.occurrenceData = this.apiCache[this.queryParams.q]
           this.queryLoaded = true;
           console.log("loaded from cache " + this.queryParams.q)
           return;
-          }
+        }
 
        axios
         .get('https://api.ala.org.au/occurrences/occurrences/search?',
@@ -230,7 +241,6 @@
             indexes: null, // serialise the array value (facets)
           }})
         .then((response) => {
-          console.log(response.data);
           this.occurrenceData = response.data;
           this.apiCache[this.queryParams.q] = response.data;
           this.queryLoaded = true;
@@ -239,7 +249,7 @@
 
       setGeoFilter(geofilter){
         // console.log(geofilter)
-        this.apiCache = {}; // clear cache
+        this.apiCache = {}; // clear cache when geoFilter set
         // this.queryParams.q = "*"; // unset query
         // this.filterQuery = {}; // Uunset facets
         this.queryParams.lat = geofilter.lat
@@ -273,7 +283,8 @@
         try {
           this.gettingUserLocation = false;
           this.userLocation = await this.getLocation();
-          this.setGeoFilter({lat: this.userLocation.coords.latitude, lon: this.userLocation.coords.longitude, radius:50 })
+          let mapradius = this.$refs.hexmap.getViewRadius();
+          this.setGeoFilter({lat: this.userLocation.coords.latitude, lon: this.userLocation.coords.longitude, radius:mapradius })
         } catch(e) {
           this.gettingUserLocation = false;
           this.geoLocationError = e.message;
@@ -289,7 +300,10 @@
      },
 
     mounted(){
-      this.setGeoFilter(this.defaultGeoQuery); // load with default geo query
+      let randomIdx = Math.floor(Math.random()*this.startLocs.length);
+      this.initLoc = this.startLocs[randomIdx]
+      this.setGeoFilter(this.initLoc); // load with default geo query
+      // this.mapZoom = this.startLocs[randomIdx].zoom;
     },
 
     watch: {
@@ -297,6 +311,10 @@
         //console.log("watched query " + globalQuery)
         this.queryParams.q = globalQuery;
         this.queryApi()
+      },
+
+      'hexmap.ready'(){
+        console.log("map ready")
       }
     }
 
@@ -392,10 +410,8 @@
   }
 
   a.ds-tile p{
-/*    text-align: left;*/
-/*    margin-left:1rem;*/
-  margin-top:0.5rem;
-  color:var(--ala-black);
+    margin-top:0.5rem;
+    color:var(--ala-black);
   }
 
   .ds-tile img{
@@ -434,17 +450,54 @@
 
   button.geoFocus{
     background-color: white;
-    border: 1px solid #aaa;
-   display: inline-block;
+    border: 2px solid var(--ala-lightgrey);
+    display: block;
     margin:0 0.25rem;
     cursor:pointer;
-    height:1.5rem;
+/*    height:1.5rem;*/
     position:absolute;
     top:0.5rem;
     left:0.5rem;
+    padding:0;
     z-index:9999;
+    border-radius:3px;
+    transition:height 0.5s;
 
   }
+
+  button.geoFocus .ring{
+    width:36px;
+    height:36px;
+    border-radius: 50%;
+    border: 2px dashed var(--ala-orange);
+    margin:0.2rem;
+    position:relative;
+    
+
+  }
+
+  button.geoFocus .ring p{
+    font-size: 0.65rem;
+    font-weight: 500;
+    text-align: center;
+    margin-top:12px;
+  }
+
+/*  button.geoFocus p.tip{
+    display: none;
+    color:var(--ala-darkgrey);
+    font-size:0.6rem;
+    text-align: center;
+  }*/
+
+  button.geoFocus:hover{
+    background-color: var(--ala-concrete);
+  }
+/*
+  button.geoFocus:hover p.tip{
+    display: block;
+    width:36px;
+  }*/
 
   .mapFooter{
     margin:0;
@@ -471,18 +524,14 @@
 
 
   .focusInfoBar{
-
-/*    display: flex;*/
     width:100%;
-/*    background-color: var(--ala-flamingo-tint);*/
-background-color: var(--ala-orange);
-    padding:0.25rem 0.5rem;
+    background-color: var(--ala-orange);
+    padding:0.25rem;
     box-sizing: border-box;
     position:sticky;
     top:0;
     z-index:2;
     height:2.9rem;
-/*    border-top:3px solid var(--ala-orange);*/
   }
 
   .obsCountWrapper{
@@ -526,7 +575,6 @@ background-color: var(--ala-orange);
     display: inline;
     background-color: white;
     padding: 0 0 0 0.25rem;
-/*    0.6rem 0rem 0.1rem;*/
     position: relative;
     height:2.25rem;
 
@@ -536,9 +584,7 @@ background-color: var(--ala-orange);
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
     font-weight: 400;
     
-   border: 0.5px solid rgba(0,0,0,0.2);
-
-/*    border-left: 0.25rem solid var(--ala-orange);*/
+    border: 0.5px solid rgba(0,0,0,0.2);
     min-width:60px;
   }
 
