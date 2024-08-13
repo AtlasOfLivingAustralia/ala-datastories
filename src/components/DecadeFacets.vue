@@ -4,7 +4,7 @@
 			<div class="fill" v-if="d.count > 0" 
 				:style="{opacity: 0.2 + (d.count/maxCount)*0.8}" 
 				@click="clickFacet(d)"></div>
-			<span class="label">{{d.label}}</span>	
+			<span class="label" :class="{mobiletick: +d.label%50==0}">{{d.label}}</span>	
 		</div>
 
 	</div>
@@ -154,12 +154,14 @@
 		height:2rem;
 		position:relative;
 		border-left:1px solid white;
+		
 	}
 
 	.tile .label{
 		position:absolute;
 		bottom:0;
 		color:#9d9d9d;
+		z-index:1;
 	}
 
 	.fill{
@@ -180,6 +182,16 @@
 	.tile.focus .label{
 		font-weight: bold;
 		color:unset;
+	}
+
+	@media only screen and (max-width: 600px) {
+		.tile .label{
+			opacity:0;
+		}
+
+		.tile .label.mobiletick{
+			opacity:1;
+		}
 	}
 
 

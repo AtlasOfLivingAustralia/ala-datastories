@@ -126,11 +126,13 @@
     </section>
 
     <section id="facets" v-show="viewMode=='data'">
-      <div class="facetColumn" v-if="occurrenceData" v-for="f in showFacets">
-        <!-- <facet-group :field="f" :format="facetFormat[f]" :facet-data="buildFacets(f)" :facet-focus="filterQuery" :total-count="occurrenceData.totalRecords"></facet-group> -->
+      <div class="facet-wrapper" v-touch:swipe="swipeFacets" :style="{left:facetSwipeOffset*-70+'vw'}">
+        <div class="facetColumn" v-if="occurrenceData" v-for="f in showFacets">
+          <!-- <facet-group :field="f" :format="facetFormat[f]" :facet-data="buildFacets(f)" :facet-focus="filterQuery" :total-count="occurrenceData.totalRecords"></facet-group> -->
 
-        <facet-group-multi :field="f" :facet-results="occurrenceData.facetResults" :total-count="occurrenceData.totalRecords" :geo-filter="geoFilter"></facet-group-multi>
+          <facet-group-multi :field="f" :facet-results="occurrenceData.facetResults" :total-count="occurrenceData.totalRecords" :geo-filter="geoFilter"></facet-group-multi>
 
+        </div>
       </div>
     </section>
 
@@ -178,6 +180,7 @@
                 initLoc:null,
                 apiState,
                 viewMode:"species",
+                facetSwipeOffset:0,
                 siteRoot: import.meta.env.BASE_URL
               }
 
@@ -295,6 +298,11 @@
             if (count < 10000) return count;
             if (count >= 10000 && count < 1000000) return Math.floor(count/1000)+"k";
             return (count/1000000).toFixed(1)+ "M";
+      },
+
+      swipeFacets(direction){
+        if (direction == "left" && this.facetSwipeOffset < 2) this.facetSwipeOffset++
+        if (direction == "right" && this.facetSwipeOffset > 0) this.facetSwipeOffset--
       }
 
      },
@@ -333,6 +341,7 @@
     padding:0 1em;
     max-width:1100px;
     margin:0 auto;
+    overflow-x: hidden;
   }
 
   .landing{
@@ -342,6 +351,7 @@
   .landing h1{
     font-size:4rem;
     margin:2rem 0;
+    line-height: 0.9em;
   }
 
   .title-asterisk{
@@ -709,14 +719,36 @@
   }
 
   .viewTab h3{
+    font-weight: 500;
     margin:0;
     font-size:1.2rem;
   }
 
-    .viewTab p{
-      font-size: 0.8rem;
-      margin-top:0.25rem;
-      line-height: 0.9em;
+  .viewTab p{
+    font-size: 0.8rem;
+    margin-top:0.25rem;
+    line-height: 0.9em;
+  }
+
+    @media only screen and (max-width: 600px) {
+
+      section.viewControl{
+        padding:0 0.25rem;
+      }
+
+      section.viewControl .viewTab{
+        margin:0.5rem 0.25rem 0;
+      }
+
+
+
+    /*  make facets overflow to enable swiping    */
+      .facet-wrapper{
+        width:240vw;
+        position:relative;
+        transition:left 0.5s;
+      }
+
     }
 
 
