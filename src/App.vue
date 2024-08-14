@@ -16,7 +16,10 @@
  
     <section>
        <div class="content-wrapper landing"> 
-         <h1>ALA <img src="./assets/img/title-asterisk.svg" class="title-asterisk"> Explorer Hub</h1> 
+         <!-- <h1>ALA <img src="./assets/img/title-asterisk.svg" class="title-asterisk"> Explorer Hub</h1>  -->
+
+         <h1>ALA <img src="./assets/img/title-asterisk.svg" class="title-asterisk"> Prism</h1>
+         <h2 class="tagline">New views of the Atlas of Living Australia</h2>
 
          <h4>The Atlas of Living Australia is supporting research into how we represent, visualise and interact with biodiversity data. Developed through a partnership with the Australian National University, this site presents experiments that aim to enrich our experience of biodiversity data. </h4>
 
@@ -55,7 +58,8 @@
         </div>
 
 
-        <h2>ALA Explorer</h2>
+        <!-- <h2>ALA Explorer</h2> -->
+        <h2>The Prism</h2>
         <h4>Browse, discover, facet and filter: a new way to explore the Atlas</h4>
         <h4>Start at one of our favourite spots, or</h4>
 
@@ -64,33 +68,6 @@
       </div>
     </section>
 
-
-    <section class="viewControl">
-
-      <div class="viewTab" :class="{focus: viewMode=='species'}" @click="viewMode='species'; apiState.switchFilter('data','species')">
-        <h3>Discover Species</h3>
-        <p>Meet common, distinctive and threatened species</p>
-      </div>
-
-      <div class="viewTab" :class="{focus: viewMode=='data'}" @click="viewMode='data'; apiState.switchFilter('species','data')">
-        <h3>Explore Data</h3>
-        <p>Browse by data facets and relationships</p>
-      </div>
-
-    </section>
-
-    <div class="mapWrapper">
-      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="getGeoFromMap" @mapready="mapInit"/>
-
-      <button class="geoFocus" @click="getGeoFromMap">
-        <div class="ring"><p>focus</p></div>
-        <!-- <p class="tip">or double-click map</p> -->
-      </button>
-
-      <div class="obsTileWrapper" v-if="occurrenceData">
-          <ObsTile v-for="o in occurrenceData.occurrences" :obs-data="o"/>
-      </div>
-    </div>
 
     <div class="focusInfoBar">
       <div class="obsCountWrapper">
@@ -115,6 +92,52 @@
       </div>
     </div>
 
+    <div class="mapWrapper">
+      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="getGeoFromMap" @mapready="mapInit" @mapmoved="mapMoved"/>
+
+      <button class="geoFocus" @click="getGeoFromMap">
+        <div class="ring"><p>search here</p></div>
+        <!-- <p class="tip">or double-click map</p> -->
+      </button>
+
+      <div class="obsTileWrapper" v-if="occurrenceData">
+          <div class="obsTileLabel"><p>Latest 100 observations</p></div>
+          <ObsTile v-for="o in occurrenceData.occurrences" :obs-data="o" @tilehover="setTileHover" @show-modal="setObsModal"/>
+      </div>
+
+      <div class="modalWrapper" v-if="modalObs">
+        
+        <!-- <div class="imgWrapper"> -->
+          <!-- <img :src="modalObs.largeImageUrl"> -->
+          <img :src="modalObs.imageUrl">
+        <!-- </div> -->
+        <div class="modalInfo">
+          <p><a target="_blank" class="newtab" :href="'https://biocache.ala.org.au/occurrences/'+modalObs.uuid">{{modalObs.vernacularName ? modalObs.vernacularName : modalObs.scientificName }}</a></p>
+          <p v-if="modalObs.vernacularName"><em>{{modalObs.vernacularName ? modalObs.scientificName : '' }}</em></p>
+          <p class="sub">Observed by {{modalObs.collector[0]}}</p>
+          <p class="sub">{{modalObs.formattedDate}}</p>
+
+          <p><span class="close" @click="modalObs=null">×</span></p>
+        </div>
+      </div>
+    </div>
+
+
+
+     <section class="viewControl">
+
+      <div class="viewTab" :class="{focus: viewMode=='species'}" @click="viewMode='species'; apiState.switchFilter('data','species')">
+        <h3>Discover Species</h3>
+        <p>Meet common, distinctive and threatened species</p>
+      </div>
+
+      <div class="viewTab" :class="{focus: viewMode=='data'}" @click="viewMode='data'; apiState.switchFilter('species','data')">
+        <h3>Explore Data</h3>
+        <p>Browse by data facets and relationships</p>
+      </div>
+
+    </section>
+
 
     <section v-show="viewMode=='species'">
       <speciesRank v-if="viewMode=='species' && geoFilter" :geoFilter="geoFilter" :speciesGroups="speciesGroups" :bubbleSize="360">
@@ -126,7 +149,8 @@
     </section>
 
     <section id="facets" v-show="viewMode=='data'">
-      <div class="facet-wrapper" v-touch:swipe="swipeFacets" :style="{left:facetSwipeOffset*-70+'vw'}">
+      <!-- <div class="facet-wrapper" v-touch:swipe="swipeFacets" :style="{left:facetSwipeOffset*-70+'vw'}"> -->
+      <div class="facet-wrapper" >
         <div class="facetColumn" v-if="occurrenceData" v-for="f in showFacets">
           <!-- <facet-group :field="f" :format="facetFormat[f]" :facet-data="buildFacets(f)" :facet-focus="filterQuery" :total-count="occurrenceData.totalRecords"></facet-group> -->
 
@@ -178,9 +202,11 @@
                   ,
                 mapZoom: 9,
                 initLoc:null,
+                mapBeenMoved:false,
                 apiState,
                 viewMode:"species",
-                facetSwipeOffset:0,
+                tileHoverId:null,
+                modalObs:null,
                 siteRoot: import.meta.env.BASE_URL
               }
 
@@ -255,6 +281,7 @@
         this.apiCache = {}; // clear cache when geoFilter set
         // this.queryParams.q = "*"; // unset query
         // this.filterQuery = {}; // Uunset facets
+        this.mapBeenMoved = false;
         this.queryParams.lat = geofilter.lat
         this.queryParams.lon = geofilter.lon
         this.queryParams.radius = geofilter.radius;
@@ -264,8 +291,12 @@
 
       getGeoFromMap(){
         let mapradius = this.$refs.hexmap.getViewRadius();
-        let mapcenter = this.$refs.hexmap.mapCenter;
+        let mapcenter = this.$refs.hexmap.mapCenter; 
         this.setGeoFilter({lat: mapcenter.lat, lon:mapcenter.lng, radius: mapradius })
+      },
+
+      mapMoved(){
+        if (!this.mapBeenMoved) this.mapBeenMoved = true;
       },
 
       async getLocation() {
@@ -300,10 +331,19 @@
             return (count/1000000).toFixed(1)+ "M";
       },
 
-      swipeFacets(direction){
-        if (direction == "left" && this.facetSwipeOffset < 2) this.facetSwipeOffset++
-        if (direction == "right" && this.facetSwipeOffset > 0) this.facetSwipeOffset--
+      setTileHover(id){
+        if (id != this.tileHoverId) {
+          this.tileHoverId = id;
+          this.$refs.hexmap.bounceMarker(id)
+
+       }
+      },
+
+      setObsModal(obs){
+        console.log(obs)
+        this.modalObs = obs;
       }
+  
 
      },
 
@@ -316,13 +356,8 @@
 
     watch: {
       'apiState.query'(globalQuery){ // watching the global state
-        //console.log("watched query " + globalQuery)
         this.queryParams.q = globalQuery;
         this.queryApi()
-      },
-
-      'hexmap.ready'(){
-        console.log("map ready")
       }
     }
 
@@ -346,11 +381,12 @@
 
   .landing{
     text-align: center;
+    padding-bottom:2rem;
   }
 
   .landing h1{
     font-size:4rem;
-    margin:2rem 0;
+    margin:2rem 0 0.5rem;
     line-height: 0.9em;
   }
 
@@ -363,6 +399,12 @@
     font-size:2.0rem;
     font-weight: 600;
     margin:4rem 0 1rem;
+  }
+
+  .landing h2.tagline{
+    color:var(--ala-black);
+    font-weight: 500;
+    margin:0.5rem 0 1rem;
   }
 
   .landing h4{
@@ -487,10 +529,11 @@
   }
 
   button.geoFocus .ring p{
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 500;
     text-align: center;
-    margin-top:12px;
+    margin-top:9px;
+    line-height: 1.0em;
   }
 
 /*  button.geoFocus p.tip{
@@ -503,11 +546,80 @@
   button.geoFocus:hover{
     background-color: var(--ala-concrete);
   }
-/*
-  button.geoFocus:hover p.tip{
+
+  .modalWrapper{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:30000;
+    background-color: rgba(0,0,0,0.9);
+    display: flex;
+    flex-direction: column;
+    padding:2rem;
+    box-sizing: border-box;
+    justify-content: center;
+  }
+
+  .modalWrapper .imgWrapper{
+    position:relative;
+    top:10%;
+    left:10%;
+    height:60%;
+    width:80%;
+  }
+
+  .modalWrapper img{
+    object-fit:contain;
     display: block;
-    width:36px;
-  }*/
+    margin:0 auto;
+    max-width: 70%;
+    max-height: 70%;
+    background-color: #212121;
+    border-radius: 1rem;
+/*    flex:2;*/
+  }
+
+  .modalWrapper span.close{
+    /*position:absolute;
+    top:10%;
+    left:10%;*/
+    font-size: 3rem;
+    color:white;
+    cursor: pointer;
+    padding-top:0.5rem;
+   display: inline-block;
+/*    border: 1px solid white;*/
+/*    padding:0.5rem;*/
+/*    border-radius: 50%;*/
+  }
+
+  .modalWrapper span.close:hover{
+    color:var(--ala-orange);
+  }
+
+  .modalInfo{
+    color:white;
+    width:50%;
+    margin:0 auto;
+    margin-top:2rem;
+/*    flex:1;*/
+    
+  }
+
+  .modalInfo p{
+    text-align: center;
+    line-height: 1.1em;
+    font-size:120%;
+    margin:0.25rem 0;
+    }
+
+    .modalInfo p.sub{
+      color: var(--ala-lightgrey);
+      font-size: 100%;
+    }
+
 
   .mapFooter{
     margin:0;
@@ -532,6 +644,20 @@
     bottom:0;
   }
 
+  .obsTileLabel{
+    height: 76px;
+    margin: 0 0.25em 0 0;
+    background: var(--ala-orange);
+    box-sizing: border-box;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+    padding: 0.25em 1.0em 0.25em 0.5em;
+    text-wrap: wrap;
+    font-size: 1.0rem;
+    font-weight: 500;
+    text-align: right;
+    color: white;
+  }
+
 
   .focusInfoBar{
     width:100%;
@@ -540,7 +666,7 @@
     box-sizing: border-box;
     position:sticky;
     top:0;
-    z-index:2;
+    z-index:99999;
     height:2.9rem;
   }
 
@@ -672,7 +798,8 @@
   }
 
   section.viewControl{
-    margin-top:3rem;
+/*    margin-top:3rem;*/
+    margin-top:0;
     padding: 0 1rem;
     background-color: var(--ala-black);
     border-bottom: 0.25rem solid var(--ala-orange);
@@ -741,6 +868,10 @@
       }
 
 
+
+      section#facets{
+        overflow-x: scroll;
+      }
 
     /*  make facets overflow to enable swiping    */
       .facet-wrapper{

@@ -2,7 +2,7 @@
 
 <template>
   <main id="map">
-    <l-map  ref="map" :zoom="zoom" :center="filterCenter" :useGlobalLeaflet="false" @ready="mapReady" @update:bounds="boundsUpdated" @update:center="centerUpdated" :options="{attributionControl: false, zoomControl:false, doubleClickZoom:false}" :detectRetina="true" @dblclick="doubleClick">
+    <l-map  ref="map" :zoom="zoom" :center="filterCenter" :useGlobalLeaflet="false" @ready="mapReady" @update:bounds="boundsUpdated" @update:center="centerUpdated" :options="{attributionControl: false, zoomControl:false, doubleClickZoom:false, scrollWheelZoom:false}" :detectRetina="true" @dblclick="doubleClick" >
       <l-control-zoom position="topright"  ></l-control-zoom>
       <l-tile-layer :url="baseLayer.url"
                     layer-type="base"
@@ -19,15 +19,17 @@
       </l-wms-tile-layer>
       <l-circle :lat-lng="filterCenter" :radius="filterRadiusMeters" :color="'#c44d34'" :fill="false" :weight=2 :dashArray="'5 10'"
     />
-      <l-marker v-for="o in obs" :lat-lng="[o.decimalLatitude,o.decimalLongitude]" :options="{riseOnHover:true}" @click="clickMarker(o)" :key="o.uuid">
+      <l-marker v-for="o in obs" :lat-lng="[o.decimalLatitude,o.decimalLongitude]" :options="{riseOnHover:true}" @click="clickMarker(o.uuid)" :key="o.uuid" :z-index-offset="bounceMarkerId==o.uuid ? 30 : 0">
         <l-icon
           :icon-size="[21,28]"
           :icon-anchor="[10.5,28]"
           :shadow-size="[30,9]"
           :shadow-anchor="[15,4]"
           :popup-anchor="[0,-30]"
-          :icon-url="`${siteRoot}/markers/${o.speciesGroup.toLowerCase()}-marker${focusMarkerId==o.uuid?'-focus':''}.png`"
+          :icon-url="`${siteRoot}/markers/${o.speciesGroup.toLowerCase()}-marker${focusMarkerId==o.uuid||bounceMarkerId==o.uuid?'-focus':''}.png`"
           :shadow-url="`${siteRoot}/markers/marker-shadow.png`"
+          :class-name="`${bounceMarkerId==o.uuid ? 'focus': ''}`"
+          
         />
           
         
@@ -88,6 +90,7 @@
       return {
         mapCenter: null,
         focusMarkerId:"",
+        bounceMarkerId:"",
         baseLayer: {
           // url: "https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png",
           url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
@@ -102,6 +105,7 @@
           format: 'image/png'
 
         },
+        beenMoved:0,
         siteRoot: import.meta.env.BASE_URL
       }
     },
@@ -136,31 +140,35 @@
           },
 
           doubleClick(){
-            console.log("double click")
             this.$emit("setGeoFocus")
-            console.log(this.zoom)
           },
 
-          clickMarker(obs){
-            // obs.focus = true;
-            // this.focusMarkerId = obs.uuid
-            if (this.focusMarkerId == obs.uuid){
+          clickMarker(id){
+            if (this.focusMarkerId == id){
               this.focusMarkerId = "";
             } else {
-              this.focusMarkerId = obs.uuid;
-              console.log("focused "+ obs.uuid)
+              this.focusMarkerId = id;
             }
+            if (this.bounceMarkerId) this.bounceMarkerId = ""
             this.$forceUpdate();
-             // console.log(this.focusMarkerId)
+          },
+
+          bounceMarker(id){
+            this.bounceMarkerId = id;
+            if (this.focusMarkerId) this.focusMarkerId = ""
+            this.$forceUpdate();
           },
 
           centerUpdated (center) {
-            // console.log("map filterCenter")
-             //console.log(this.filterCenter.lat + " - " + this.filterCenter.lng)
-            // console.log(center)
+ 
+            console.log("centerUpdated")
             this.mapCenter = center;
             this.radius = this.getViewRadius();
+            // if ((this.filterCenter.lat != this.mapCenter.lat)) {
+            //  //this.$emit("mapmoved")
+            // }
           },
+
           boundsUpdated (bounds) {
             // console.log(bounds)
             this.bounds = bounds;
@@ -214,8 +222,23 @@
     padding:0.25em;
   }
 
-  .leaflet-marker-icon.bounce{
+  .leaflet-marker-icon.focus{
+    z-index:99999999;
+    animation: marker-bounce;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+
     
+  }
+
+  @keyframes marker-bounce{
+    0% {top:0px}
+    30% {top:-12px}
+    45% {top:-15px}
+    50% {top:-16px}
+    55% {top:-15px}
+    70% {top:-12px}
+    100% {top:0px}
   }
   
 </style>

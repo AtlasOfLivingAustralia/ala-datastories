@@ -1,8 +1,8 @@
 <template>
   <main>
-    <img v-if="obsData.thumbnailUrl" :src="obsData.thumbnailUrl">
+    <img v-if="obsData.thumbnailUrl" :src="obsData.thumbnailUrl" @mouseover="tileHover" @click="showModal" >
     <!-- <img class="placeholder" v-if="!obsData.thumbnailUrl" src="../assets/img/ala-logo.png"> -->
-    <div class="info">
+    <div class="info" @mouseover="tileHover">
       
       <div class="head">
         <p v-if="obsData.vernacularName" class="commonName">
@@ -74,6 +74,14 @@
           if (status == "Critically Endangered") return "CE"
           if (status == "Conservation Dependent") return "CD"
           if (status == "Extinct") return "EX" 
+        },
+
+        tileHover(){
+          this.$emit('tilehover',this.obsData.uuid)
+        },
+
+        showModal(){
+          this.$emit('showModal',{ ...this.obsData, 'formattedDate': this.formattedDate})
         }
       }
 	}
@@ -91,6 +99,13 @@
     box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
     padding:0.25em 1.5em 0.25em 0.25em;
     position:relative;
+    cursor: pointer;
+    border:1px solid transparent;
+  }
+
+  main:hover{
+    background-color: var(--ala-concrete);
+    border:1px solid var(--ala-flamingo);
   }
 
   main img{

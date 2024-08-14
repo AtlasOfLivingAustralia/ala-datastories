@@ -152,11 +152,14 @@
 			},
 			
 			'apiState.query'(){
-				if (!apiState.filterState.speciesGroup){
+				// empty filters after a speciesGroup has been removed
+				if (apiState.filters.length == 0 && this.speciesGroupFilter.value != 'All'){
 					this.speciesGroupFilter = {value:'All'}
+					this.getLocalSpeciesAsync();
+					this.getLocalSpeciesAsync("conservation");
+
 				}
-				this.getLocalSpeciesAsync();
-				this.getLocalSpeciesAsync("conservation");
+
 
 			}
 		},
@@ -174,6 +177,7 @@
 				
 				apiState.setFilter({field:'speciesGroup', fieldLabel:'Lifeform',value: f.label, valueLabel: f.label, fq:f.fq, icon:f.icon})
 				this.getLocalSpeciesAsync();
+				this.getLocalSpeciesAsync("conservation");
 			},
 
 			async getLocalSpeciesAsync(conservationQuery) {
