@@ -18,10 +18,10 @@
        <div class="content-wrapper landing"> 
          <!-- <h1>ALA <img src="./assets/img/title-asterisk.svg" class="title-asterisk"> Explorer Hub</h1>  -->
 
-         <h1>ALA <img src="./assets/img/title-asterisk.svg" class="title-asterisk"> Prism</h1>
+         <h1>ALA<span class="logotype"><img src="./assets/img/prism.svg" class="title-logo"> Prism</span></h1>
          <h2 class="tagline">New views of the Atlas of Living Australia</h2>
 
-         <h4>The Atlas of Living Australia is supporting research into how we represent, visualise and interact with biodiversity data. Developed through a partnership with the Australian National University, this site presents experiments that aim to enrich our experience of biodiversity data. </h4>
+         <h4>Developed through a partnership with the Australian National University, this site presents experiments that aim to enrich our experience of biodiversity data. </h4>
 
 
 
@@ -59,7 +59,7 @@
 
 
         <!-- <h2>ALA Explorer</h2> -->
-        <h2>The Prism</h2>
+        <h2>Prism<img src="./assets/img/prism.svg" class="title-logo"> Interface</h2>
         <h4>Browse, discover, facet and filter: a new way to explore the Atlas</h4>
         <h4>Start at one of our favourite spots, or</h4>
 
@@ -413,12 +413,20 @@
     line-height: 0.9em;
   }
 
-  .title-asterisk{
-    height:2.8rem;
+  .title-logo{
+    height: 1.0em;
+    display: inline-block;
+    position: relative;
+    top: 0.15em;
+    left: 0.12em;
+  }
+
+  h1 span.logotype{
+    white-space: nowrap;
   }
 
   .landing h2{
-    color:var(--ala-orange);
+/*    color:var(--ala-orange);*/
     font-size:2.0rem;
     font-weight: 600;
     margin:4rem 0 1rem;
@@ -428,13 +436,16 @@
     color:var(--ala-black);
     font-weight: 500;
     margin:0.5rem 0 1rem;
+
   }
 
   .landing h4{
     font-weight: 400;
     font-size:1.3rem;
-    margin:0.5rem 0;
+    margin:0.5rem auto;
+    max-width: 600px;
   }
+
 
   .landing button{
     font-size:1.25rem;
