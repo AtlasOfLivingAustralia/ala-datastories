@@ -72,13 +72,10 @@
     <div class="focusInfoBar">
       <div class="obsCountWrapper">
         <h4 v-if="queryLoaded">{{occurrenceData ? formatCount(occurrenceData.totalRecords) : 0}}</h4> 
-        
         <span class="countLabel" v-if="queryLoaded">occurrences</span>
-
         <h4 v-if="!queryLoaded">...</h4>
         <span class="countLabel" v-if="!queryLoaded">loading</span>
       </div> 
-
       <div class="filterTagWrapper">
         <div class="filterTag" v-for="f in apiState.filters" :class="{group:f.fieldLabel=='Lifeform'}">
           <p class="label">{{f.fieldLabel.includes("Status") ? "status" : f.fieldLabel.toLowerCase() }}</p> 
@@ -92,31 +89,45 @@
       </div>
     </div>
 
+<!-- map -->
     <div class="mapWrapper">
-      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="getGeoFromMap" @mapready="mapInit" @mapmoved="mapMoved"/>
+      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="getGeoFromMap" @mapready="mapInit" @mapmoved="mapMoved" @updateBins="updateMapBins"/>
 
       <button class="geoFocus" @click="getGeoFromMap">
         <div class="ring"><p>search here</p></div>
         <!-- <p class="tip">or double-click map</p> -->
       </button>
 
-      <div class="obsTileWrapper" v-if="occurrenceData">
-          <div class="obsTileLabel"><p>Latest 100 observations</p></div>
-          <ObsTile v-for="o in occurrenceData.occurrences" :obs-data="o" @tilehover="setTileHover" @show-modal="setObsModal"/>
+      <div class="hexbinLegend">
+        <div class="chip" v-for="b in mapBins" :style="{'background-color':b.csscol}">
+          <span>{{formatBinCount(b.count)}}</span>
+        </div>
       </div>
 
+      <div class="obsTileWrapper" v-if="occurrenceData">
+          <div class="obsTileLabel">
+            <p v-if="occurrenceData.totalRecords > occurrenceData.occurrences.length">Latest {{occurrenceData.occurrences.length}} observations</p>
+
+            <p v-if="occurrenceData.totalRecords == occurrenceData.occurrences.length">{{occurrenceData.occurrences.length}} observations</p>
+
+          </div>
+          <ObsTile v-for="o in occurrenceData.occurrences" :obs-data="o" @tilehover="setTileHover" @show-modal="setObsModal"/>
+
+          <div class="obsTileLabel end" v-if="occurrenceData.totalRecords > occurrenceData.occurrences.length">
+
+            <p><a :href="'https://biocache.ala.org.au/occurrences/search?q='+apiState.query+'&lat='+geoFilter.lat+'&lon='+geoFilter.lon+'&radius='+geoFilter.radius" target="_blank" class="newtab">All {{occurrenceData.totalRecords}} observations</a></p>
+
+          </div>
+      </div>
+
+<!-- image modal  -->
       <div class="modalWrapper" v-if="modalObs">
-        
-        <!-- <div class="imgWrapper"> -->
-          <!-- <img :src="modalObs.largeImageUrl"> -->
           <img :src="modalObs.imageUrl">
-        <!-- </div> -->
         <div class="modalInfo">
           <p><a target="_blank" class="newtab" :href="'https://biocache.ala.org.au/occurrences/'+modalObs.uuid">{{modalObs.vernacularName ? modalObs.vernacularName : modalObs.scientificName }}</a></p>
           <p v-if="modalObs.vernacularName"><em>{{modalObs.vernacularName ? modalObs.scientificName : '' }}</em></p>
           <p class="sub">Observed by {{modalObs.collector[0]}}</p>
           <p class="sub">{{modalObs.formattedDate}}</p>
-
           <p><span class="close" @click="modalObs=null">×</span></p>
         </div>
       </div>
@@ -149,13 +160,9 @@
     </section>
 
     <section id="facets" v-show="viewMode=='data'">
-      <!-- <div class="facet-wrapper" v-touch:swipe="swipeFacets" :style="{left:facetSwipeOffset*-70+'vw'}"> -->
       <div class="facet-wrapper" >
         <div class="facetColumn" v-if="occurrenceData" v-for="f in showFacets">
-          <!-- <facet-group :field="f" :format="facetFormat[f]" :facet-data="buildFacets(f)" :facet-focus="filterQuery" :total-count="occurrenceData.totalRecords"></facet-group> -->
-
           <facet-group-multi :field="f" :facet-results="occurrenceData.facetResults" :total-count="occurrenceData.totalRecords" :geo-filter="geoFilter"></facet-group-multi>
-
         </div>
       </div>
     </section>
@@ -174,7 +181,7 @@
   export default {
     data() {
       return {  queryParams:{ q:"*", 
-                  pageSize:50, 
+                  pageSize:100, 
                   spatiallyValid:true,
                   qualityProfile:"ALA",
                   sort:"eventDate", 
@@ -207,6 +214,7 @@
                 viewMode:"species",
                 tileHoverId:null,
                 modalObs:null,
+                mapBins:null,
                 siteRoot: import.meta.env.BASE_URL
               }
 
@@ -251,6 +259,8 @@
       mapInit(){
         console.log("map init")
         this.mapZoom = this.initLoc.zoom;
+        this.mapBins = this.$refs.hexmap.mapBins;
+        console.log(this.mapBins)
       },
       
       queryApi(){
@@ -331,6 +341,13 @@
             return (count/1000000).toFixed(1)+ "M";
       },
 
+      formatBinCount(count){
+            if (count < 1000) return count;
+            if (count >= 1000 && count < 10000) return (count/1000).toFixed(1)+"k";
+            if (count >= 10000 && count < 1000000) return Math.floor(count/1000)+"k";
+            return (count/1000000).toFixed(1)+ "M";
+      },
+
       setTileHover(id){
         if (id != this.tileHoverId) {
           this.tileHoverId = id;
@@ -342,6 +359,10 @@
       setObsModal(obs){
         console.log(obs)
         this.modalObs = obs;
+      },
+
+      updateMapBins(bins){
+        this.mapBins = bins;
       }
   
 
@@ -352,6 +373,8 @@
       this.initLoc = this.startLocs[randomIdx]
       this.setGeoFilter(this.initLoc); // load with default geo query
       // this.mapZoom = this.startLocs[randomIdx].zoom;
+
+
     },
 
     watch: {
@@ -488,7 +511,7 @@
   }
 
   .mapWrapper{
-    border-bottom:0.5px solid rgba(0,0,0,0.4);
+/*    border-bottom:0.5px solid rgba(0,0,0,0.4);*/
 /*    box-shadow: 0px 3px 12px rgba(0,0,0,0.2);*/
     position:relative;
     height:65vh;
@@ -547,6 +570,36 @@
     background-color: var(--ala-concrete);
   }
 
+  .hexbinLegend{
+    position:absolute;
+    bottom:6rem;
+    right:0.5rem;
+    z-index:10000;
+    display: flex;
+    flex-direction: row
+  }
+
+  .hexbinLegend .chip{
+    width:1.5rem;
+    height:0.5rem;
+    display: inline-block;
+  }
+
+  .hexbinLegend .chip span{
+    display: inline-block;
+    width:1.5rem;
+    font-size: 0.66rem;
+    position: relative;
+    text-align: center;
+    left:0.75rem;
+    top:-1.2rem;
+
+  }
+
+  .hexbinLegend .chip:last-of-type span{
+    display: none;
+  }
+
   .modalWrapper{
     position:absolute;
     top:0;
@@ -574,7 +627,7 @@
     object-fit:contain;
     display: block;
     margin:0 auto;
-    max-width: 70%;
+    max-width: 90%;
     max-height: 70%;
     background-color: #212121;
     border-radius: 1rem;
@@ -585,7 +638,7 @@
     /*position:absolute;
     top:10%;
     left:10%;*/
-    font-size: 3rem;
+    font-size: 2.5rem;
     color:white;
     cursor: pointer;
     padding-top:0.5rem;
@@ -654,8 +707,20 @@
     text-wrap: wrap;
     font-size: 1.0rem;
     font-weight: 500;
-    text-align: right;
+    text-align: center;
     color: white;
+  }
+
+  .obsTileLabel.end{
+    background: white;
+    text-align: left;
+    margin-left:0.25em;
+    margin-right:0;
+    font-size:0.8em;
+  }
+
+  .obsTileLabel.end a{
+/*    padding-right:0.5rem;*/
   }
 
 
@@ -668,6 +733,7 @@
     top:0;
     z-index:99999;
     height:2.9rem;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
   }
 
   .obsCountWrapper{
@@ -828,7 +894,7 @@
     background-color: var(--ala-darkgrey);
     width:30%;
     max-width:360px;
-    margin: 1rem 0.5rem 0 0.5rem;
+    margin: 0.5rem 0.5rem 0 0.5rem;
     text-align: center;
     padding: 0.5rem 0.5rem 0 0.5rem;
     cursor:pointer;
@@ -858,6 +924,30 @@
   }
 
     @media only screen and (max-width: 600px) {
+
+      .filterTagWrapper .filterTag{
+        max-width:80px;
+        transition:width 0.5s;
+      }
+
+      .filterTagWrapper .filterTag p.value{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+      }
+
+      .filterTagWrapper .filterTag:hover{
+        width:unset;
+      }
+
+      .viewTab p{
+        display: none;
+      }
+
+      .viewTab h3{
+        margin-bottom:0.5rem;
+      }
 
       section.viewControl{
         padding:0 0.25rem;

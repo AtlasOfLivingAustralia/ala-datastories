@@ -36,14 +36,22 @@ a:hover{
   color:var(--ala-dark-orange) !important;
 }
 
+
+a.newtab{
+  display:inline-block;
+  padding-right:13px;
+}
+
 a.newtab::after{
-    content: "";
+    content: " ";
     background-image: url(@/assets/img/newtab.png);
-    background-size: 100% 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position:20% 0;
     display: inline-block;
-    height: 13px;
-    width: 13px;
-    margin: 0 0 0 0.2rem;
+    height: 0.9em;
+    width: 2em;
+    margin-right: -2em;
     position: relative;
     top: 2px;
 }

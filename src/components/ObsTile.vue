@@ -1,7 +1,9 @@
 <template>
   <main>
-    <img v-if="obsData.thumbnailUrl" :src="obsData.thumbnailUrl" @mouseover="tileHover" @click="showModal" >
-    <!-- <img class="placeholder" v-if="!obsData.thumbnailUrl" src="../assets/img/ala-logo.png"> -->
+    <div class="imgwrap" @click="showModal">
+      <img v-if="obsData.thumbnailUrl" :src="obsData.thumbnailUrl" @mouseover="tileHover"  >
+      <div class="maximise"></div>
+    </div>
     <div class="info" @mouseover="tileHover">
       
       <div class="head">
@@ -168,6 +170,21 @@
     padding: 0.02rem 0.1rem 0.0rem 0.1rem;
     font-weight: 600;
     user-select: none;
+  }
+
+  .maximise{
+    background-image:url('assets/img/modal-expand.svg');
+    background-size: 85%;
+    background-position: 52% 52%;
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    background-repeat: no-repeat;
+    opacity:0;
+  }
+
+  .imgwrap:hover .maximise{
+    opacity:1;
   }
 
 

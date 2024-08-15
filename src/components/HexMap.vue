@@ -94,7 +94,7 @@
         baseLayer: {
           // url: "https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png",
           url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
-          name:"Stadia Maps Basemap"
+          name:"Carto Voyager"
         },
         bounds:null,
         radius:null,
@@ -103,23 +103,27 @@
           layers:'',
           visible: true,
           format: 'image/png'
-
         },
-        beenMoved:0,
         siteRoot: import.meta.env.BASE_URL
       }
     },
 
     computed:{
       hexBaseUrl(){ // build the base URL
-        const maxcount = Math.sqrt(this.recordCount)*10; // scaling w square root of total records
-        const binCounts = [1000,100,10,1].map(c => Math.floor(maxcount/c)); //scale down w maxcount
-        const binColours= ["4Cffc557","72fcad54","99f99650","BFf57e4d","FFf26649"]
-        const colstring = binColours[0]+","+binCounts[0]+","+binColours[1]+","+binCounts[1]+","+binColours[2]+","+binCounts[2]+","+binColours[3]+","+binCounts[3]+","+binColours[4];
+        const colstring = this.mapBins[0].col+","+this.mapBins[0].count+","+this.mapBins[1].col+","+this.mapBins[1].count+","+this.mapBins[2].col+","+this.mapBins[2].count+","+this.mapBins[3].col+","+this.mapBins[3].count+","+this.mapBins[4].col;
         const envString = encodeURIComponent("size:3;colormode:hexbin;color:"+colstring);
-        //console.log("https://api.test.ala.org.au/occurrences/mapping/wms/reflect?&q="+this.query+"&outline=false&ENV="+envString)
         return encodeURI("https://api.test.ala.org.au/occurrences/mapping/wms/reflect?&q="+this.query+"&outline=false&ENV="+envString);
+      },
 
+      mapBins(){
+        let maxcount = Math.sqrt(this.recordCount)*12; // scaling w square root of total records
+        let roundcount = maxcount;
+        if (maxcount > 1000) roundcount = Math.floor(maxcount/100)*100;
+        if (maxcount > 10000) roundcount = Math.floor(maxcount/1000)*1000;
+        const binCounts = [1000,100,10,1,1].map(c => Math.floor(roundcount/c)); //scale down w maxcount
+        const binColours= ["4Cffc557","72fcad54","99f99650","BFf57e4d","FFf26649"]
+        // NB these colours are AARRGGBB, need to transform to be CSS hex
+        return binCounts.map((c,i) => { return {col: binColours[i], csscol: '#'+ binColours[i].substring(2,8)+binColours[i].substring(0,2), count:c}})
       },
       radiusMeters(){
         return this.radius*1000;
@@ -179,7 +183,7 @@
             let halfh = this.getDistanceFromLatLonInKm(this.mapCenter.lat,this.mapCenter.lng, this.bounds._northEast.lat ,this.mapCenter.lng);
             let halfw = this.getDistanceFromLatLonInKm(this.mapCenter.lat,this.mapCenter.lng, this.mapCenter.lat ,this.bounds._northEast.lng)
             let mindist = Math.min(halfh,halfw)
-            return mindist * 0.9;
+            return mindist * 0.8;
 
           },
 
@@ -201,10 +205,10 @@
           }
     },
 
-
-
-    mounted(){
-      this.focusMarkerId = "";
+    watch: {
+      hexBaseUrl(){
+        this.$emit('updateBins',this.mapBins)
+      }
     }
   };
 

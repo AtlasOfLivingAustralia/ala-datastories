@@ -20,11 +20,6 @@
              {{s.label}}</p>   
             </div>
 
-<!-- 			Lifeform: <select v-model="speciesGroupFilter" @change="setSpeciesFilter">
-				<option value="">All</option>
-				<option v-for="s in speciesGroups" :value="s">{{s.label}}</option>
-			</select> -->
-
 		</div>
 
 		<div class="speciesBubble">	
@@ -57,11 +52,11 @@
 
 			<BubbleLayout :species-data="conservationSpecies" :bubbleCount="10" :size="bubbleSize"></BubbleLayout>
 
-			<p class="explainer">In State or National lists</p>
+			<p class="explainer">In national lists</p>
 
-			<p class="deeplink"><a class="newtab" target="_blank" 
-				:href="'https://biocache.ala.org.au/occurrences/search?q='+apiState.query+'&fq=countryConservation:*&lat='+geoFilter.lat+'&lon='+geoFilter.lon+'&radius='+geoFilter.radius">
-			All threatened species </a>
+			<p class="deeplink">
+				<a class="newtab" target="_blank" 
+				:href="'https://biocache.ala.org.au/occurrences/search?q='+apiState.query+'&fq=countryConservation:*&lat='+geoFilter.lat+'&lon='+geoFilter.lon+'&radius='+geoFilter.radius">All threatened species</a>
 		</p>
 
 		</div>
@@ -235,6 +230,14 @@
 		},
 
 		mounted(){
+
+			console.log("mounted ")
+			console.log(this.apiState.filterState)
+			let gf = this.apiState.filterState.speciesGroup
+			if (gf){
+				console.log("setting sg filter")
+				this.speciesGroupFilter = {value:gf.value, label:gf.valueLabel, fq:gf.fq}
+			} 
 			this.getLocalSpeciesAsync();
 			this.getLocalSpeciesAsync("conservation");
 		}
