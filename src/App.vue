@@ -23,6 +23,8 @@
 
          <h4>Developed through a partnership with the Australian National University, this site presents experiments that aim to enrich our experience of biodiversity data. </h4>
 
+         <h4>Why Prism? A prism changes our view, reflecting and refracting light. It also reveals that light's component parts. In the same way these interfaces offer different views of the ALA, showing what it's made of, and how its parts relate.</h4>
+
 
 
         <h2>Data Stories</h2>
@@ -442,8 +444,8 @@
   .landing h4{
     font-weight: 400;
     font-size:1.3rem;
-    margin:0.5rem auto;
-    max-width: 600px;
+    margin:1rem auto;
+    max-width: 800px;
   }
 
 
@@ -583,7 +585,7 @@
 
   .hexbinLegend{
     position:absolute;
-    bottom:6rem;
+    bottom:7rem;
     right:0.5rem;
     z-index:10000;
     display: flex;

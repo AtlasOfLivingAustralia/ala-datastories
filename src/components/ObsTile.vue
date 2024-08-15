@@ -173,7 +173,7 @@
   }
 
   .maximise{
-    background-image:url('assets/img/modal-expand.svg');
+    background-image:url('@/assets/img/modal-expand.svg');
     background-size: 85%;
     background-position: 52% 52%;
     position: relative;
