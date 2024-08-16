@@ -18,12 +18,20 @@
        <div class="content-wrapper landing"> 
          <!-- <h1>ALA <img src="./assets/img/title-asterisk.svg" class="title-asterisk"> Explorer Hub</h1>  -->
 
-         <h1>ALA<span class="logotype"><img src="./assets/img/prism.svg" class="title-logo"> Prism</span></h1>
+         <h1>ALA<span class="logotype">
+          <img src="./assets/img/lens.svg" class="title-logo">Lens</span>
+        </h1>
          <h2 class="tagline">New views of the Atlas of Living Australia</h2>
 
-         <h4>Developed through a partnership with the Australian National University, this site presents experiments that aim to enrich our experience of biodiversity data. </h4>
+         
+         <div class="intro-wrap">
+          <img src="./assets/img/bubble-concrete.png" class="landing-bubble">
 
-         <h4>Why Prism? A prism changes our view, reflecting and refracting light. It also reveals that light's component parts. In the same way these interfaces offer different views of the ALA, showing what it's made of, and how its parts relate.</h4>
+          <div class="intro-text">
+            <p>Try out new views of the ALA, designed to encourage exploration and discovery of species, data and place.</p> 
+            <p>This site presents outcomes of a research partnership with the Australian National University that aims to investigate and enrich experiences of biodiversity data. </p>
+          </div>
+       </div>
 
 
 
@@ -61,9 +69,8 @@
 
 
         <!-- <h2>ALA Explorer</h2> -->
-        <h2>Prism<img src="./assets/img/prism.svg" class="title-logo"> Interface</h2>
-        <h4>Browse, discover, facet and filter: a new way to explore the Atlas</h4>
-        <h4>Start at one of our favourite spots, or</h4>
+        <h2>Lens<img src="./assets/img/lens.svg" class="title-logo">Interface</h2>
+        <h4>Browse, discover, facet and filter: the Lens interface is a new way to explore the Atlas. Start at one of our favourite spots, or</h4>
 
         <button @click="locateMe">Use my location</button>
 
@@ -420,7 +427,9 @@
     display: inline-block;
     position: relative;
     top: 0.15em;
-    left: 0.12em;
+/*    left: 0.15em;*/
+    margin-right:0.25em;
+    margin-left:0.25em;
   }
 
   h1 span.logotype{
@@ -467,6 +476,27 @@
   .landing button:active{
     background-color: var(--ala-orange);
     color:white;
+  }
+
+  .landing img.landing-bubble{
+    max-width:450px;
+/*    max-width:100%;*/
+    margin:1rem auto;
+    flex:1;
+  }
+
+  .landing .intro-wrap{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+/*    width:100%;*/
+    align-items: center;
+  }
+
+  .landing .intro-wrap .intro-text{
+    flex:0.4;
+    font-size: 1.2rem;
+    text-align: left;
   }
 
   .ds-tile-wrap{
