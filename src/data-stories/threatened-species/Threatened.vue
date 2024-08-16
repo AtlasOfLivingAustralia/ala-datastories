@@ -8,7 +8,7 @@
 </script>
 
 <template>
-	<Menu homePath="../../"/>
+	<Menu homePath="../.."/>
 	<div class="datastory-outer">
   		<div class="datastory-wrapper">
 

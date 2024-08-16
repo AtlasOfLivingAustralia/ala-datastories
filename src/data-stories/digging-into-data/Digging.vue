@@ -12,7 +12,7 @@
 
 <template>
 
-<Menu home-path="../../"/>
+<Menu home-path="../.."/>
 <div class="datastory-outer">
   <div class="datastory-wrapper">
 
