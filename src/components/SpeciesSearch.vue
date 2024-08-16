@@ -87,11 +87,7 @@ export default {
 		width:50%;
 		min-width:360px;
 		max-width:900px;
-/*		display: flex;*/
-/*		flex-wrap: nowrap;*/
-/*		flex-direction: row;*/
-/*		position: relative;*/
-		height:480px;
+		height:240px;
 
 	}
 	.speciesSearch h4{

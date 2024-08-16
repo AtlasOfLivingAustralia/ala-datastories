@@ -5,13 +5,15 @@
 	import HexDensityMap from '../../components/HexDensityMap.vue'
 	import swiftData from '../../assets/data/swift-filtered.json'
 	import caladeniaData from '../../assets/data/caladenia-filtered.json'
+	import Menu from '../../components/Menu.vue'
+	import Footer from '../../components/Footer.vue'
 
 </script>
 
 <template>
+	<Menu homePath="../../" />
 	<div class="datastory-outer">
   		<div class="datastory-wrapper">
-  			<a href="../../index.html">Home</a>
   			
   			    <h1>Seasonal Change</h1>
 
@@ -151,6 +153,8 @@
 
 			</div>
 		</div>
+	
+	<Footer />
 
 </template>
 

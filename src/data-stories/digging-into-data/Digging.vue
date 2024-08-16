@@ -1,7 +1,20 @@
+<script setup>
+    import Menu from '../../components/Menu.vue'
+    import Footer from '../../components/Footer.vue'
+    import drTimeline from '../../assets/data/drTimelineUnflat.json'
+    
+    import gangGangData from '../../assets/data/ggDecimated.json'
+    import ausStates from '../../assets/data/aus-states.json'
+    import iNatGangGangData from '../../assets/data/iNatGangGangs.json'
+    import axios from 'axios'
+    import * as d3 from 'd3'
+</script>
+
 <template>
+
+<Menu home-path="../../"/>
 <div class="datastory-outer">
   <div class="datastory-wrapper">
-    <a href="../../index.html">Home</a>
 
 
     <h1>Digging into Data</h1>
@@ -128,18 +141,10 @@
   </div>
 </div>
 
+<Footer />
 </template>
 
 <script>
-
-    // import dataResources from '../../assets/data/dataResources.json'
-    import drTimeline from '../../assets/data/drTimelineUnflat.json'
-    // import gangGangData from '../../assets/data/ala-harvest-ganggangs.json'
-    import gangGangData from '../../assets/data/ggDecimated.json'
-    import ausStates from '../../assets/data/aus-states.json'
-    import iNatGangGangData from '../../assets/data/iNatGangGangs.json'
-    import axios from 'axios'
-    import * as d3 from 'd3'
 
     export default{
       data(){

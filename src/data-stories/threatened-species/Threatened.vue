@@ -3,13 +3,14 @@
 	import HexMap from '../../components/HexMap.vue'
 	import * as d3 from 'd3'
 	import axios from 'axios'
+	import Menu from '../../components/Menu.vue'
+	import Footer from '../../components/Footer.vue'
 </script>
 
 <template>
+	<Menu homePath="../../"/>
 	<div class="datastory-outer">
   		<div class="datastory-wrapper">
-  			<a href="../../index.html">Home</a>
-
 
 		    <h1>Threatened Species</h1>
 
@@ -175,6 +176,8 @@
 		    <p></p>
 		 </div>
 	</div>
+
+	<Footer />
 
 </template>
 

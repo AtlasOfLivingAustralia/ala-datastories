@@ -6,13 +6,17 @@
   import SpeciesRank from './components/SpeciesRank.vue'
   import YearFacets from './components/DecadeFacets.vue'
   import SpeciesSearch from './components/SpeciesSearch.vue'
+  import Menu from './components/Menu.vue'
+  import Footer from './components/Footer.vue'
+
   import axios from 'axios'
   import { apiState } from './apiState.js'
   import speciesGroups from './assets/data/speciesGroups.json'
-
 </script>
 
 <template>
+
+    <Menu home-path="."/>
  
     <section>
        <div class="content-wrapper landing"> 
@@ -182,6 +186,8 @@
        <yearFacets :facet-results="occurrenceData.facetResults" :geo-filter="geoFilter"></yearFacets>
       </div>
     </section>
+
+    <Footer/>
 
 </template>
 
@@ -479,24 +485,27 @@
   }
 
   .landing img.landing-bubble{
-    max-width:450px;
-/*    max-width:100%;*/
+  width:450px;
+    max-width:100%;
     margin:1rem auto;
-    flex:1;
+    flex:2;
   }
 
   .landing .intro-wrap{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-/*    width:100%;*/
+    margin:0 auto;
+    max-width:900px;
     align-items: center;
+    gap:1rem;
   }
 
   .landing .intro-wrap .intro-text{
-    flex:0.4;
+    flex:1;
     font-size: 1.2rem;
     text-align: left;
+    flex-grow: 1;
   }
 
   .ds-tile-wrap{
