@@ -45,8 +45,10 @@
 				async loadSpeciesImage(){
 					this.imageLoaded = false;
 					if (!this.bubble.data.lsid) return;
+					const base = 'https://api.ala.org.au/species/species/';
+					//const base = 'https://bie-ws.ala.org.au/ws/species/'
 
-					let response = await fetch('https://bie-ws.ala.org.au/ws/species/'+ this.bubble.data.lsid)
+					let response = await fetch(base + this.bubble.data.lsid)
 					let data = await response.json();
 					// console.log(data);
 					let im;

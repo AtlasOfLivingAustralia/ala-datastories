@@ -13,8 +13,7 @@
     "d3": "^7.9.0",
     "d3-hexbin": "^0.2.2",
     "lodash.debounce": "^4.0.8",
-    "vue": "^3.4.21",
-    "vue3-touch-events": "^4.1.8"
+    "vue": "^3.4.21"
   },
   "devDependencies": {
     "@types/node": "^20.14.12",

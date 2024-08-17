@@ -199,7 +199,9 @@
 				}
 
 			    try {
-			      	const response = await axios.get('https://biocache-ws.ala.org.au/ws/occurrences/search?',{params: qparams})
+			    	const base = 'https://api.ala.org.au/occurrences/occurrences/search?';
+			    	// https://biocache-ws.ala.org.au/ws/occurrences/search?
+			      	const response = await axios.get(base,{params: qparams})
 			      	
 			      	// conservation species query
 			      	if (conservationQuery){
