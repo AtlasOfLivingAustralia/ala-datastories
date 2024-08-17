@@ -34,7 +34,7 @@
           
         
         <l-popup :className="'hexMapPopup'" offset="[0,30]">
-            <ObsTile :obs-data="o" popup="true"/>
+            <ObsTile :obs-data="o" popup="true" @show-modal="passModal"/>
           </l-popup>    
 
       </l-marker>
@@ -161,6 +161,11 @@
             this.bounceMarkerId = id;
             if (this.focusMarkerId) this.focusMarkerId = ""
             this.$forceUpdate();
+          },
+
+          passModal(obs){
+            console.log("pass modal")
+              this.$emit('showModal',obs)
           },
 
           centerUpdated (center) {

@@ -104,7 +104,7 @@
 
 <!-- map -->
     <div class="mapWrapper">
-      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="getGeoFromMap" @mapready="mapInit" @mapmoved="mapMoved" @updateBins="updateMapBins"/>
+      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="getGeoFromMap" @mapready="mapInit" @mapmoved="mapMoved" @updateBins="updateMapBins" @show-modal="setObsModal"/>
 
       <button class="geoFocus" @click="getGeoFromMap">
         <div class="ring"><p>search here</p></div>
@@ -683,21 +683,16 @@
     max-height: 70%;
     background-color: #212121;
     border-radius: 1rem;
-/*    flex:2;*/
   }
 
   .modalWrapper span.close{
-    /*position:absolute;
-    top:10%;
-    left:10%;*/
+
     font-size: 2.5rem;
     color:white;
     cursor: pointer;
     padding-top:0.5rem;
-   display: inline-block;
-/*    border: 1px solid white;*/
-/*    padding:0.5rem;*/
-/*    border-radius: 50%;*/
+    display: inline-block;
+
   }
 
   .modalWrapper span.close:hover{
@@ -707,10 +702,9 @@
   .modalInfo{
     color:white;
     width:50%;
+    min-width: 320px;
     margin:0 auto;
     margin-top:2rem;
-/*    flex:1;*/
-    
   }
 
   .modalInfo p{

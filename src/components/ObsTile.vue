@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main :class="{obsTile: !popup, popup: popup}">
     <div class="imgwrap" @click="showModal">
       <img v-if="obsData.thumbnailUrl" :src="obsData.thumbnailUrl" @mouseover="tileHover"  >
       <div class="maximise"></div>
@@ -79,7 +79,7 @@
         },
 
         tileHover(){
-          this.$emit('tilehover',this.obsData.uuid)
+          if (!this.popup) this.$emit('tilehover',this.obsData.uuid)
         },
 
         showModal(){
@@ -105,7 +105,7 @@
     border:1px solid transparent;
   }
 
-  main:hover{
+  main.obsTile:hover{
     background-color: var(--ala-concrete);
     border:1px solid var(--ala-flamingo);
   }
