@@ -110,9 +110,11 @@
 
     computed:{
       hexBaseUrl(){ // build the base URL
+        // const base = 'https://api.test.ala.org.au/occurrences/mapping/wms/reflect?&q='
+        const base = 'https://api.ala.org.au/occurrences/mapping/wms/reflect?&q='
         const colstring = this.mapBins[0].col+","+this.mapBins[0].count+","+this.mapBins[1].col+","+this.mapBins[1].count+","+this.mapBins[2].col+","+this.mapBins[2].count+","+this.mapBins[3].col+","+this.mapBins[3].count+","+this.mapBins[4].col;
         const envString = encodeURIComponent("size:3;colormode:hexbin;color:"+colstring);
-        return encodeURI("https://api.test.ala.org.au/occurrences/mapping/wms/reflect?&q="+this.query+"&outline=false&ENV="+envString);
+        return encodeURI(base+this.query+"&outline=false&ENV="+envString);
       },
 
       mapBins(){
