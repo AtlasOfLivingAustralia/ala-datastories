@@ -628,7 +628,10 @@
     right:0.5rem;
     z-index:10000;
     display: flex;
-    flex-direction: row
+    flex-direction: row;
+    background-color: white;
+    padding: 1.0rem 0.25rem 0.25rem;
+    border-radius:3px;
   }
 
   .hexbinLegend .chip{
@@ -645,6 +648,7 @@
     text-align: center;
     left:0.75rem;
     top:-1.2rem;
+    color:var(--ala-darkgrey);
 
   }
 
