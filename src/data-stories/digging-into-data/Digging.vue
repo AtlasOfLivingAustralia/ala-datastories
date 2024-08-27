@@ -19,7 +19,7 @@
 
     <h1>Digging into Data</h1>
 
-    <p class="intro">The Atlas of Living Australia contains millions of observations of living things, recorded as data. This story uses visualisation to dig into where this data comes from and how it's created; it's a good place to start to explore what the Atlas is made of.</p>
+    <p class="intro">The Atlas of Living Australia contains millions of observations of living things, recorded as data. This story uses visualisation to dig into where this data comes from and how it's created; it's a good place to start to explore what the ALA is made of.</p>
 
 
     <section>
@@ -27,7 +27,7 @@
       <h3>Data Resources</h3>
 
 
-      <p>The ALA aggregates data from {{dataResources.length}} different data resources. They vary massively in size, from giants like eBird with over 50 million observations, to small local projects Just their names tell us a lot about how the ALA's data is made. Browse and filter this list to get an impression of the range and scale of data resources.</p>
+      <p>The ALA aggregates data from {{dataResources.length}} different data resources. They vary massively in size, from giants like eBird with over 50 million observations, to small local projects Just their names tell us a lot about how data in the ALA is made. Browse and filter this list to get an impression of the range and scale of data resources.</p>
 
       <p class="interactionTip">Among other things you can search for types of creature (eg <span class="sample-query" @click="drFilter='fish'">fish</span>) or organisations (<span class="sample-query" @click="drFilter='museum'">museum</span>, <span class="sample-query" @click="drFilter='CSIRO'">CSIRO</span>), or places (<span class="sample-query" @click="drFilter='NSW'">NSW</span>). Click on a resource name to explore it in the ALA.</p>
 
@@ -96,7 +96,7 @@
 
         <p>This map shows observations of Gang-gang cockatoos, colour-coded by data resource. Notice the different spatial distributions of the data resources?</p>
 
-        <p class="interactionTip">Click the providers to hide or show their observations, and explore the relationships between data resources and locations.</p>
+        <p class="interactionTip">Click the resources to hide or show their observations, and explore the relationships between data resources and locations.</p>
 
         <div class="ggMapWrap">
           <canvas id="ggMap" width="1600" height="1200"></canvas>

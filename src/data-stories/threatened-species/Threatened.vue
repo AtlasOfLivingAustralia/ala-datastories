@@ -14,7 +14,7 @@
 
 		    <h1>Threatened Species</h1>
 
-		    <p class="intro">We hear a lot about threats to biodiversity, and about the need for action and intervention in response. In our research this issue was one of the central concerns raised by users of the Atlas. This story investigates how the threats to biodiversity are evidenced in the Atlas, as well as what it can show about our responses.</p>
+		    <p class="intro">We hear a lot about threats to biodiversity, and about the need for action and intervention in response. In our research this issue was one of the central concerns raised by users of the ALA. This story investigates how the threats to biodiversity are evidenced in the ALA, as well as what it can show about our responses.</p>
 
 
 		    <section>
@@ -98,7 +98,7 @@
 
 		    <section>
 		    	<h3>De-Extinction?</h3>
-				<p>ALA data also shows traces of recent interventions to support threatened species. This graph shows a timeline of observations since 1980. We can see big gains in Endangered and Critically Endangered species, but also a boom in Extinct species since 2019. Are we seeing de-extinction? Not quite, but we can see traces of increasing attention and new forms of intervention.</p>
+				<p>Data held in the ALA also shows traces of recent interventions to support threatened species. This graph shows a timeline of observations since 1980. We can see big gains in Endangered and Critically Endangered species, but also a boom in Extinct species since 2019. Are we seeing de-extinction? Not quite, but we can see traces of increasing attention and new forms of intervention.</p>
 
 		    	<select name="" v-model="eGraphCat" @change="getExtinctionData">
 		    		<option value="Extinct">Extinct</option>

@@ -33,14 +33,14 @@
 
           <div class="intro-text">
             <p>Try out new views of the ALA, designed to encourage exploration and discovery of species, data and place.</p> 
-            <p>This site presents outcomes of a research partnership with the Australian National University that aims to investigate and enrich experiences of biodiversity data. </p>
+            <p>This site presents outcomes of a research partnership with the Australian National University that aims to investigate and enrich user experiences of biodiversity data. </p>
           </div>
        </div>
 
 
 
         <h2>Data Stories</h2>
-        <h4>Dive into the ALA's data with these interactive investigations</h4>
+        <h4>Dive into data in the ALA with these interactive investigations</h4>
         
         <div class="ds-tile-wrap">
           <a class="ds-tile" href="data-stories/digging-into-data/">
@@ -48,7 +48,7 @@
               Digging into Data
             </h4>
             <img src="./assets/img/digging-icon.png">
-            <p>This Atlas is made of biodiversity data; but where does the ALA's data come from?</p>
+            <p>This ALA is made of biodiversity data; but where does this data come from?</p>
           </a>
 
          
@@ -57,7 +57,7 @@
                  Threatened Species
               </h4>
               <img src="./assets/img/threatened-icon.png">
-              <p>What does the Atlas reveal about Australia's threatened species, and our efforts to protect them? </p>
+              <p>What does the ALA reveal about Australia's threatened species, and our efforts to protect them? </p>
             </a>
 
 
@@ -66,14 +66,14 @@
               Seasonal Change
             </h4>
             <img src="./assets/img/seasonal-icon.png">
-            <p>The cycle of the seasons shapes life around us; how does it shape the data in the Atlas?</p>
+            <p>The cycle of the seasons shapes life around us; how does it shape the data in the ALA?</p>
           </a>
 
         </div>
 
 
         <h2>Lens<img src="./assets/img/lens.svg" class="title-logo">Interface</h2>
-        <h4>Browse, discover, facet and filter: the Lens interface is a new way to explore the Atlas. Start at one of our favourite spots, or</h4>
+        <h4>Browse, discover, facet and filter: the Lens interface is a new way to explore the ALA. Start at one of our favourite spots, or</h4>
 
         <button @click="locateMe">Use my location</button>
 
@@ -271,7 +271,6 @@
     methods: {
 
       mapInit(){
-        console.log("map init")
         this.mapZoom = this.initLoc.zoom;
         this.mapBins = this.$refs.hexmap.mapBins;
       },
@@ -300,11 +299,7 @@
       },
 
       setGeoFilter(geofilter){
-        // console.log(geofilter)
         this.apiCache = {}; // clear cache when geoFilter set
-        // this.queryParams.q = "*"; // unset query
-        // this.filterQuery = {}; // Uunset facets
-        //this.mapBeenMoved = false;
         this.queryParams.lat = geofilter.lat
         this.queryParams.lon = geofilter.lon
         this.queryParams.radius = geofilter.radius;
@@ -361,19 +356,16 @@
         if (id != this.tileHoverId) {
           this.tileHoverId = id;
           this.$refs.hexmap.bounceMarker(id)
-
-       }
+        }
       },
 
       setObsModal(obs){
-        console.log(obs)
         this.modalObs = obs;
       },
 
       updateMapBins(bins){
         this.mapBins = bins;
       }
-  
 
      },
 

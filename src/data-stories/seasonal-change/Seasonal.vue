@@ -17,7 +17,7 @@
   			
   			    <h1>Seasonal Change</h1>
 
-		    	<p class="intro">The living world is constantly changing, and the ALA's data can reveal some of these changes. This story investigates the annual cycle of seasonal change, and how this cycle can show us more about the Atlas and its data. 
+		    	<p class="intro">The living world is constantly changing, and data in the ALA can reveal some of these changes. This story investigates the annual cycle of seasonal change, and how this cycle can show us more about the ALA and its data. 
 		    	</p>
 
 		    	<section>
