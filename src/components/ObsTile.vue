@@ -59,11 +59,9 @@
         },
 
         formattedDate(){
-          //console.log(this.obsData.eventDate)
           if (! this.obsData.eventDate) return "no date";
           let obsDate = new Date();
           obsDate.setTime(this.obsData.eventDate);
-          // let dateString = obsDate.toUTCString();
           let d = new Intl.DateTimeFormat('en-AU').format(obsDate);
           return d;
         }

@@ -80,7 +80,6 @@
         type: Array,
         default:[]
       },
-      // center:{},
       zoom:{},
       filterCenter:{},
       filterRadius:{}
@@ -92,7 +91,6 @@
         focusMarkerId:"",
         bounceMarkerId:"",
         baseLayer: {
-          // url: "https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png",
           url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
           name:"Carto Voyager"
         },
@@ -109,8 +107,7 @@
     },
 
     computed:{
-      hexBaseUrl(){ // build the base URL
-        // const base = 'https://api.test.ala.org.au/occurrences/mapping/wms/reflect?&q='
+      hexBaseUrl(){ // build the base URL for the hex map
         const base = 'https://api.ala.org.au/occurrences/mapping/wms/reflect?&q='
         const colstring = this.mapBins[0].col+","+this.mapBins[0].count+","+this.mapBins[1].col+","+this.mapBins[1].count+","+this.mapBins[2].col+","+this.mapBins[2].count+","+this.mapBins[3].col+","+this.mapBins[3].count+","+this.mapBins[4].col;
         const envString = encodeURIComponent("size:3;colormode:hexbin;color:"+colstring);
@@ -139,14 +136,10 @@
     methods: {
           mapReady (){
             this.$emit('mapready')
-            // console.log("map is ready");
             this.bounds = this.$refs.map.leafletObject.getBounds();
-            // this.radius = this.getRadius();
-            // console.log(this.radius)
           },
 
           doubleClick(e){
-            //console.log(e.latlng)
             let r = this.getViewRadius();
             this.$emit("setGeoFocus", {lat: e.latlng.lat, lon: e.latlng.lng, radius: r })
           },
@@ -167,33 +160,26 @@
             this.$forceUpdate();
           },
 
-          passModal(obs){
-            console.log("pass modal")
+          passModal(obs){ // pass modal click up to App.vue
               this.$emit('showModal',obs)
           },
 
           centerUpdated (center) {
- 
-            console.log("centerUpdated")
             this.mapCenter = center;
             this.radius = this.getViewRadius();
-            // if ((this.filterCenter.lat != this.mapCenter.lat)) {
-            //  //this.$emit("mapmoved")
-            // }
           },
 
           boundsUpdated (bounds) {
-            // console.log(bounds)
             this.bounds = bounds;
             this.radius = this.getViewRadius();
           },
 
           getViewRadius(){
+            // generate a radius based on the current map extent
             let halfh = this.getDistanceFromLatLonInKm(this.mapCenter.lat,this.mapCenter.lng, this.bounds._northEast.lat ,this.mapCenter.lng);
             let halfw = this.getDistanceFromLatLonInKm(this.mapCenter.lat,this.mapCenter.lng, this.mapCenter.lat ,this.bounds._northEast.lng)
             let mindist = Math.min(halfh,halfw)
             return mindist * 0.8;
-
           },
 
           getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
@@ -215,6 +201,7 @@
     },
 
     watch: {
+      // update counts for the map bins; pass to App.vue
       hexBaseUrl(){
         this.$emit('updateBins',this.mapBins)
       }
@@ -240,8 +227,6 @@
     animation: marker-bounce;
     animation-duration: 0.5s;
     animation-iteration-count: 1;
-
-    
   }
 
   @keyframes marker-bounce{

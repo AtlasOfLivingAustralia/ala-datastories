@@ -24,7 +24,7 @@
         "id": "mammals"
     },
     {
-        "label": "Snakes and Lizards",
+        "label": "Reptiles",
         "fq": "speciesGroup:Reptiles",
         "icon": "reptile-icon.svg",
         "id": "reptiles"

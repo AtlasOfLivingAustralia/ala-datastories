@@ -19,6 +19,7 @@ Faceted data for species groups is transformed into a custom set of groups using
 
 Occurence data is also annotated with these custom species groups and passed  to the _Hexmap_ component. 
 
+App.vue defines a set of locations, including radii and map zoom levels, in the form: `{label: "Daintree", lat:-16.09484060306643, lon:145.3829383850098, radius:13.820092175436397, zoom:11}`. On loading one of these locations is selected at random. The user can modify the location or use their geolocation at any time.
 
 
 ### HexMap.vue
@@ -36,4 +37,13 @@ To generate the hex density map the component queries `https://api.ala.org.au/oc
 Markers are generated based on occurrences passed in to the component. Custom icons are assigned based on species groups, as well as a marker shadow. Markers are linked to popups which use the _ObsTile_ component to show details of the occurrence.
 
 The map components communicates with _App.vue_; for example a double click on the map sets the spatial focus to the double click location, triggering a new API call in _App.vue_.
+
+
+### ObsTile.vue
+
+Observation tiles show details of individual occurrence records in the map footer and in map markers. The component is passed data for a single occurrence. It provides links to the full occurrence record as well as information on the data resource. A 'focus' button sets the tile's species as a global focus. Clicking on the thumbnail image triggers a modal image display through an event passed to App.vue
+
+When instanced in a marker popup, the tile is assigned a 'popup' class which modifies its styling.
+
+
 

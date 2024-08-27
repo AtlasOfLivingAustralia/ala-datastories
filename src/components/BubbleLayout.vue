@@ -9,7 +9,9 @@
 
 		<div class="label-wrapper" v-for="b in bubbleLayout" :style="{transform:'translate('+(b.x - b.r)+'px,'+(b.y - b.r)+'px)', width:b.r*2+'px', height:b.r*2+'px'}" >
 			<div class="text-wrapper" v-if="b.r > 20">
-				<p v-if="!b.children">{{b.data.commonName ? b.data.commonName : b.data.name}}
+				<p v-if="!b.children && b.data.commonName">{{b.data.commonName}}
+				<span class="count">({{b.data.count}})</span></p>
+				<p v-if="!b.children && !b.data.commonName"><em>{{b.data.name}}</em>
 				<span class="count">({{b.data.count}})</span></p>
 			</div>
 		</div>
@@ -114,6 +116,7 @@
 		color:white;
 		position:absolute;
 		z-index:1;
+		hyphens:auto;
 
 	}
 
@@ -121,6 +124,7 @@
 	.text-wrapper p{
 		margin:0rem;
 		line-height: 1.05em;
+		hyphens:auto;
 	}
 
 	.text-wrapper span.count{

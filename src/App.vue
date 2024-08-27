@@ -34,6 +34,12 @@
           <div class="intro-text">
             <p>Try out new views of the ALA, designed to encourage exploration and discovery of species, data and place.</p> 
             <p>This site presents outcomes of a research partnership with the Australian National University that aims to investigate and enrich user experiences of biodiversity data. </p>
+
+            <p class="image-credits">Images (all CC-BY-NC): 
+              Kai Squires, andrewpavlov, mikegrow,
+              kerrbrad, Matt Campbell, Toby Esplin,
+              darcywhittaker
+            </p>
           </div>
        </div>
 
@@ -436,7 +442,11 @@
     color:var(--ala-black);
     font-weight: 500;
     margin:0.5rem 0 1rem;
+  }
 
+  .landing .image-credits{
+    font-size: 0.8rem;
+    color:var(--ala-darkgrey);
   }
 
   .landing h4{
@@ -874,18 +884,6 @@
 
   }
 
-/*  .filterTag a.speciesInfo{
-    margin: 0 0.5rem 0.25rem 0.25rem;
-    text-decoration: none;
-    padding:0.0em 0.4em;
-    border-radius:50%;
-    font-size:0.9em;
-    font-weight:800;
-    border:1px solid var(--ala-light-orange);
-    display: inline;
-    position: relative;
-    top: -0.1rem;
-  }*/
 
 /*  info link button */
   .speciesInfo img{
