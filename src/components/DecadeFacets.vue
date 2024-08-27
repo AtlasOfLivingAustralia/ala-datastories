@@ -1,10 +1,15 @@
 <template>
 	<div class="timelineWrapper">
 		<div class="tile" v-for="d in decadeFacets" :class="{focus: localFocus == d.label}">
-			<div class="fill" v-if="d.count > 0" 
+			<!-- <div class="fill" v-if="d.count > 0" 
 				:style="{opacity: 0.2 + (d.count/maxCount)*0.8}" 
-				@click="clickFacet(d)"></div>
+				@click="clickFacet(d)"></div> -->
+
+			<div class="decade-bar" v-if="d.count > 0" :style="{height:heightScale(d.count)+'%'}" @click="clickFacet(d)" :title="d.label + ' - ' + d.count + ' occurrences' "></div>
 			<span class="label" :class="{mobiletick: +d.label%50==0}">{{d.label}}</span>	
+		</div>
+		<div class="tile yaxis">
+			<span class="decade-tick" v-for="t in yTicks" :style="{bottom:heightScale(t)+'%'}">{{t}}</span>
 		</div>
 
 	</div>
@@ -14,6 +19,7 @@
 	
 	  import { apiState } from '../apiState.js'
 	  import axios from 'axios'
+	  import * as d3 from 'd3'
 
 	  export default {
 
@@ -66,7 +72,17 @@
 	  		maxCount(){
 	  			let countSorted = this.decadeFacets.slice(0).sort((a,b) => b.count - a.count)
 	  			return countSorted[0].count;
+	  		},
+
+	  		heightScale(){
+	  			return d3.scaleLog([1,this.maxCount],[5,100]).nice()
+	  		},
+
+	  		yTicks(){
+	  			return this.heightScale.ticks(3)
 	  		}
+
+
 
 	  	},
 
@@ -146,12 +162,13 @@
 		height:4rem;
 		display: flex;
 		margin:2rem auto;
+		column-gap: 2px;
 	}
 
 	.tile{
 		width:5rem;
 		font-size: 0.6rem;
-		height:2rem;
+		height:5rem;
 		position:relative;
 		border-left:1px solid white;
 		
@@ -159,23 +176,17 @@
 
 	.tile .label{
 		position:absolute;
-		bottom:0;
+		bottom:-0.75rem;
 		color:#9d9d9d;
 		z-index:1;
-	}
-
-	.fill{
-		background-color: var(--ala-ocean);
 		width:100%;
-		height:60%;
-		
-		position:absolute;
-		cursor:pointer;
-/*		z-index:;*/
+		text-align: center;
 	}
 
-	.tile.focus .fill, .tile:hover .fill{
+
+	.tile.focus .decade-bar, .tile:hover .decade-bar{
 			background-color: var(--ala-orange);
+			opacity:0.5;
 
 	}
 
@@ -184,7 +195,22 @@
 		color:unset;
 	}
 
-	@media only screen and (max-width: 600px) {
+	.decade-bar{
+		width:100%;
+		position:absolute;
+		bottom:0;
+		cursor:pointer;
+		background-color: var(--ala-ocean);
+		opacity:0.25;
+	}
+
+	.decade-tick{
+		font-size: 0.6rem;
+		color:#9d9d9d;
+		position:absolute;
+	}
+
+	@media only screen and (max-width: 720px) {
 		.tile .label{
 			opacity:0;
 		}
