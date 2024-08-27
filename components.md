@@ -46,4 +46,14 @@ Observation tiles show details of individual occurrence records in the map foote
 When instanced in a marker popup, the tile is assigned a 'popup' class which modifies its styling.
 
 
+### SpeciesRank.vue
+
+This component lays out the species bubble interfaces and handles data processing and API calls. It loads data on species for the current spatial focus in two stages
+
+It queries `https://api.ala.org.au/occurrences/occurrences/search?` with facets `names_and_lsid` and a facet limit of 1000. This is required for the distinctive species calculation. A second query with the addition of `countryConservation:*` is used to load species with national conservation status.
+
+Locally distinctive species are calculated by comparing the ranked query results for the local area, with a list of 50,000 *global* species counts for the whole ALA. These are stored in a local file at `assets/data/occurrencerank-50k-total.json`. This list should be regenerated periodically for the distinctiveness calculations to remain accurate! 
+
+The most "distinctive" species are those whose local frequency is highest, compared to their global frequency. In the default configuration of this component this is actually calculated on the basis of difference in rank (rather than proportional frequency). That is, a species with a local rank of 5 and a global rank of 500 has a score of (500 - 5 = 495). Whereas a species with a local rank of 100 and a global rank of 50 has a score of (50 - 100 = -50). A minimum proportion is set for distinctive species, to prevent extremely uncommon species appearing here (for example taxa with a handful of localised occurrences). This proportion is set here at 0.1% - so any species with fewer than 0.1% of the total local occurrences is excluded.
+
 

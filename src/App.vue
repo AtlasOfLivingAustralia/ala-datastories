@@ -124,16 +124,16 @@
 
       <div class="obsTileWrapper" v-if="occurrenceData">
           <div class="obsTileLabel">
-            <p v-if="occurrenceData.totalRecords > occurrenceData.occurrences.length">Latest {{occurrenceData.occurrences.length}} observations</p>
+            <p v-if="occurrenceData.totalRecords > occurrenceData.occurrences.length">Latest {{occurrenceData.occurrences.length}} occurrences</p>
 
-            <p v-if="occurrenceData.totalRecords == occurrenceData.occurrences.length">{{occurrenceData.occurrences.length}} observations</p>
+            <p v-if="occurrenceData.totalRecords == occurrenceData.occurrences.length">{{occurrenceData.occurrences.length}} occurrences</p>
 
           </div>
           <ObsTile v-for="o in occurrenceData.occurrences" :obs-data="o" @tilehover="setTileHover" @show-modal="setObsModal"/>
 
           <div class="obsTileLabel end" v-if="occurrenceData.totalRecords > occurrenceData.occurrences.length">
 
-            <p><a :href="'https://biocache.ala.org.au/occurrences/search?q='+apiState.query+'&lat='+geoFilter.lat+'&lon='+geoFilter.lon+'&radius='+geoFilter.radius" target="_blank" class="newtab">All {{occurrenceData.totalRecords}} observations</a></p>
+            <p><a :href="'https://biocache.ala.org.au/occurrences/search?q='+apiState.query+'&lat='+geoFilter.lat+'&lon='+geoFilter.lon+'&radius='+geoFilter.radius" target="_blank" class="newtab">All {{occurrenceData.totalRecords}} occurrences</a></p>
 
           </div>
       </div>
@@ -513,7 +513,7 @@
 /*    display: block;*/
     width:25%;
     min-width:240px;
-    background-color: var(--ala-concrete);
+/*    background-color: var(--ala-concrete);*/
     margin:1rem;
     padding:1rem;
     border-radius: 1rem;
@@ -521,6 +521,8 @@
     cursor: pointer;
     transition: background-color 0.5s;
     text-decoration: none;
+    border: 1px solid var(--ala-orange);
+
     
 
   }
@@ -790,7 +792,7 @@
 
   .obsCountWrapper h4{
     display: inline-block;
-    background-color: var(--ala-black);
+/*    background-color: var(--ala-black);*/
     color: white;
     font-weight: 600;
     margin: 0.25rem 0 0;
@@ -801,12 +803,12 @@
   .obsCountWrapper .countLabel{
     display: block;
     font-size:0.7rem;
-    margin:0.1rem 0;
+    margin:0;
     padding:0;
-/*    height:0.4rem;*/
     line-height: 0.5rem;
-    font-weight: 400;
-/*    font-style: italic;*/
+    font-weight: 500;
+    color: white;
+
   }
 
 
