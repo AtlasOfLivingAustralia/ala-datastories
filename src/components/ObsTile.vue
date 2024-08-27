@@ -23,7 +23,7 @@
         <p class="smaller date">{{formattedDate}}</p>
         <p class="smaller dataResource">
           <a class="newtab" :href="'https://collections.ala.org.au/public/show/'+obsData.dataResourceUid" target="_blank" title="View this Data Resource in the ALA">
-            {{obsData.dataResourceName}}
+            {{displayDataResource}}
           </a>
         </p>
       </div>
@@ -56,6 +56,12 @@
 
         displayName(){
           return this.obsData.vernacularName ? this.obsData.vernacularName : this.obsData.scientificName
+        },
+
+        displayDataResource(){
+          let n = this.obsData.dataResourceName;
+          if (n.length > 30) n = n.substring(0,30) + '...';
+          return n;
         },
 
         formattedDate(){

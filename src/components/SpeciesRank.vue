@@ -332,9 +332,9 @@
 
 		padding: 0.4rem 0.5rem 0.15rem 0.25rem;
 		border-color: var(--ala-darkgrey);
-		border-width:1px;
+		border-width:0.5px;
 		cursor: pointer;
-		opacity:0.35;
+		opacity:0.7;
 		margin: 0 0.25rem 0.25rem 0;
 		height: unset;
 
@@ -343,6 +343,7 @@
 
 	.filterTag.sgSelect.focus{
 		border-color: var(--ala-orange);
+		background-color: var(--ala-light-orange);
 		opacity:1.0;
 	}
 

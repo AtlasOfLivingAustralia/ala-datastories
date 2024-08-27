@@ -135,18 +135,25 @@ p.intro{
 /*   colours for national status, following ALA conventions */
 
   .CE{
-    background-color:#c33;
-    color:#fcc;
+    background-color:#921D11;
+    color:white;
   }
 
+  .CR{
+    background-color:#921D11;
+    color:white;
+  }
+
+/* CE is CR in the new ALA style? */
+
   .EN{
-    background-color: #c63;
-    color:#fc9;
+    background-color: #F26649;
+    color:#212121;
   }
 
   .VU{
-    background-color: #c90;
-    color: #ffc;
+    background-color: #FFC557;
+    color: #212121;
   }
 
   .CD{
@@ -155,8 +162,8 @@ p.intro{
   }
 
   .EX{
-    background-color: black;
-    color:white;
+    background-color: #212121;
+    color:#ffc557;
   }
 
 

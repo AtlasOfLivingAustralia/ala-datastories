@@ -10,9 +10,9 @@
 		<div class="label-wrapper" v-for="b in bubbleLayout" :style="{transform:'translate('+(b.x - b.r)+'px,'+(b.y - b.r)+'px)', width:b.r*2+'px', height:b.r*2+'px'}" >
 			<div class="text-wrapper" v-if="b.r > 20">
 				<p v-if="!b.children && b.data.commonName">{{b.data.commonName}}
-				<span class="count">({{b.data.count}})</span></p>
+				<span class="count">({{formatBinCount(b.data.count)}})</span></p>
 				<p v-if="!b.children && !b.data.commonName"><em>{{b.data.name}}</em>
-				<span class="count">({{b.data.count}})</span></p>
+				<span class="count">({{formatBinCount(b.data.count)}})</span></p>
 			</div>
 		</div>
 
@@ -65,6 +65,15 @@
 				return root.descendants();
 			}
 		},
+
+		methods:{
+			formatBinCount(count){
+	            if (count < 1000) return count;
+	            if (count >= 1000 && count < 10000) return (count/1000).toFixed(1)+"k";
+	            if (count >= 10000 && count < 1000000) return Math.floor(count/1000)+"k";
+	            return (count/1000000).toFixed(1)+ "M";
+	      	}
+		}
 	}
 
 </script>
