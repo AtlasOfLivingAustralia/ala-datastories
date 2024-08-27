@@ -145,8 +145,10 @@
             // console.log(this.radius)
           },
 
-          doubleClick(){
-            this.$emit("setGeoFocus")
+          doubleClick(e){
+            //console.log(e.latlng)
+            let r = this.getViewRadius();
+            this.$emit("setGeoFocus", {lat: e.latlng.lat, lon: e.latlng.lng, radius: r })
           },
 
           clickMarker(id){

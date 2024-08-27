@@ -1,10 +1,10 @@
 
 <script setup>
   import HexMap from './components/HexMap.vue'
-  import FacetGroupMulti from './components/FacetGroupMulti.vue'
+  import FacetGroup from './components/FacetGroup.vue'
   import ObsTile from './components/ObsTile.vue'
   import SpeciesRank from './components/SpeciesRank.vue'
-  import YearFacets from './components/DecadeFacets.vue'
+  import DecadeFacets from './components/DecadeFacets.vue'
   import SpeciesSearch from './components/SpeciesSearch.vue'
   import Menu from './components/Menu.vue'
   import Footer from './components/Footer.vue'
@@ -72,7 +72,6 @@
         </div>
 
 
-        <!-- <h2>ALA Explorer</h2> -->
         <h2>Lens<img src="./assets/img/lens.svg" class="title-logo">Interface</h2>
         <h4>Browse, discover, facet and filter: the Lens interface is a new way to explore the Atlas. Start at one of our favourite spots, or</h4>
 
@@ -104,7 +103,7 @@
 
 <!-- map -->
     <div class="mapWrapper">
-      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="getGeoFromMap" @mapready="mapInit" @mapmoved="mapMoved" @updateBins="updateMapBins" @show-modal="setObsModal"/>
+      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="setGeoFilter" @mapready="mapInit" @updateBins="updateMapBins" @show-modal="setObsModal"/>
 
       <button class="geoFocus" @click="getGeoFromMap">
         <div class="ring"><p>search here</p></div>
@@ -175,7 +174,7 @@
     <section id="facets" v-show="viewMode=='data'">
       <div class="facet-wrapper" >
         <div class="facetColumn" v-if="occurrenceData" v-for="f in showFacets">
-          <facet-group-multi :field="f" :facet-results="occurrenceData.facetResults" :total-count="occurrenceData.totalRecords" :geo-filter="geoFilter"></facet-group-multi>
+          <facet-group :field="f" :facet-results="occurrenceData.facetResults" :total-count="occurrenceData.totalRecords" :geo-filter="geoFilter"></facet-group>
         </div>
       </div>
     </section>
@@ -183,7 +182,7 @@
     <section id="decades" v-show="viewMode=='data'">
       <h4>Decades</h4>
       <div class="timeFacets" v-if="occurrenceData">
-       <yearFacets :facet-results="occurrenceData.facetResults" :geo-filter="geoFilter"></yearFacets>
+       <decadeFacets :facet-results="occurrenceData.facetResults" :geo-filter="geoFilter"></decadeFacets>
       </div>
     </section>
 
@@ -275,7 +274,6 @@
         console.log("map init")
         this.mapZoom = this.initLoc.zoom;
         this.mapBins = this.$refs.hexmap.mapBins;
-        console.log(this.mapBins)
       },
       
       queryApi(){
@@ -306,7 +304,7 @@
         this.apiCache = {}; // clear cache when geoFilter set
         // this.queryParams.q = "*"; // unset query
         // this.filterQuery = {}; // Uunset facets
-        this.mapBeenMoved = false;
+        //this.mapBeenMoved = false;
         this.queryParams.lat = geofilter.lat
         this.queryParams.lon = geofilter.lon
         this.queryParams.radius = geofilter.radius;
@@ -318,10 +316,6 @@
         let mapradius = this.$refs.hexmap.getViewRadius();
         let mapcenter = this.$refs.hexmap.mapCenter; 
         this.setGeoFilter({lat: mapcenter.lat, lon:mapcenter.lng, radius: mapradius })
-      },
-
-      mapMoved(){
-        if (!this.mapBeenMoved) this.mapBeenMoved = true;
       },
 
       async getLocation() {
@@ -387,9 +381,6 @@
       let randomIdx = Math.floor(Math.random()*this.startLocs.length);
       this.initLoc = this.startLocs[randomIdx]
       this.setGeoFilter(this.initLoc); // load with default geo query
-      // this.mapZoom = this.startLocs[randomIdx].zoom;
-
-
     },
 
     watch: {
