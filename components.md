@@ -15,7 +15,9 @@ App.vue defines view modes for the Discover Species / Explore Data tabs, and swi
 
 App.vue queries `https://api.ala.org.au/occurrences/occurrences/search` with the current spatial focus, and loads facets for `speciesGroup`, `dataResourceName`, `countryConservation` and `decade`. Facet data is passed to the _FacetGroup_ and _DecadeFacets_ components. A simple in-memory cache stores API query results within a session and uses stored results where possible to minimise API queries. 
 
-Faceted data for species groups is transformed into a custom set of groups using `assets/data/speciesGroups.json`. This structure defines species groups, their labels, icons and associated API queries.
+Faceted data for species groups is transformed into a custom set of groups using `assets/data/speciesGroups.json`. This structure defines species groups, their labels, icons and associated API queries. 
+
+Occurence data is also annotated with these custom species groups and passed  to the _Hexmap_ component. 
 
 
 
@@ -31,4 +33,7 @@ To generate the hex density map the component queries `https://api.ala.org.au/oc
 - bin 2: count > max count / 1000; colour: #fcad54; alpha: 45%
 - bin 1: count > 0; colour: #ffc557; alpha: 30%
 
+Markers are generated based on occurrences passed in to the component. Custom icons are assigned based on species groups, as well as a marker shadow. Markers are linked to popups which use the _ObsTile_ component to show details of the occurrence.
+
+The map components communicates with _App.vue_; for example a double click on the map sets the spatial focus to the double click location, triggering a new API call in _App.vue_.
 
