@@ -56,4 +56,38 @@ Locally distinctive species are calculated by comparing the ranked query results
 
 The most "distinctive" species are those whose local frequency is highest, compared to their global frequency. In the default configuration of this component this is actually calculated on the basis of difference in rank (rather than proportional frequency). That is, a species with a local rank of 5 and a global rank of 500 has a score of (500 - 5 = 495). Whereas a species with a local rank of 100 and a global rank of 50 has a score of (50 - 100 = -50). A minimum proportion is set for distinctive species, to prevent extremely uncommon species appearing here (for example taxa with a handful of localised occurrences). This proportion is set here at 0.1% - so any species with fewer than 0.1% of the total local occurrences is excluded.
 
+Distinctiveness can also be calculated using a simple frequency ratio, as in the natural language processing technique [https://en.wikipedia.org/wiki/Tf%E2%80%93idf](tf-idf) which inspired this approach. However it was found that when using a frequency measure, species with very high local occurrence counts can be highly ranked, even when they may be widely distributed (this was observed for example with koalas in coastal areas of northern NSW and QLD). The rank-based calculation seems more robust to these cases.
+
+
+### BubbleLayout.vue
+
+This component handles the construction and layout of each bubble group. Based on a list of species (names, IDs and occurrence counts) it generates a bubble layout and labels.
+
+Bubble layout is handled with the [https://d3js.org/d3-hierarchy/pack](d3.pack) circle packing implementation. The generated layout data is used to position HTML elements to compose the bubble group.
+
+Each bubble is an instance of the _SpeciesBubble_ component.
+
+
+### SpeciesBubble.vue
+
+This component renders a bubble representing a single species, consisting of a representative image (if available) and an icon signifying national conservation status (if relevant).
+
+Each bubble queries `https://api.ala.org.au/species/species/` with the id of the species, in order to get an `imageIdentifier`. Images are loaded asynchronously through `https://images.ala.org.au/image/proxyImageThumbnail?`.
+
+This results in a large number of requests to load images for the three bubble groups (2 requests per bubble x 10 bubbles per group x 3 groups). Future implementations could improve this by (for example) including image IDs in a species facet result (similar to `names_and_lsid`) 
+
+
+### SpeciesSearch.vue
+
+This component implements an autocomplete species search using the ALA API endpoint `https://api.ala.org.au/species/search/auto?`. For search inputs five or more characters in length it requests 20 search results, limited to `indexType: "TAXON"`. [https://lodash.com/](Lodash) debounce is used to limit the rate at which the API is queried. 
+
+
+
+
+
+
+
+
+
+
 
