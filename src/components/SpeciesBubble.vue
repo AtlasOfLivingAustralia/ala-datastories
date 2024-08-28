@@ -46,19 +46,16 @@
 					this.imageLoaded = false;
 					if (!this.bubble.data.lsid) return;
 					const base = 'https://api.ala.org.au/species/species/';
-					//const base = 'https://bie-ws.ala.org.au/ws/species/'
 
 					let response = await fetch(base + this.bubble.data.lsid)
 					let data = await response.json();
-					// console.log(data);
 					let im;
 					if ( data.imageIdentifier != null){
-						// console.log("loaded " + data.imageIdentifier);
 						im = "https://images.ala.org.au/image/proxyImageThumbnail?imageId="+data.imageIdentifier
 						this.imageLoaded = true;
 					} else {
 						im = null
-					}
+					} 
 					// set species status
 					if (data.conservationStatuses.AUS) this.conservationStatus = data.conservationStatuses.AUS.status;
 
@@ -68,7 +65,7 @@
 				formatStatus(status){
 		          if (status == "Vulnerable") return "VU"
 		          if (status == "Endangered") return "EN"
-		          if (status == "Critically Endangered") return "CE"
+		          if (status == "Critically Endangered") return "CR"
 		          if (status == "Conservation Dependent") return "CD"
 		          if (status == "Extinct") return "EX" 
 		        }

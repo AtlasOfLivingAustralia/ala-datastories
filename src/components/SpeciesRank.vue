@@ -2,18 +2,17 @@
 
 	<div class="section-wrapper">
 		<div class="lifeform-wrapper">
-			<!-- <p class="sgSelectLabel">Filter by Lifeform:</p> -->
+	
 			<h4>Lifeform</h4>
 			<div class="filterTag sgSelect" @click="setSpeciesGroupFilter({value:'All'})"
 			:class="{focus: speciesGroupFilter.value == 'All'}">
-              <!-- <p class="label">Lifeform</p>  -->
+            
               <p class="value">All</p>   
             </div>
 
 			<div class="filterTag sgSelect" v-for="s in speciesGroups" 
 			@click="setSpeciesGroupFilter(s)"
 			:class="{focus: speciesGroupFilter.label == s.label}">
-              <!-- <p class="label">Lifeform</p>  -->
              
              <p class="value">
              	<img v-if="s.icon" class="groupIcon" :src="`${siteRoot}/icons/${s.icon}`"/>
@@ -33,7 +32,7 @@
 			<p class="deeplink"><a class="newtab" target="_blank" 
 				:href="'https://biocache.ala.org.au/occurrences/search?q='+apiState.query+'&lat='+geoFilter.lat+'&lon='+geoFilter.lon+'&radius='+geoFilter.radius">
 			All species</a>
-		</p>
+			</p>
 		</div>
 
 		<div class="speciesBubble">
@@ -57,7 +56,7 @@
 			<p class="deeplink">
 				<a class="newtab" target="_blank" 
 				:href="'https://biocache.ala.org.au/occurrences/search?q='+apiState.query+'&fq=countryConservation:*&lat='+geoFilter.lat+'&lon='+geoFilter.lon+'&radius='+geoFilter.radius">All threatened species</a>
-		</p>
+			</p>
 
 		</div>
 
@@ -152,10 +151,7 @@
 					this.speciesGroupFilter = {value:'All'}
 					this.getLocalSpeciesAsync();
 					this.getLocalSpeciesAsync("conservation");
-
 				}
-
-
 			}
 		},
 
@@ -195,12 +191,10 @@
 				if (conservationQuery){ // modify for conservation species lists
 					qparams.q += " AND (countryConservation:*)";
 					qparams.flimit = this.numLocalSpecies; // only load 10 species
-					console.log(qparams.q);
 				}
 
 			    try {
 			    	const base = 'https://api.ala.org.au/occurrences/occurrences/search?';
-			    	// https://biocache-ws.ala.org.au/ws/occurrences/search?
 			      	const response = await axios.get(base,{params: qparams})
 			      	
 			      	// conservation species query
@@ -232,12 +226,8 @@
 		},
 
 		mounted(){
-
-			console.log("mounted ")
-			console.log(this.apiState.filterState)
 			let gf = this.apiState.filterState.speciesGroup
 			if (gf){
-				console.log("setting sg filter")
 				this.speciesGroupFilter = {value:gf.value, label:gf.valueLabel, fq:gf.fq}
 			} 
 			this.getLocalSpeciesAsync();

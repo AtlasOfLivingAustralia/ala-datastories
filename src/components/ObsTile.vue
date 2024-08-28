@@ -77,7 +77,7 @@
         formatStatus(status){
           if (status == "Vulnerable") return "VU"
           if (status == "Endangered") return "EN"
-          if (status == "Critically Endangered") return "CE"
+          if (status == "Critically Endangered") return "CR"
           if (status == "Conservation Dependent") return "CD"
           if (status == "Extinct") return "EX" 
         },
