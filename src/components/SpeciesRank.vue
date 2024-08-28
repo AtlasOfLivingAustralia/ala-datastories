@@ -147,7 +147,7 @@
 			
 			'apiState.query'(){
 				// empty filters after a speciesGroup has been removed
-				if (apiState.filters.length == 0 && this.speciesGroupFilter.value != 'All'){
+				if (apiState.filters.length == 0){
 					this.speciesGroupFilter = {value:'All'}
 					this.getLocalSpeciesAsync();
 					this.getLocalSpeciesAsync("conservation");
