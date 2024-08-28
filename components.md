@@ -56,16 +56,17 @@ Locally distinctive species are calculated by comparing the ranked query results
 
 The most "distinctive" species are those whose local frequency is highest, compared to their global frequency. In the default configuration of this component this is actually calculated on the basis of difference in rank (rather than proportional frequency). That is, a species with a local rank of 5 and a global rank of 500 has a score of (500 - 5 = 495). Whereas a species with a local rank of 100 and a global rank of 50 has a score of (50 - 100 = -50). A minimum proportion is set for distinctive species, to prevent extremely uncommon species appearing here (for example taxa with a handful of localised occurrences). This proportion is set here at 0.1% - so any species with fewer than 0.1% of the total local occurrences is excluded.
 
-Distinctiveness can also be calculated using a simple frequency ratio, as in the natural language processing technique [https://en.wikipedia.org/wiki/Tf%E2%80%93idf](tf-idf) which inspired this approach. However it was found that when using a frequency measure, species with very high local occurrence counts can be highly ranked, even when they may be widely distributed (this was observed for example with koalas in coastal areas of northern NSW and QLD). The rank-based calculation seems more robust to these cases.
+Distinctiveness can also be calculated using a simple frequency ratio, as in the natural language processing technique [tf-idf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) which inspired this approach. However it was found that when using a frequency measure, species with very high local occurrence counts can be highly ranked, even when they may be widely distributed (this was observed for example with koalas in coastal areas of northern NSW and QLD). The rank-based calculation seems more robust to these cases.
 
 
 ### BubbleLayout.vue
 
 This component handles the construction and layout of each bubble group. Based on a list of species (names, IDs and occurrence counts) it generates a bubble layout and labels.
 
-Bubble layout is handled with the [https://d3js.org/d3-hierarchy/pack](d3.pack) circle packing implementation. The generated layout data is used to position HTML elements to compose the bubble group.
+Bubble layout is handled with the [d3.pack](https://d3js.org/d3-hierarchy/pack) circle packing implementation. The generated layout data is used to position HTML elements to compose the bubble group. Each bubble is an instance of the _SpeciesBubble_ component.
 
-Each bubble is an instance of the _SpeciesBubble_ component.
+Interaction events (bubble clicks) set the global query state via _apiState.js_. The component watches the apiState query and when a change in species group / lifeform filters is detected, reloads the species data.
+
 
 
 ### SpeciesBubble.vue
@@ -79,9 +80,24 @@ This results in a large number of requests to load images for the three bubble g
 
 ### SpeciesSearch.vue
 
-This component implements an autocomplete species search using the ALA API endpoint `https://api.ala.org.au/species/search/auto?`. For search inputs five or more characters in length it requests 20 search results, limited to `indexType: "TAXON"`. [https://lodash.com/](Lodash) debounce is used to limit the rate at which the API is queried. 
+This component implements an autocomplete species search using the ALA API endpoint `https://api.ala.org.au/species/search/auto?`. For search inputs five or more characters in length it requests 20 search results, limited to `indexType: "TAXON"`. [lodash](https://lodash.com/) debounce is used to limit the rate at which the API is queried. 
 
 
+### FacetGroup.vue
+
+
+
+
+
+### DecadeFacets.vue
+
+
+### apiState.js
+
+
+### Menu.vue
+
+### Footer.vue
 
 
 
