@@ -1,9 +1,5 @@
 # Interface Elements
 
-
-
-
-
 ## Hex Map
 - A visual language for showing the distribution of (arbitrarily) large numbers of observations on a map. This is required because otherwise the number of individual observations that can be shown is limited (by browser performance and API requests) to the order of 100-1000. 
 - Compared to current approaches (eg dot distribution maps in species pages) the hex map is better able to show variation in distribution, though perhaps less effective in showing spatial extent. 
@@ -66,7 +62,7 @@
 	- Decades provide a useful way to reveal the historical dimension of ALA data, for example showing the change in data resources over time
 - Facet navigation enable rapid refinement of the selection and exploration of relationships between dimensions (eg between data resource and lifeform)
 
-<img src="img/facets.png" width="640">
+<img src="img/facets.png" width="720">
 
 
 ## Species Bubbles
@@ -79,5 +75,5 @@
 
 <img src="img/species-bubble.png" width="400">
 
-
+< [ALA Lens Docs](../README.md)
 
