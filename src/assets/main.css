@@ -167,6 +167,17 @@ p.intro{
   }
 
 
+  .credits{
+    padding-bottom:1rem;
+    color:var(--ala-darkgrey);
+    font-size: 0.9rem;
+    text-align: center;
+    width:75%;
+    min-width:320px;
+    margin:0 auto;
+  }
+
+
 
 
 
