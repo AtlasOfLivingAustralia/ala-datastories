@@ -1,7 +1,7 @@
 # Interface Elements
 
 
-![a hexagonal density map](img/hexmap.png)
+![a hexagonal density map](/img/hexmap.png)
 
 
 ## Hex Map
