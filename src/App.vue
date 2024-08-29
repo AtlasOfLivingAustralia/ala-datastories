@@ -129,7 +129,7 @@
             <p v-if="occurrenceData.totalRecords == occurrenceData.occurrences.length">{{occurrenceData.occurrences.length}} occurrences</p>
 
           </div>
-          <ObsTile v-for="o in occurrenceData.occurrences" :obs-data="o" @tilehover="setTileHover" @show-modal="setObsModal"/>
+          <ObsTile v-for="o in occurrenceData.occurrences" :key="o.uuid" :obs-data="o" @tilehover="setTileHover" @show-modal="setObsModal"/>
 
           <div class="obsTileLabel end" v-if="occurrenceData.totalRecords > occurrenceData.occurrences.length">
 
