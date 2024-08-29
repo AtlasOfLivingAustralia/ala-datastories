@@ -85,11 +85,16 @@ This component implements an autocomplete species search using the ALA API endpo
 
 ### FacetGroup.vue
 
+This component renders the three bar-graph facets (Lifeform, Data Resource and National Conservation Status). Facet data is passed from the main API query in _App.vue_. This component also transforms `speciesGroup` facet data into the custom species groups using `assets/data/speciesGroups.json`
 
+The interface shows facets "inclusively": when a given value is selected, alternative facets for that value remain visible. This requires that, for example, when the value "Vulnerable" is selected for the field `countryConservation`, counts for the other values of `countryConservation` remain visible and selectable. To implement this, when necessary the facet component makes an additional query to `https://api.ala.org.au/occurrences/occurrences/search?` with its own field excluded from the query. Note that SOLR supports this form of multi-select faceting through its [faceting API](https://solr.apache.org/guide/7_1/faceting.html). Implementing this feature server-side in SOLR would simplify the client-side facet implementation here.
 
+FacetGroup.vue watches the global query state exposed through _apiState.js_ and the global `geoFilter` value, triggering rebuild when required.
 
 
 ### DecadeFacets.vue
+
+
 
 
 ### apiState.js

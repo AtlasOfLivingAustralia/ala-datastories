@@ -90,7 +90,6 @@
                     f.count = this.getFacetCount(facetResult,"Animals") - this.getFacetCount(facetResult,"Mammals") - this.getFacetCount(facetResult,"Birds") - this.getFacetCount(facetResult,"Reptiles") - this.getFacetCount(facetResult,"Fishes") - this.getFacetCount(facetResult,"Molluscs") - this.getFacetCount(facetResult,"Arthropods") - this.getFacetCount(facetResult,"Amphibians");
                   }
                   if (f.id == "chromista"){
-                    //f.count = this.getFacetCount(facetResult,"Algae") + this.getFacetCount(facetResult,"Chromista")
                     f.count = this.getFacetCount(facetResult,"Chromista")
                   }
                   if (f.id == "microbes"){
@@ -125,7 +124,6 @@
         },
 
         loadFacets(){
-          console.log("loading local facets "+ this.field);
           let queryParams = { 
                   q:"*",  
                   spatiallyValid:true,
@@ -138,15 +136,13 @@
                   radius: this.geoFilter.radius,
                   facets: this.field
                 }
-          // console.log(this.apiState.filterState);
           const joinedQuery = Object.keys(this.apiState.filterState)
-          .filter(k => k != this.field) // filter out my field
+          .filter(k => k != this.field) // filter out this facet field
           .map(k => this.apiState.filterState[k].fq)
           .join(" AND "); // boolean query
           queryParams.q = "*";
           if (joinedQuery) queryParams.q = "* AND " + joinedQuery;
 
-          //axios.get('https://api.ala.org.au/occurrences/occurrences/facets?',
           axios.get('https://api.ala.org.au/occurrences/occurrences/search?',
           {params:queryParams,
           paramsSerializer: {
@@ -155,10 +151,6 @@
         .then((response) => {
           this.localFacets = response.data.facetResults;
         })
-
-
-
-
   		 }
   	},
 
@@ -170,7 +162,6 @@
           } else {
             if (this.localFacets){
                this.localFacets = null; // unset local facets
-               console.log("clearing local facets for " + this.field)
             }
             this.localFocus = null; // remove 
           }
@@ -178,9 +169,7 @@
 
       geoFilter: {
         handler() {
-          
           if (this.apiState.filterState[this.field]){
-            console.log("reloading facets on geo " + this.field)
             this.loadFacets();
           } 
         },

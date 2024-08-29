@@ -60,10 +60,8 @@ export default {
   			let results = response.data.autoCompleteList;
   			results = results.filter(r => r.rankString == "species"); // only species
   			let uniqueSpecies = [...new Set( results.map(r => r.guid))]; // unique guids
-  			// console.log(uniqueSpecies)
   			let uniqueResults = uniqueSpecies.map(u => results.find(r => r.guid == u))
   			this.searchResults = uniqueResults
-  			// console.log(this.searchResults)
   		})
   	}
   },
