@@ -22,8 +22,8 @@ The project's design goals were framed by:
 
 ## Design Goals
 
-### Design Goals
-- Generosity
+
+### Generosity
 - Show features and relationships in the data without requiring a search - because we found that many users of the data stories didn’t have a query or don’t have the knowledge required to form a query; 
 - Provide visual and interactive representations showing data extent, distribution and diversity.
 - Provide multiple, concurrent and connected views of ALA data
