@@ -1,5 +1,8 @@
-# ala-explorer
+# ALA Lens
 
-A microsite for the ALA/ANU Redesigning Biodiversity Experience project.
+This microsite is an outcome of the ALA/ANU Redesigning Biodiversity Experience project. It was created by Mitchell Whitelaw and Adrian Mackenzie (ANU), working with with Kylie Morrow and Martin Westgate (ALA).
 
-[Technical Documentation](components.md)
+
+## Documentation
+- [Data Stories Pilot Research](docs/dspilot.md)
+- [Technical Documentation](docs/components.md)
