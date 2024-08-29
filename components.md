@@ -45,6 +45,8 @@ Observation tiles show details of individual occurrence records in the map foote
 
 When instanced in a marker popup, the tile is assigned a 'popup' class which modifies its styling.
 
+Images in observation tiles are lazy loaded using [v-lazy-image](https://github.com/alexjoverm/v-lazy-image), such that images are only loaded when visible on screen
+
 
 ### SpeciesRank.vue
 
@@ -98,8 +100,12 @@ This component renders the decade facets, using the same approach as _FacetGroup
 
 The component includes values for the decade range rendered, currently set at 1750-2020.
 
+A log(10) scale is used for the vertical axis of the column graph. The scale and tick marks are generated dynamically using d3.js.
+
 
 ### apiState.js
+
+
 
 
 ### Menu.vue

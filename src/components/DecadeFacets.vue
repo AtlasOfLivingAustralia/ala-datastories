@@ -46,8 +46,6 @@
 
 	  			let sorted = facetdata.filter(f => f.label != "Not supplied")
 	  			.sort((a,b) => +a.label - +b.label);
-	  			// let firstDecade = 1750;
-	  			// let lastDecade = 2020;
 	  			let df = [];
 	  			for (let d=this.firstDecade; d<this.lastDecade+1; d+=10){
 	  				let match = sorted.find(s => +s.label == d)
