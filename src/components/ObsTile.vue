@@ -1,7 +1,15 @@
+<script setup>
+
+    import { apiState } from '../apiState.js'
+    import VLazyImage from "v-lazy-image";
+
+</script>
+
 <template>
   <main :class="{obsTile: !popup, popup: popup}">
     <div class="imgwrap" @click="showModal">
-      <img v-if="obsData.thumbnailUrl" :src="obsData.thumbnailUrl" @mouseover="tileHover"  >
+      <!-- <img v-if="obsData.thumbnailUrl" :src="obsData.thumbnailUrl" @mouseover="tileHover"  > -->
+      <v-lazy-img v-if="obsData.thumbnailUrl" :src="obsData.thumbnailUrl" @mouseover="tileHover"  />
       <div class="maximise"></div>
     </div>
     <div class="info" @mouseover="tileHover">
@@ -39,9 +47,12 @@
 
 <script>
 
-    import { apiState } from '../apiState.js'
 	
 	export default {
+
+     components: {
+    "v-lazy-img": VLazyImage,
+  },
 
 	    props: ["obsData","popup"],
 
