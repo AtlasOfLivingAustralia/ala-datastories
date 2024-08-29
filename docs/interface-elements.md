@@ -75,5 +75,7 @@
 
 <img src="img/species-bubble.png" width="400">
 
-< [ALA Lens Docs](../README.md)
+< [Themes and Design Goals](themes-goals.md)
+
+[ALA Lens Docs](../README.md)
 

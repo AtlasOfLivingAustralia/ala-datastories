@@ -50,6 +50,9 @@ The project's design goals were framed by:
 ### Delight
 - Be visually enjoyable, functionally performant and responsive 
 
-Next: [Interface Elements](interface-elements.md)
+
+< [Themes and Design Goals](themes-goals.md) | [Interface Elements](interface-elements.md) > 
+
+[ALA Lens Docs](../README.md)
 
 

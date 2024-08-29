@@ -40,3 +40,9 @@ Familiar elements of the format – maps, images, lists – are valued by partic
 Data Stories that are not fully integrated with the ALA platform occasion confusion for people with some familiarity or established practices on the ALA.
 What we might call ‘biodiversity data literacy’ is a significant issue for users of the ALA, and at various points this hinders progress through the Data Stories. The motivation for collecting observations, awareness of taxonomic differences, or knowing how to look beyond the most common occurrences cannot be assumed.
 Themes relating to extinction, conservation and climate change engendered the most discussion and interest, followed by curiousity about where ALA data comes from and how it relates to particular interests, or social groups. 
+
+
+[Themes and Design Goals](themes-goals.md) >
+
+[ALA Lens Docs](../README.md)
+
