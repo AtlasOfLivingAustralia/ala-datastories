@@ -105,14 +105,17 @@ A log(10) scale is used for the vertical axis of the column graph. The scale and
 
 ### apiState.js
 
-
+This reactive module keeps track of the global query state and makes it available to other components of the application. It handles the addition, removal and toggling of filters, and converts filters into a query string. It also stores filter state separately for the two views (species and data). This means that filter states are persistent within each view; flipping to a view will recall its past filter state (if any).
 
 
 ### Menu.vue
 
+A simple menu / navigation element
+
+
 ### Footer.vue
 
-
+Static site footer, based on the ALA template
 
 
 
