@@ -51,7 +51,7 @@ The project's design goals were framed by:
 - Be visually enjoyable, functionally performant and responsive 
 
 
-< [Themes and Design Goals](themes-goals.md) | [Interface Elements](interface-elements.md) > 
+< [Themes and Design Goals](themes-goals.md)  |  [Interface Elements](interface-elements.md) > 
 
 [ALA Lens Docs](../README.md)
 

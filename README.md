@@ -7,4 +7,4 @@ This microsite is an outcome of the ALA/ANU Redesigning Biodiversity Experience 
 - [Data Stories Pilot Research](docs/ds-pilot.md)
 - [Themes and Design Goals](docs/themes-goals.md)
 - [Interface Elements](docs/interface-elements.md)
-- [Technical Documentation](docs/components.md)
+- [Technical Documentation](docs/tech-docs.md)
