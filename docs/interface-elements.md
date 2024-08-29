@@ -1,7 +1,7 @@
 # Interface Elements
 
 
-![a hexagonal density map](img/hex-map.png)
+<img src="img/hex-map.png" width="400">
 
 
 ## Hex Map
@@ -11,6 +11,8 @@
 - In the context of other biodiversity platforms it is also visually distinctive (eg iNaturalist uses a square density map). 
 - Informed by research: Users gravitated to map-based representations but expressed concern when these were limited or constrained (eg by the limited numbers available through the API). The density map approach provides a visual language for showing all available data. 
 
+
+<img src="img/map-marker.png" width="200">
 
 ## Map Markers
 - Markers are used to show sample observations on the map
@@ -23,6 +25,7 @@
 - Recency is privileged to emphasise the dynamic nature of data in the ALA
 - Samples are shown as horizontally scrolling observation tiles at the foot of the map as well as in map markers
 
+<img src="img/obs-tile.png" width="200">
 
 ## Observation Tiles
 - Tiles provide information on sample observations: Common name, scientific name, date of observation, data resource and national conservation status
@@ -32,6 +35,7 @@
 - Image triggers large modal image / observation display
 - Informed by research: the makeup of the tiles reflects users' interests in the sources of data. It also adopts an inclusive approach, privileging common names over scientific names and showing images by default.
 
+<img src="img/species-groups.png" width="600">
 
 ## Species Groups
 - The Lifeform dimension is used throughout the interface as a way to both represent biodiversity and enable refinement and exploration of observations. 
