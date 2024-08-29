@@ -1,8 +1,8 @@
-## Technical Documentation of ALA Lens interface and components
+# Technical Documentation of ALA Lens interface and components
 
 ALA Lens is a Vue.js web application composed of a set of nested components. This documentation describes each interface element and the components that comprise it, as well as data sources, ALA API endpoints and dependencies for each.
 
-### App.vue
+## App.vue
 
 As well as setting up the microsite landing page the root component coordinates app state and the main API queries for the map and occurrences.
 
@@ -21,7 +21,7 @@ Occurence data is also annotated with these custom species groups and passed  to
 App.vue defines a set of locations, including radii and map zoom levels, in the form: `{label: "Daintree", lat:-16.09484060306643, lon:145.3829383850098, radius:13.820092175436397, zoom:11}`. On loading one of these locations is selected at random. The user can modify the location or use their geolocation at any time.
 
 
-### HexMap.vue
+## HexMap.vue
 
 This component renders the map base layer, the hex tile density map, the custom map markers and the dashed circle that outlines the current spatial focus. It uses the vue-leaflet library to compose Leaflet map components and bind these to data from the API. 
 
@@ -38,7 +38,7 @@ Markers are generated based on occurrences passed in to the component. Custom ic
 The map components communicates with _App.vue_; for example a double click on the map sets the spatial focus to the double click location, triggering a new API call in _App.vue_.
 
 
-### ObsTile.vue
+## ObsTile.vue
 
 Observation tiles show details of individual occurrence records in the map footer and in map markers. The component is passed data for a single occurrence. It provides links to the full occurrence record as well as information on the data resource. A 'focus' button sets the tile's species as a global focus. Clicking on the thumbnail image triggers a modal image display through an event passed to App.vue
 
@@ -47,7 +47,7 @@ When instanced in a marker popup, the tile is assigned a 'popup' class which mod
 Images in observation tiles are lazy loaded using [v-lazy-image](https://github.com/alexjoverm/v-lazy-image), such that images are only loaded when visible on screen
 
 
-### SpeciesRank.vue
+## SpeciesRank.vue
 
 This component lays out the species bubble interfaces and handles data processing and API calls. It loads data on species for the current spatial focus in two stages
 
@@ -60,7 +60,7 @@ The most "distinctive" species are those whose local frequency is highest, compa
 Distinctiveness can also be calculated using a simple frequency ratio, as in the natural language processing technique [tf-idf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) which inspired this approach. However it was found that when using a frequency measure, species with very high local occurrence counts can be highly ranked, even when they may be widely distributed (this was observed for example with koalas in coastal areas of northern NSW and QLD). The rank-based calculation seems more robust to these cases.
 
 
-### BubbleLayout.vue
+## BubbleLayout.vue
 
 This component handles the construction and layout of each bubble group. Based on a list of species (names, IDs and occurrence counts) it generates a bubble layout and labels.
 
@@ -70,7 +70,7 @@ Interaction events (bubble clicks) set the global query state via _apiState.js_.
 
 
 
-### SpeciesBubble.vue
+## SpeciesBubble.vue
 
 This component renders a bubble representing a single species, consisting of a representative image (if available) and an icon signifying national conservation status (if relevant).
 
@@ -79,12 +79,12 @@ Each bubble queries `https://api.ala.org.au/species/species/` with the id of the
 This results in a large number of requests to load images for the three bubble groups (2 requests per bubble x 10 bubbles per group x 3 groups). Future implementations could improve this by (for example) including image IDs in a species facet result (similar to `names_and_lsid`) 
 
 
-### SpeciesSearch.vue
+## SpeciesSearch.vue
 
 This component implements an autocomplete species search using the ALA API endpoint `https://api.ala.org.au/species/search/auto?`. For search inputs five or more characters in length it requests 20 search results, limited to `indexType: "TAXON"`. [lodash](https://lodash.com/) debounce is used to limit the rate at which the API is queried. 
 
 
-### FacetGroup.vue
+## FacetGroup.vue
 
 Three instances of this component render the three bar-graph facets (Lifeform, Data Resource and National Conservation Status). Facet data is passed from the main API query in _App.vue_. This component also transforms `speciesGroup` facet data into the custom species groups using `assets/data/speciesGroups.json`
 
@@ -93,7 +93,7 @@ The interface shows facets "inclusively": when a given value is selected, altern
 FacetGroup.vue watches the global query state exposed through _apiState.js_ and the global `geoFilter` value, triggering rebuild when required.
 
 
-### DecadeFacets.vue
+## DecadeFacets.vue
 
 This component renders the decade facets, using the same approach as _FacetGroup.vue_. It queries the API at `https://api.ala.org.au/occurrences/occurrences/search?` when required and watches the global query and `geoFilter` states to rebuild as needed.
 
@@ -102,20 +102,24 @@ The component includes values for the decade range rendered, currently set at 17
 A log(10) scale is used for the vertical axis of the column graph. The scale and tick marks are generated dynamically using d3.js.
 
 
-### apiState.js
+## apiState.js
 
 This reactive module keeps track of the global query state and makes it available to other components of the application. It handles the addition, removal and toggling of filters, and converts filters into a query string. It also stores filter state separately for the two views (species and data). This means that filter states are persistent within each view; flipping to a view will recall its past filter state (if any).
 
 
-### Menu.vue
+## Menu.vue
 
 A simple menu / navigation element
 
 
-### Footer.vue
+## Footer.vue
 
 Static site footer, based on the ALA template
 
+
+< [Interface Elements](interface-elements.md)
+
+[ALA Lens Docs](../README.md)
 
 
 
