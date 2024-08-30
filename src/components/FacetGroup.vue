@@ -6,7 +6,7 @@
             :class="{focus: localFocus == a.label}">
             <div class="bar" :style="{width: 100*a.count/localTotal+'%'}"></div>
             <div class="foreground">
-              <img class="groupIcon" v-if="a.icon" :src="`${siteRoot}/icons/${a.icon}`">
+              <img class="groupIcon" v-if="a.icon" :src="`${siteRoot}/icons/${a.icon}`" alt="">
               <div class="label">{{a.label}}</div> 
               <div class="count">{{formatCount(a.count)}}</div>
             </div>

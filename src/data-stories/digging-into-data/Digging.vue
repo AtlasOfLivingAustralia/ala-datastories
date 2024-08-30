@@ -94,7 +94,7 @@
     <section>
       <h3>Data Resources in Space</h3> 
 
-        <p>This map shows observations of <a target="_blank" href="https://bie.ala.org.au/species/https:/biodiversity.org.au/afd/taxa/6c646af8-06fb-40ae-83aa-3dd001cc4ea6#overview">Gang-Gang Cockatoos</a> <em>(Callocephalon fimbriatum)</em>, colour-coded by data resource. Notice the differe(nt spatial distributions of the data resources?</p>
+        <p>This map shows observations of <a target="_blank" class="newtab inline" href="https://bie.ala.org.au/species/https:/biodiversity.org.au/afd/taxa/6c646af8-06fb-40ae-83aa-3dd001cc4ea6#overview">Gang-Gang Cockatoos</a> <em>(Callocephalon fimbriatum)</em>, colour-coded by data resource. Notice the different spatial distributions of the data resources?</p>
 
         <p class="interactionTip">Click the resources to hide or show their observations, and explore the relationships between data resources and locations.</p>
 

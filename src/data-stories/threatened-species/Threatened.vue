@@ -36,7 +36,7 @@
 					<tr v-for="s in tsSummary">
 						<td><span class="state-label">{{s.state}}</span></td>
 						<td v-for="c in colourMap.keys()" class="matrixcell" >
-							<div class="matrixinner" @click="setTsFocus({state:s.state,code:c})" :class="{focus: tsFocus.state==s.state && tsFocus.code==c}" v-if="s[c]" :style="{background: colourMap.get(c), color: c=='EX' || c=='EW' ? 'white' : 'black'}">
+							<div class="matrixinner" @click="setTsFocus({state:s.state,code:c})" :class="{focus: tsFocus.state==s.state && tsFocus.code==c, [c]:true}"  v-if="s[c]" >
 									{{s[c]}}
 							</div>
 						</td>	
@@ -71,7 +71,7 @@
 		    	<h3>Calling the Roll</h3>
 		    	<p>Tables, lists and maps provide one way to explore and investigate threatened species; here's another one. What if we just showed the whole list, one at a time? It's a bit like calling the roll: a way to name and briefly recognise each one.</p>
 
-		    	<p class="interactionTip">This is number {{rollIndex}} of {{tsdata.length}} species. At this rate, it will take you about 8 hours and 20 minutes to read the names of every conservation listed species.</p>
+		    	<p class="interactionTip">This is number {{rollIndex}} of {{tsdata.length}} species. At this rate, it will take you about 8 hours and 20 minutes to see every conservation listed species.</p>
 
 		    	<button @click="startTicker">Start</button>
 		    	<button @click="stopTicker">Stop</button>
@@ -87,7 +87,7 @@
 					  </h3>
 					  <p class="stateStatus" v-for="s in rollSpecies.statuses">
 					   {{s.state}}: 
-					   	<span class="status" :style="{'background-color': colourMap.get(s.status), color: s.status == 'EX' || s.status == 'EW' ? 'white' : 'black'}"> 
+					   	<span class="status" :class="s.status"> 
 					   	{{keyNames.get(s.status)}}
 					   	</span>
 					   </p>
@@ -133,9 +133,9 @@
 		    	<h3>Behind the Fences</h3>
 				<p>Increasingly fenced reserves are being used to exclude introduced predators like foxes and cats, and enable vulnerable species to be reintroduced - especially mammals. These maps focus on three sites, showing how many threatened and even "extinct" species are recorded.</p>
 				<p><ul>
-					<li><a href="https://www.australianwildlife.org/where-we-work/scotia/" target="_blank" class="newtab">Scotia Sanctuary</a> is a 650 sq km reserve in western NSW, managed by the Australian Wildlife Conservancy. It was established in 1994.</li>
-					<li><a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/mallee-cliffs-national-park" target="_blank" class="newtab">Mallee Cliffs National Park</a> in south-western NSW includes a 9,570 hectare predator-free fenced area. It is managed under a partnership between NSW National Parks and the Austalian Wildlife Conservancy</li>
-					<li><a href="https://www.australianwildlife.org/where-we-work/the-pilliga/" target="_blank" class="newtab">The Pilliga</a> in northern NSW is a 35,000 hectare reserve co-managed by NSW National Parks and the AWC.</li>
+					<li><a href="https://www.australianwildlife.org/where-we-work/scotia/" target="_blank" class="newtab inline">Scotia Sanctuary</a> is a 650 sq km reserve in western NSW, managed by the Australian Wildlife Conservancy. It was established in 1994.</li>
+					<li><a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/mallee-cliffs-national-park" target="_blank" class="newtab inline">Mallee Cliffs National Park</a> in south-western NSW includes a 9,570 hectare predator-free fenced area. It is managed under a partnership between NSW National Parks and the Austalian Wildlife Conservancy</li>
+					<li><a href="https://www.australianwildlife.org/where-we-work/the-pilliga/" target="_blank" class="newtab inline">The Pilliga</a> in northern NSW is a 35,000 hectare reserve co-managed by NSW National Parks and the AWC.</li>
 				</ul></p>
 
 				Show: <select v-model.lazy="exMapFocusIndex" @change="getExMapData">
@@ -214,7 +214,9 @@
 		    	listKeys: new Map([["dr649","ACT"],["dr656","Aus"],["dr650","NSW"],["dr655","VIC"],["dr653","SA"],["dr651","NT"],["dr2201","WA"],["dr652","QLD"],["dr654","TAS"]]),
 		    	statusMap:new Map([["Critically Endangered","CR"],["Vulnerable","VU"],["Endangered","EN"],["Extinct in the wild","EW"],["Extinct","EX"],["Conservation Dependent","CD"],["Near Threatened","NT"],["Threatened","TH"],["Rare","RA"]]),
 		    	keyNames: new Map([["NT","Near Threatened"], ["RA","Rare"], ["VU","Vulnerable"], ["EN","Endangered"],["P","Priority"], ["TH","Threatened"], ["CR","Critically Endangered"], ["CD","Conservation Dependent"], ["EW","Extinct in the Wild"], ["EX","Extinct"]]),
-		    	colourMap: new Map([ ["NT","#E0FFA7"], ["RA","#E0FFA7"], ["P","#F2FF5C"], ["VU","#F2FF5C"], ["EN","#FFE897"], ["TH","#FFDD88"], ["CR","#FFC6A5"], ["CD","#FF9D93"], ["EW","#FF4E53"], ["EX","#000000"] ])
+		    	colourMap: new Map([ ["NT","#E0FFA7"], ["RA","#E0FFA7"], ["P","#F2FF5C"], ["VU","#F2FF5C"], ["EN","#FFE897"], ["TH","#FFDD88"], ["CR","#FFC6A5"], ["CD","#FF9D93"], ["EW","#FF4E53"], ["EX","#000000"] ]),
+				updatedColourMap: new Map([ ["NT","#38613D"], ["RA","#38613D"], ["P","#FFC557"], ["VU","#FFC557"], ["EN","#F26649"], ["TH","#F26649"], ["CR","#921D11"], ["CD","#921D11"], ["EW","#000000"], ["EX","#000000"] ])
+
 
 		    }
 		  },
@@ -414,12 +416,10 @@
 
 <style lang="css" scoped>
 
-	/* table */
 	table.tsmatrix{
 		width:100%;
 		max-width:900px;
-		border-collapse:collapse;
-	/*	table-layout: fixed;*/
+		border-spacing:1px;
 	}
 
 	table.tsmatrix td{
@@ -533,7 +533,7 @@
 .rollcall{
 	width:100%; 
 	max-width:400px;
-	height:500px;
+	height:600px;
 	border:15px solid black;
 	box-sizing: border-box;
 	padding:20px;
@@ -570,6 +570,7 @@ p.stateStatus{
 }
 .status{
   padding:3px;
+  font-weight: 500;
 }
 .rollcall .inner{
 	display:inline-block;

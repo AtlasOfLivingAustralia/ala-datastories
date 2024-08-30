@@ -42,6 +42,10 @@ a.newtab{
   padding-right:13px;
 }
 
+a.newtab.inline{
+  padding-right:20px;
+}
+
 a.newtab::after{
     content: " ";
     background-image: url(@/assets/img/newtab.png);
@@ -146,24 +150,34 @@ p.intro{
 
 /* CE is CR in the new ALA style? */
 
-  .EN{
+  .EN, .TH{
     background-color: #F26649;
     color:#212121;
   }
 
-  .VU{
+  .VU, .P{
     background-color: #FFC557;
     color: #212121;
   }
 
   .CD{
-    background-color: #005454;
+    background-color: #921D11;
     color:white;
   }
 
   .EX{
     background-color: #212121;
-    color:#ffc557;
+    color:#FFC557;
+  }
+
+  .EW{
+    background-color: #212121;
+    color:white;
+  }
+
+  .NT, .RA{
+    background-color: #38613D;
+    color:white;
   }
 
 
