@@ -7,8 +7,8 @@
             <div class="bar" :style="{width: 100*a.count/localTotal+'%'}"></div>
             <div class="foreground">
               <img class="groupIcon" v-if="a.icon" :src="`${siteRoot}/icons/${a.icon}`">
-              <span class="label">{{a.label}}</span> 
-              <span class="count">({{formatCount(a.count)}})</span>
+              <div class="label">{{a.label}}</div> 
+              <div class="count">{{formatCount(a.count)}}</div>
             </div>
           </li>
           <li v-if="truncateFacetData && computedFacets.length > truncateLength">
@@ -113,7 +113,8 @@
         },
 	    	
         formatCount(count){
-	        	if (count < 10000) return count;
+	        	if (count < 1000) return count;
+            if (count < 10000) return (count/1000).toFixed(1)+ "k";;
 	        	if (count >= 10000 && count < 1000000) return Math.floor(count/1000)+"k";
 	        	return (count/1000000).toFixed(1)+ "M";
 		    },
@@ -121,6 +122,11 @@
         getFacetCount(facets,field){
           let match = facets.fieldResult.find(fr => fr.label == field);
           return match ? match.count : 0
+        },
+
+        truncateLabel(label,len){
+          if (label.length > len) return label.substring(0,len)+ "…"
+          return label;
         },
 
         loadFacets(){
@@ -209,19 +215,25 @@
   .facetList li .foreground{
     position:absolute;
     z-index:1;
-    bottom:0;
+    top:1px;
+    width:100%;
+    display: ;
   }
 
   .facetList .foreground .label{
     padding-left:0.5em;
     margin-right: 0.5em;
+    display: inline-block;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    width:90%;
   }
 
   .facetList .foreground .groupIcon{
     width:14px;
     max-height:14px;
     vertical-align:baseline;
-    margin:0.25rem 0.2rem 0;
+    margin: 0.25rem 0.2rem 0.2rem;
   }
 
   .facetList li.focus{
@@ -236,6 +248,9 @@
   .facetList li .count{
     color:#9d9d9d;
     font-size:90%;
+    position:absolute;
+    right:0;
+    display: inline-block;
   }
 
   .facetList li:hover .count, .facetList li.focus .count{
