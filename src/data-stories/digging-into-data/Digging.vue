@@ -92,9 +92,9 @@
     </section>
 
     <section>
-      <h3>Data Resources in Space</h3>
+      <h3>Data Resources in Space</h3> 
 
-        <p>This map shows observations of Gang-gang cockatoos, colour-coded by data resource. Notice the different spatial distributions of the data resources?</p>
+        <p>This map shows observations of <a target="_blank" href="https://bie.ala.org.au/species/https:/biodiversity.org.au/afd/taxa/6c646af8-06fb-40ae-83aa-3dd001cc4ea6#overview">Gang-Gang Cockatoos</a> <em>(Callocephalon fimbriatum)</em>, colour-coded by data resource. Notice the differe(nt spatial distributions of the data resources?</p>
 
         <p class="interactionTip">Click the resources to hide or show their observations, and explore the relationships between data resources and locations.</p>
 
@@ -103,11 +103,11 @@
           
         </div>
         <div class="ggMapWrap">
-          <div v-for="r in ggDataResources" class="ggMapSelect" 
+          <button v-for="r in ggDataResources" class="ggMapSelect" 
           @click="toggleShowResource(r)" :class="{show:r.show}">
           {{r.dr}} 
             <span class="chip" :style="{backgroundColor: r.col}"></span>
-          </div>
+          </button>
         </div>
 
 
@@ -121,7 +121,7 @@
       <p class="interactionTip">Click on a term to see comments that include that term; click on a comment to see details of that observation</p>
 
       <div class="ggCloud">
-          <span v-for="w in ggWordTable" :style="{fontSize: 4 + 1.5*Math.sqrt(w.count)+'px'}" @click="ggCloudWord = w.word" :class="{focus: w.word == ggCloudWord}">{{w.word}}</span>
+          <button v-for="w in ggWordTable" :style="{fontSize: 4 + 1.5*Math.sqrt(w.count)+'px'}" @click="ggCloudWord = w.word" :class="{focus: w.word == ggCloudWord}">{{w.word}}</button>
       </div>
 
       <h4 v-if="ggCloudWord">{{ggComments.length}} Comments including "{{ggCloudWord}}"</h4>
@@ -543,16 +543,17 @@
 
 }
 
-.ggCloud span{
-  margin:6px;
+.ggCloud button{
+  margin:0px;
   cursor:pointer;
+  border:0;
 }
 
-.ggCloud span.focus{
+.ggCloud button.focus{
   color:var(--ala-orange);
 }
 
-.ggCloud span:hover{
+.ggCloud button:hover{
   text-decoration: underline;
 }
 
