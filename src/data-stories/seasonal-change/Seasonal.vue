@@ -22,7 +22,7 @@
 
 		    	<section>
 
-			    	<h3>Visualising Seasonal Change</h3>	
+			    	<h2>Visualising Seasonal Change</h2>	
 
 			    	<p>Some flowers only appear at a certain time of year. Here's a graph of occurrences of a genus of native orchids, the Caladenia. We can see that they flower in Spring - but is this column chart the best way to show this cycle?</p>
 
@@ -122,7 +122,7 @@
 				</section>
 
 				<section>
-					<h3>Mapping Seasonal Change</h3>
+					<h2>Mapping Seasonal Change</h2>
 
 					<p>Seasonal change also occurs across space. Swift Parrots are endangered migratory birds that spend summer in cool southern forests, but migrate north during winter.</p>
 

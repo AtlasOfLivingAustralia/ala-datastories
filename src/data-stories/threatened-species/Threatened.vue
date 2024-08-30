@@ -19,7 +19,7 @@
 
 		    <section>
 
-		    	<h3>Exploring Threatened Species</h3>
+		    	<h2>Exploring Threatened Species</h2>
 				<p>One of the key mechanisms used by Australian governments is the listing of threatened species in various categories - and we can find this information in the ALA.</p>
 
 				<p>One of the first issues we discover is that the classification systems used by Federal, State and Territory governments are all different.</p>
@@ -68,7 +68,7 @@
 		    </section>
 
 		    <section>
-		    	<h3>Calling the Roll</h3>
+		    	<h2>Calling the Roll</h2>
 		    	<p>Tables, lists and maps provide one way to explore and investigate threatened species; here's another one. What if we just showed the whole list, one at a time? It's a bit like calling the roll: a way to name and briefly recognise each one.</p>
 
 		    	<p class="interactionTip">This is number {{rollIndex}} of {{tsdata.length}} species. At this rate, it will take you about 8 hours and 20 minutes to see every conservation listed species.</p>
@@ -97,7 +97,7 @@
 		    </section>
 
 		    <section>
-		    	<h3>De-Extinction?</h3>
+		    	<h2>De-Extinction?</h2>
 				<p>Data held in the ALA also shows traces of recent interventions to support threatened species. This graph shows a timeline of observations since 1980. We can see big gains in Endangered and Critically Endangered species, but also a boom in Extinct species since 2019. Are we seeing de-extinction? Not quite, but we can see traces of increasing attention and new forms of intervention.</p>
 
 		    	<select name="" v-model="eGraphCat" @change="getExtinctionData">
@@ -130,7 +130,7 @@
 
 		    <section>
 		    	
-		    	<h3>Behind the Fences</h3>
+		    	<h2>Behind the Fences</h2>
 				<p>Increasingly fenced reserves are being used to exclude introduced predators like foxes and cats, and enable vulnerable species to be reintroduced - especially mammals. These maps focus on three sites, showing how many threatened and even "extinct" species are recorded.</p>
 				<p><ul>
 					<li><a href="https://www.australianwildlife.org/where-we-work/scotia/" target="_blank" class="newtab inline">Scotia Sanctuary</a> is a 650 sq km reserve in western NSW, managed by the Australian Wildlife Conservancy. It was established in 1994.</li>

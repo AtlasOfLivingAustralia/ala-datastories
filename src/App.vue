@@ -23,13 +23,13 @@
          <!-- <h1>ALA <img src="./assets/img/title-asterisk.svg" class="title-asterisk"> Explorer Hub</h1>  -->
 
          <h1>ALA<span class="logotype">
-          <img src="./assets/img/lens.svg" class="title-logo">Lens</span>
+          <img src="./assets/img/lens.svg" class="title-logo" alt="">Lens</span>
         </h1>
          <h2 class="tagline">New views of the Atlas of Living Australia</h2>
 
          
          <div class="intro-wrap">
-          <img src="./assets/img/bubble-concrete.png" class="landing-bubble">
+          <img src="./assets/img/bubble-concrete.png" class="landing-bubble" alt="Nested circles showing images of Australian wildlife and flora">
 
           <div class="intro-text">
             <p>Try out new views of the ALA, designed to encourage exploration and discovery of species, data and place.</p> 
@@ -53,7 +53,7 @@
             <h4>
               Digging into Data
             </h4>
-            <img src="./assets/img/digging-icon.png">
+            <img src="./assets/img/digging-icon.png" alt="">
             <p>This ALA is made of biodiversity data; but where does this data come from?</p>
           </a>
 
@@ -62,7 +62,7 @@
               <h4>
                  Threatened Species
               </h4>
-              <img src="./assets/img/threatened-icon.png">
+              <img src="./assets/img/threatened-icon.png" alt="">
               <p>What does the ALA reveal about Australia's threatened species, and our efforts to protect them? </p>
             </a>
 
@@ -71,14 +71,14 @@
             <h4>
               Seasonal Change
             </h4>
-            <img src="./assets/img/seasonal-icon.png">
+            <img src="./assets/img/seasonal-icon.png" alt="">
             <p>The cycle of the seasons shapes life around us; how does it shape the data in the ALA?</p>
           </a>
 
         </div>
 
 
-        <h2>Lens<img src="./assets/img/lens.svg" class="title-logo">Interface</h2>
+        <h2>Lens<img src="./assets/img/lens.svg" class="title-logo" alt="">Interface</h2>
         <h4>Browse, discover, facet and filter: the Lens interface is a new way to explore the ALA. Start at one of our favourite spots, or</h4>
 
         <button @click="locateMe">Use my location</button>

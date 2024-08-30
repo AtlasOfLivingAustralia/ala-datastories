@@ -8,11 +8,11 @@
 	<div class="speciesSearch">
 		<h4>Search for Species</h4>
 		<div class="searchInterface">
-
-			<input class="searchInput" type="text" v-model="searchInput">
+			<label class="hidden" for="speciesSearch">Search species</label>
+			<input class="searchInput" type="text" v-model="searchInput" id="speciesSearch">
 			<ul class="searchResults">
 				<li v-for="s in searchResults" @click="apiState.setFilter({field:'lsid', fieldLabel:'Species',value: s.guid, valueLabel: s.commonName, fq:'lsid:'+s.guid})">
-					<img class="speciesFocus" src="../assets/img/focus-species.svg">
+					<img class="speciesFocus" src="../assets/img/focus-species.svg" alt="">
 					{{s.commonName}}
 					(<em>{{s.name}}</em>)
 				</li>
@@ -141,6 +141,10 @@ export default {
 		top:1px;
 		left:1px;
 		margin-right:3px;
+	}
+
+	.hidden{
+		display:none;
 	}
 
 

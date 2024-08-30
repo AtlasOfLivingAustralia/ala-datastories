@@ -15,7 +15,7 @@
 			:class="{focus: speciesGroupFilter.label == s.label}">
              
              <p class="value">
-             	<img v-if="s.icon" class="groupIcon" :src="`${siteRoot}/icons/${s.icon}`"/>
+             	<img v-if="s.icon" class="groupIcon" :src="`${siteRoot}/icons/${s.icon}`" alt=""/>
              {{s.label}}</p>   
             </div>
 

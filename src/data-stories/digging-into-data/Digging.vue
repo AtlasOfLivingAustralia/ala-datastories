@@ -24,15 +24,15 @@
 
     <section>
       <!-- DATA RESOURCES -->
-      <h3>Data Resources</h3>
+      <h2>Data Resources</h2>
 
 
       <p>The ALA aggregates data from {{dataResources.length}} different data resources. They vary massively in size, from giants like eBird with over 50 million observations, to small local projects Just their names tell us a lot about how data in the ALA is made. Browse and filter this list to get an impression of the range and scale of data resources.</p>
 
       <p class="interactionTip">Among other things you can search for types of creature (eg <span class="sample-query" @click="drFilter='fish'">fish</span>) or organisations (<span class="sample-query" @click="drFilter='museum'">museum</span>, <span class="sample-query" @click="drFilter='CSIRO'">CSIRO</span>), or places (<span class="sample-query" @click="drFilter='NSW'">NSW</span>). Click on a resource name to explore it in the ALA.</p>
 
-
-      <input type="text" v-model="drFilter">
+      <label for="drfilter">Filter by: </label>
+      <input type="text" v-model="drFilter" id="drfilter">
 
       <div class="data-table-wrapper" v-if="drLoaded">
         <table>
@@ -69,13 +69,14 @@
 
     <section>
       <!-- DR TIMELINE -->
-      <h3>Data Resources Over Time</h3>
+      <h2>Data Resources Over Time</h2>
       
       <p>This graph shows the number of records in data resources over time. It shows how some resources span many decades, while others are generated in short period. Museum collections have records from long ago, while citizen science resoures like iNaturalist have grown rapidly in recent years. </p>
 
       <p class="interactionTip">Use the search box to filter the records, just like the table above. For eaxmple try <span class="sample-query" @click="tlFilter='insect'">insect</span>, <span class="sample-query" @click="tlFilter='frog'">frog</span>, <span class="sample-query" @click="tlFilter='waterbird'">waterbird</span>, <span class="sample-query" @click="tlFilter='Queensland'">Queensland</span> or <span class="sample-query" @click="tlFilter='herbarium'">herbarium</span></p> 
-
-      <input type="text" v-model="tlFilter">
+      
+      <label for="tlfilter">Filter by: </label>
+      <input type="text" v-model="tlFilter" id="tlfilter">
 
       <div class="drTimeline"> 
         <!-- TIMELINE -->
@@ -92,7 +93,7 @@
     </section>
 
     <section>
-      <h3>Data Resources in Space</h3> 
+      <h2>Data Resources in Space</h2> 
 
         <p>This map shows observations of <a target="_blank" class="newtab inline" href="https://bie.ala.org.au/species/https:/biodiversity.org.au/afd/taxa/6c646af8-06fb-40ae-83aa-3dd001cc4ea6#overview">Gang-Gang Cockatoos</a> <em>(Callocephalon fimbriatum)</em>, colour-coded by data resource. Notice the different spatial distributions of the data resources?</p>
 
@@ -114,7 +115,7 @@
     </section>
 
     <section>
-      <h3>Observing Gang-gangs</h3>
+      <h2>Observing Gang-gangs</h2>
 
       <p>Much of the ALA's data is created through observation. But so far the data hasn't been able to tell us much about the experience of the observer. Here we look at observations from the citizen science platform iNaturalist, which enables observers to record notes or comments with their sightings. This word cloud is created from comments in 851 gang-gang observations.</p> 
 

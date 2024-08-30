@@ -36,7 +36,7 @@
         </p>
       </div>
 
-      <img v-if="(obsData.taxonRank == 'species' || obsData.taxonRank == 'subspecies' || obsData.taxonRank=='variety') && !popup" class="focusSpeciesButton" src="../assets/img/focus-species.svg" @click="apiState.setFilter({field:'lsid',fieldLabel:'Species',value: obsData.speciesGuid,valueLabel: displayName, fq:'lsid:'+obsData.speciesGuid})" title="Focus on this species">
+      <img v-if="(obsData.taxonRank == 'species' || obsData.taxonRank == 'subspecies' || obsData.taxonRank=='variety') && !popup" class="focusSpeciesButton" src="../assets/img/focus-species.svg" @click="apiState.setFilter({field:'lsid',fieldLabel:'Species',value: obsData.speciesGuid,valueLabel: displayName, fq:'lsid:'+obsData.speciesGuid})" title="Focus on this species" alt="">
 
        <div class="status" :if="obsData.countryConservation" :class="formatStatus(obsData.countryConservation)" :title="obsData.countryConservation">{{formatStatus(obsData.countryConservation)}}</div>
 

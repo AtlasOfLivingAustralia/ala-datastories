@@ -2,18 +2,18 @@
 	<nav>
 		<div class="ala-logo">
 			<a href="https://ala.org.au">
-				<img src="@/assets/img/ALA_Logo_Inline_REV-RGB.png"/>
+				<img src="@/assets/img/ALA_Logo_Inline_REV-RGB.png" alt=""/>
 			</a>
 		</div>
 
 		<div class="ala-logo-mobile">
 			<a href="https://ala.org.au">
-				<img src="@/assets/img/ALA_Logo_Mark-only.png"/>
+				<img src="@/assets/img/ALA_Logo_Mark-only.png" alt=""/>
 			</a>
 		</div>
 
 		<div class="lens-logo">
-			<a :href="homePath">ALA<img src="@/assets/img/lens.svg">Lens</a>
+			<a :href="homePath">ALA<img src="@/assets/img/lens.svg" alt="">Lens</a>
 		</div>
 
 		<div class="ds-menu dropdown-toggle"><a href="#" @click="dropDown">Data Stories</a>
