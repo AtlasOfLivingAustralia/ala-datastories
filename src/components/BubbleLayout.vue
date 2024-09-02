@@ -42,10 +42,8 @@
 		computed: {
 
 			bubbleLayout(){
-			    // console.log("bubble layout " + this.speciesData.length)
 				const numBubbles = this.bubbleCount;
-				if (this.speciesData.length == 0){
-					console.log("no data, no bubbles")
+				if (this.speciesData.length == 0){ // no species data, no layout
 					return;
 				}
 				let bubbleData = {name:"No Species", children: this.speciesData.slice(0,numBubbles)}
@@ -56,7 +54,6 @@
 				const pack = d3.pack()
 			      .size([this.size,this.size])
 			      .padding(this.padding)
-			      //.radius(d => 5 + Math.sqrt(d.value/bubbleTotal))
 
 				 const root = pack(d3.hierarchy(bubbleData)
       				.sum(d => d.count)
