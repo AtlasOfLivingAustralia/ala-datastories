@@ -127,6 +127,7 @@ export default {
 		background-color: var(--ala-black);
 		width:200px;
 		padding:1rem 0;
+		z-index:1;
 	}
 
 	.ds-menu ul li{
