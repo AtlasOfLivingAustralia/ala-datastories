@@ -67,6 +67,8 @@
           // use local facets if loaded
           let facetResult = source.find(r => r.fieldName == this.field);
           if (!facetResult) return [];
+
+          console.log(source)
           
           if (this.field == "speciesGroup"){
             speciesGroups.forEach(f => {
@@ -77,6 +79,11 @@
                   if (f.id == "reptiles"){
                     f.count = this.getFacetCount(facetResult,"Reptiles")
                   }
+
+                  if (f.id == "amphibians"){
+                    f.count = this.getFacetCount(facetResult,"Amphibians")
+                  }
+
                   if (f.id == "fishes"){
                     f.count = this.getFacetCount(facetResult,"Fishes")
                   }
@@ -197,8 +204,7 @@
     font-size:13px;
     font-weight: 400;
     line-height: 1.5em;
-    max-height:400px;
-    min-height:300px;
+    height:400px;
     overflow-y:auto;
     display: block;
    

@@ -261,6 +261,7 @@
             else if (o.speciesGroups.includes("Reptiles")) sg = "Reptiles";
             else if (o.speciesGroups.includes("Fishes")) sg = "Fishes";
             else if (o.speciesGroups.includes("Amphibians")) sg = "Amphibians";
+            //else if (o.speciesGroups.includes("Amphibians")) {sg = "Frogs"; console.log(o)}
             else if (o.speciesGroups.includes("Fungi")) sg = "Fungi";
             else if (o.speciesGroups.includes("Chromista")) sg = "Kelp";
             else if (o.speciesGroups.includes("Molluscs") || o.speciesGroups.includes("Crustaceans") ) sg = "Molluscs";
@@ -270,6 +271,7 @@
             o.speciesGroup = sg;
             return o;
           })
+          console.log(go);
           return go;
         }
     },
