@@ -2,7 +2,7 @@
 
 <template>
   <main id="map">
-    <l-map  ref="map" :zoom="zoom" :center="filterCenter" :useGlobalLeaflet="false" @ready="mapReady" @update:bounds="boundsUpdated" @update:center="centerUpdated" :options="{attributionControl: false, zoomControl:false, doubleClickZoom:false, scrollWheelZoom:false}" :detectRetina="true" @dblclick="doubleClick" >
+    <l-map  ref="map" :zoom="zoom" :center="localCenter" :useGlobalLeaflet="false" @ready="mapReady" @update:bounds="boundsUpdated" @update:center="centerUpdated" :options="{attributionControl: false, zoomControl:false, doubleClickZoom:false, scrollWheelZoom:false}" :detectRetina="true" @dblclick="doubleClick" >
       <l-control-zoom position="topright"  ></l-control-zoom>
       <l-tile-layer :url="baseLayer.url"
                     layer-type="base"
@@ -102,6 +102,7 @@
           visible: true,
           format: 'image/png'
         },
+        localCenter:this.filterCenter,
         siteRoot: import.meta.env.BASE_URL
       }
     },
@@ -137,6 +138,7 @@
           mapReady (){
             this.$emit('mapready')
             this.bounds = this.$refs.map.leafletObject.getBounds();
+            //console.log(this.filterCenter)
           },
 
           doubleClick(e){
@@ -167,11 +169,28 @@
           centerUpdated (center) {
             this.mapCenter = center;
             this.radius = this.getViewRadius();
+            this.checkRecenterButton()
           },
 
           boundsUpdated (bounds) {
             this.bounds = bounds;
             this.radius = this.getViewRadius();
+            this.checkRecenterButton()
+          },
+
+          checkRecenterButton(){
+            // calculate radius of the 20px recenter button in map meters
+            let buttonRadius = this.$refs.map.leafletObject.distance(
+              this.$refs.map.leafletObject.containerPointToLatLng([0, 0]),
+              this.$refs.map.leafletObject.containerPointToLatLng([0, 20])
+              );
+
+            let mapCenterToFilterCenter = this.getDistanceFromLatLonInKm(this.mapCenter.lat,this.mapCenter.lng, this.filterCenter.lat ,this.filterCenter.lng)*1000;
+            if (mapCenterToFilterCenter > this.filterRadiusMeters + buttonRadius) {
+              this.$emit('updateRecenterButton',true)
+            } else {
+              this.$emit('updateRecenterButton',false)
+            }
           },
 
           getViewRadius(){
@@ -204,7 +223,13 @@
       // update counts for the map bins; pass to App.vue
       hexBaseUrl(){
         this.$emit('updateBins',this.mapBins)
+      },
+
+      filterRadius(){
+        console.log("filter radius changed, checking")
+        this.checkRecenterButton();
       }
+
     }
   };
 

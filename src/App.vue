@@ -109,9 +109,9 @@
 
 <!-- map -->
     <div class="mapWrapper">
-      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="setGeoFilter" @mapready="mapInit" @updateBins="updateMapBins" @show-modal="setObsModal"/>
+      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="setGeoFilter" @mapready="mapInit" @updateBins="updateMapBins" @show-modal="setObsModal" @update-recenter-button="recenterButton"/>
 
-      <button class="geoFocus" @click="getGeoFromMap">
+      <button class="geoFocus" :class="{show: showRecenterButton}" @click="getGeoFromMap">
         <div class="ring"><p>search here</p></div>
         <!-- <p class="tip">or double-click map</p> -->
       </button>
@@ -235,6 +235,7 @@
                 tileHoverId:null,
                 modalObs:null,
                 mapBins:null,
+                showRecenterButton:false,
                 siteRoot: import.meta.env.BASE_URL
               }
 
@@ -373,6 +374,11 @@
 
       updateMapBins(bins){
         this.mapBins = bins;
+      },
+
+      recenterButton(value){
+        console.log("update button " + value)
+        this.showRecenterButton = value;
       }
 
      },
@@ -573,25 +579,32 @@
   }
 
   button.geoFocus{
-    background-color: white;
-    border: 2px solid var(--ala-lightgrey);
-    display: block;
+    background:none;
+    border:none;
+    
     margin:0 0.25rem;
     cursor:pointer;
-/*    height:1.5rem;*/
     position:absolute;
-    top:0.5rem;
-    left:0.5rem;
+    top:calc(50% - 20px);
+    left:calc(50% - 20px);
     padding:0;
     z-index:9999;
-    border-radius:3px;
-    transition:height 0.5s;
+    display: none;
+    opacity:0.8;
+  }
+
+  button.geoFocus.show{
+    display: block;
+  }
+
+  button.geoFocus.show:hover{
+    opacity:1.0;
 
   }
 
   button.geoFocus .ring{
-    width:36px;
-    height:36px;
+    width:40px;
+    height:40px;
     border-radius: 50%;
     border: 2px dashed var(--ala-orange);
     margin:0.2rem;
@@ -602,10 +615,14 @@
 
   button.geoFocus .ring p{
     font-size: 0.6rem;
-    font-weight: 500;
+    font-weight: 400;
     text-align: center;
-    margin-top:9px;
+    margin-top:11px;
     line-height: 1.0em;
+  }
+
+  button.geoFocus:hover .ring p{
+    font-weight: 600;
   }
 
 /*  button.geoFocus p.tip{
@@ -616,7 +633,7 @@
   }*/
 
   button.geoFocus:hover{
-    background-color: var(--ala-concrete);
+/*    background-color: var(--ala-concrete);*/
   }
 
   .hexbinLegend{
