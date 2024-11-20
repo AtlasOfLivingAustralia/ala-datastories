@@ -2,7 +2,7 @@
 
 <template>
   <main id="map">
-    <l-map  ref="map" :zoom="zoom" :center="localCenter" :useGlobalLeaflet="false" @ready="mapReady" @update:bounds="boundsUpdated" @update:center="centerUpdated" :options="{attributionControl: false, zoomControl:false, doubleClickZoom:false, scrollWheelZoom:false}" :detectRetina="true" @dblclick="doubleClick" >
+    <l-map ref="map" :zoom="zoom" :center="localCenter" :useGlobalLeaflet="false" @ready="mapReady" @update:bounds="boundsUpdated" @update:center="centerUpdated" :options="mapOptions" :detectRetina="true" @dblclick="doubleClick" >
       <l-control-zoom position="topright"  ></l-control-zoom>
       <l-tile-layer :url="baseLayer.url"
                     layer-type="base"
@@ -17,9 +17,14 @@
             layer-type="base"
             :detectRetina="true">
       </l-wms-tile-layer>
-      <l-circle :lat-lng="filterCenter" :radius="filterRadiusMeters" :color="'#c44d34'" :fill="false" :weight=2 :dashArray="'5 10'"
-    />
-      <l-marker v-for="o in obs" :lat-lng="[o.decimalLatitude,o.decimalLongitude]" :options="{riseOnHover:true}" @click="clickMarker(o.uuid)" :key="o.uuid" :z-index-offset="bounceMarkerId==o.uuid ? 30 : 0">
+      
+      <!-- search area circle -->
+      <l-circle :lat-lng="localCenter" :radius="filterRadiusMeters" :color="'#c44d34'" :fill="false" :weight=2 :dashArray="'5 10'"/>
+
+    <!-- draggable handle -->
+      <l-circle-marker :lat-lng="dragHandlePos" :radius="12" :draggable="true" :fill="true" :stroke="false" :fill-color="'#c44d34'" :fill-opacity="1" @mousedown="radiusHandleDragStart" @mouseup="radiusHandleDragEnd"/>
+
+          <l-marker v-for="o in obs" :lat-lng="[o.decimalLatitude,o.decimalLongitude]" :options="{riseOnHover:true}" @click="clickMarker(o.uuid)" :key="o.uuid" :z-index-offset="bounceMarkerId==o.uuid ? 30 : 0">
         <l-icon
           :icon-size="[21,28]"
           :icon-anchor="[10.5,28]"
@@ -88,6 +93,11 @@
     data() {
       return {
         mapCenter: null,
+        mapOptions: { attributionControl: false, 
+                      zoomControl:false, 
+                      doubleClickZoom:false, 
+                      scrollWheelZoom:false, 
+                      dragging:true},
         focusMarkerId:"",
         bounceMarkerId:"",
         baseLayer: {
@@ -103,6 +113,7 @@
           format: 'image/png'
         },
         localCenter:this.filterCenter,
+        localRadius: this.filterRadius,
         siteRoot: import.meta.env.BASE_URL
       }
     },
@@ -129,7 +140,13 @@
         return this.radius*1000;
       },
       filterRadiusMeters(){
-        return this.filterRadius*1000;
+        return this.localRadius*1000;
+      },
+
+      dragHandlePos(){
+        let pos = this.destinationFromPoint(this.localCenter,90,this.filterRadiusMeters);
+        return pos;
+
       }
     },
 
@@ -216,6 +233,45 @@
 
           deg2rad(deg) {
             return deg * (Math.PI/180)
+          },
+
+          radiusHandleDragStart(){
+            this.$refs.map.leafletObject.dragging.disable();
+            this.$refs.map.leafletObject.on("mousemove", this.radiusHandleDragging) 
+          },
+
+          radiusHandleDragEnd(){
+            this.$refs.map.leafletObject.dragging.enable();
+            this.$refs.map.leafletObject.off("mousemove", this.radiusHandleDragging) 
+            this.$emit("setGeoFocus", {lat: this.localCenter.lat, lon: this.localCenter.lng, radius: this.localRadius })
+          },
+
+          radiusHandleDragging(evt){
+            this.localRadius = this.getDistanceFromLatLonInKm(this.localCenter.lat,this.localCenter.lng,this.localCenter.lat,evt.latlng.lng)
+          },
+
+
+
+          destinationFromPoint(latlng, heading, distance) {
+              heading = (heading + 360) % 360;
+              var rad = Math.PI / 180,
+                  radInv = 180 / Math.PI,
+                  R = 6378137, // approximation of Earth's radius
+                  lon1 = latlng.lng * rad,
+                  lat1 = latlng.lat * rad,
+                  rheading = heading * rad,
+                  sinLat1 = Math.sin(lat1),
+                  cosLat1 = Math.cos(lat1),
+                  cosDistR = Math.cos(distance / R),
+                  sinDistR = Math.sin(distance / R),
+                  lat2 = Math.asin(sinLat1 * cosDistR + cosLat1 *
+                      sinDistR * Math.cos(rheading)),
+                  lon2 = lon1 + Math.atan2(Math.sin(rheading) * sinDistR *
+                      cosLat1, cosDistR - sinLat1 * Math.sin(lat2));
+              lon2 = lon2 * radInv;
+              lon2 = lon2 > 180 ? lon2 - 360 : lon2 < -180 ? lon2 + 360 : lon2;
+              //return this.$refs.map.leafletObject.latLng([lat2 * radInv, lon2]);
+              return {lat:lat2 * radInv,lng:lon2}
           }
     },
 
@@ -225,10 +281,19 @@
         this.$emit('updateBins',this.mapBins)
       },
 
-      filterRadius(){
-        console.log("filter radius changed, checking")
+      localRadius(){
+        //console.log("filter radius changed, checking")
         this.checkRecenterButton();
-      }
+      },
+
+      'localCenter.lng'(){
+        console.log("center changed, checking")
+        this.checkRecenterButton();
+      },
+
+
+
+
 
     }
   };

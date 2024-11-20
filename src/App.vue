@@ -149,6 +149,7 @@
           <p><span class="close" @click="modalObs=null">×</span></p>
         </div>
       </div>
+
     </div>
 
 
@@ -317,9 +318,11 @@
       },
 
       getGeoFromMap(){
-        let mapradius = this.$refs.hexmap.getViewRadius();
+        //let mapradius = this.$refs.hexmap.getViewRadius();
+        let mapradius = this.$refs.hexmap.localRadius;
         let mapcenter = this.$refs.hexmap.mapCenter; 
         this.setGeoFilter({lat: mapcenter.lat, lon:mapcenter.lng, radius: mapradius })
+        this.$refs.hexmap.localCenter = mapcenter; // update the map's internal center point
       },
 
       async getLocation() {
