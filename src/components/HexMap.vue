@@ -18,13 +18,20 @@
             :detectRetina="true">
       </l-wms-tile-layer>
       
-      <!-- search area circle -->
+    <!-- search area circle -->
       <l-circle :lat-lng="localCenter" :radius="filterRadiusMeters" :color="'#c44d34'" :fill="false" :weight=2 :dashArray="'5 10'"/>
 
     <!-- draggable handle -->
-      <l-circle-marker :lat-lng="dragHandlePos" :radius="12" :draggable="true" :fill="true" :stroke="false" :fill-color="'#c44d34'" :fill-opacity="1" @mousedown="radiusHandleDragStart" @mouseup="radiusHandleDragEnd"/>
+      <l-marker :lat-lng="dragHandlePos" :radius="12" :draggable="true" :fill="true" :stroke="false" :fill-color="'#c44d34'" :fill-opacity="1" @mousedown="radiusHandleDragStart" @mouseup="radiusHandleDragEnd">
+        <l-icon
+          :icon-size="[36,25]"
+          :icon-anchor="[18,12.5]"
+          :icon-url="`${siteRoot}/markers/drag-handle.png`"
+        />
+      </l-marker>
 
-          <l-marker v-for="o in obs" :lat-lng="[o.decimalLatitude,o.decimalLongitude]" :options="{riseOnHover:true}" @click="clickMarker(o.uuid)" :key="o.uuid" :z-index-offset="bounceMarkerId==o.uuid ? 30 : 0">
+    <!-- sample markers -->
+      <l-marker v-for="o in obs" :lat-lng="[o.decimalLatitude,o.decimalLongitude]" :options="{riseOnHover:true}" @click="clickMarker(o.uuid)" :key="o.uuid" :z-index-offset="bounceMarkerId==o.uuid ? 30 : 0">
         <l-icon
           :icon-size="[21,28]"
           :icon-anchor="[10.5,28]"
@@ -34,13 +41,10 @@
           :icon-url="`${siteRoot}/markers/${o.speciesGroup.toLowerCase()}-marker${focusMarkerId==o.uuid||bounceMarkerId==o.uuid?'-focus':''}.png`"
           :shadow-url="`${siteRoot}/markers/marker-shadow.png`"
           :class-name="`${bounceMarkerId==o.uuid ? 'focus': ''}`"
-          
         />
-          
-        
         <l-popup :className="'hexMapPopup'" offset="[0,30]">
-            <ObsTile :obs-data="o" popup="true" @show-modal="passModal"/>
-          </l-popup>    
+          <ObsTile :obs-data="o" popup="true" @show-modal="passModal"/>
+        </l-popup>    
 
       </l-marker>
 
@@ -146,7 +150,6 @@
       dragHandlePos(){
         let pos = this.destinationFromPoint(this.localCenter,90,this.filterRadiusMeters);
         return pos;
-
       }
     },
 
@@ -155,7 +158,6 @@
           mapReady (){
             this.$emit('mapready')
             this.bounds = this.$refs.map.leafletObject.getBounds();
-            //console.log(this.filterCenter)
           },
 
           doubleClick(e){
