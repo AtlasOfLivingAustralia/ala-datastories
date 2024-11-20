@@ -2,7 +2,7 @@
 
 <template>
   <main id="map">
-    <l-map ref="map" :zoom="zoom" :center="localCenter" :useGlobalLeaflet="false" @ready="mapReady" @update:bounds="boundsUpdated" @update:center="centerUpdated" :options="mapOptions" :detectRetina="true" @dblclick="doubleClick" >
+    <l-map ref="map" :zoom="zoom" :center="localCenter" :useGlobalLeaflet="false" @ready="mapReady" @update:bounds="boundsUpdated" @update:center="centerUpdated" :options="mapOptions" :detectRetina="true">
       <l-control-zoom position="topright"  ></l-control-zoom>
       <l-tile-layer :url="baseLayer.url"
                     layer-type="base"
@@ -158,11 +158,6 @@
           mapReady (){
             this.$emit('mapready')
             this.bounds = this.$refs.map.leafletObject.getBounds();
-          },
-
-          doubleClick(e){
-            let r = this.getViewRadius();
-            this.$emit("setGeoFocus", {lat: e.latlng.lat, lon: e.latlng.lng, radius: r })
           },
 
           clickMarker(id){
