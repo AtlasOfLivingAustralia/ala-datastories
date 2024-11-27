@@ -109,7 +109,7 @@
 
 <!-- map -->
     <div class="mapWrapper">
-      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="setGeoFilter" @mapready="mapInit" @updateBins="updateMapBins" @show-modal="setObsModal" @update-recenter-button="recenterButton"/>
+      <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="setGeoFilter" @mapready="mapInit" @updateBins="updateMapBins" @show-modal="setObsModal"/>
 
 
 
@@ -374,13 +374,7 @@
 
       updateMapBins(bins){
         this.mapBins = bins;
-      },
-
-      recenterButton(value){
-        console.log("update button " + value)
-        this.showRecenterButton = value;
       }
-
      },
 
     mounted(){
