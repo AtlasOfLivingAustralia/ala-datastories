@@ -111,10 +111,7 @@
     <div class="mapWrapper">
       <HexMap v-if="geoFilter" :query="hexMapQuery" :record-count="occurrenceData ? occurrenceData.totalRecords : null" :query-loaded="queryLoaded" :obs="occurrenceData ? groupedOccurrences : []" :filterCenter="{lat: geoFilter.lat, lng: geoFilter.lon}" :filterRadius="geoFilter.radius" :zoom="mapZoom" ref="hexmap" @set-geo-focus="setGeoFilter" @mapready="mapInit" @updateBins="updateMapBins" @show-modal="setObsModal" @update-recenter-button="recenterButton"/>
 
-      <button class="geoFocus" :class="{show: showRecenterButton}" @click="getGeoFromMap">
-        <div class="ring"><p>search here</p></div>
-        <!-- <p class="tip">or double-click map</p> -->
-      </button>
+
 
       <div class="hexbinLegend">
         <div class="chip" v-for="b in mapBins" :style="{'background-color':b.csscol}">
@@ -273,7 +270,7 @@
             o.speciesGroup = sg;
             return o;
           })
-          console.log(go);
+          // console.log(go);
           return go;
         }
     },
@@ -320,9 +317,9 @@
       getGeoFromMap(){
         //let mapradius = this.$refs.hexmap.getViewRadius();
         let mapradius = this.$refs.hexmap.localRadius;
-        let mapcenter = this.$refs.hexmap.mapCenter; 
+        let mapcenter = this.$refs.hexmap.filterCenter; 
         this.setGeoFilter({lat: mapcenter.lat, lon:mapcenter.lng, radius: mapradius })
-        this.$refs.hexmap.localCenter = mapcenter; // update the map's internal center point
+        //this.$refs.hexmap.localCenter = mapcenter; // update the map's internal center point
       },
 
       async getLocation() {
@@ -579,64 +576,6 @@
 /*    margin:2rem;*/
     display: inline-block;
     margin: 2rem;
-  }
-
-  button.geoFocus{
-    background:none;
-    border:none;
-    
-    margin:0 0.25rem;
-    cursor:pointer;
-    position:absolute;
-    top:calc(50% - 20px);
-    left:calc(50% - 20px);
-    padding:0;
-    z-index:9999;
-    display: none;
-    opacity:0.8;
-  }
-
-  button.geoFocus.show{
-    display: block;
-  }
-
-  button.geoFocus.show:hover{
-    opacity:1.0;
-
-  }
-
-  button.geoFocus .ring{
-    width:40px;
-    height:40px;
-    border-radius: 50%;
-    border: 2px dashed var(--ala-orange);
-    margin:0.2rem;
-    position:relative;
-    
-
-  }
-
-  button.geoFocus .ring p{
-    font-size: 0.6rem;
-    font-weight: 400;
-    text-align: center;
-    margin-top:11px;
-    line-height: 1.0em;
-  }
-
-  button.geoFocus:hover .ring p{
-    font-weight: 600;
-  }
-
-/*  button.geoFocus p.tip{
-    display: none;
-    color:var(--ala-darkgrey);
-    font-size:0.6rem;
-    text-align: center;
-  }*/
-
-  button.geoFocus:hover{
-/*    background-color: var(--ala-concrete);*/
   }
 
   .hexbinLegend{

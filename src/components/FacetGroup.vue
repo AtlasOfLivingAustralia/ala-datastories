@@ -67,8 +67,6 @@
           // use local facets if loaded
           let facetResult = source.find(r => r.fieldName == this.field);
           if (!facetResult) return [];
-
-          console.log(source)
           
           if (this.field == "speciesGroup"){
             speciesGroups.forEach(f => {
