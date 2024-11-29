@@ -1,6 +1,6 @@
 {
-  "name": "ala-explorer",
-  "version": "0.0.0",
+  "name": "ala-lens",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "scripts": {

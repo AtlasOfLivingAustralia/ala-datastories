@@ -574,7 +574,7 @@
 
   .hexbinLegend{
     position:absolute;
-    bottom:7rem;
+    bottom:6rem;
     right:0.5rem;
     z-index:10000;
     display: flex;
@@ -582,6 +582,7 @@
     background-color: white;
     padding: 1.0rem 0.25rem 0.25rem;
     border-radius:3px;
+    box-shadow:0px 0px 3px rgba(0,0,0,0.2);
   }
 
   .hexbinLegend .chip{
