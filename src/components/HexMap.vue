@@ -3,7 +3,7 @@
 <template>
   <main id="map" ref="mapcontainer">
 
-    <l-map ref="map" :zoom="zoom" :center="filterCenter" :useGlobalLeaflet="false" @ready="mapReady" @update:bounds="boundsUpdated" @update:center="centerUpdated" :options="mapOptions" @zoomstart="mapZoomStart" @zoomend="mapZoomEnd" :detectRetina="true">
+    <l-map ref="map" :zoom="zoom" :center="mapCenter" :useGlobalLeaflet="false" @ready="mapReady" @update:bounds="boundsUpdated" @update:center="centerUpdated" :options="mapOptions" @zoomstart="mapZoomStart" @zoomend="mapZoomEnd" :detectRetina="true">
       <l-control-zoom position="topright"  ></l-control-zoom>
       <l-tile-layer :url="baseLayer.url"
                     layer-type="base"
@@ -20,7 +20,7 @@
       </l-wms-tile-layer>
       
     <!-- search area circle -->
-      <l-circle :lat-lng="localCenter" :radius="filterRadiusMeters" :color="'#c44d34'" :fill="false" :weight=2 :dashArray="'5 10'"/>
+      <l-circle ref="circle" :lat-lng="localCenter" :radius="filterRadiusMeters" :color="'#c44d34'" :fill="false" :weight=2 :dashArray="'5 10'"/>
 
     <!-- sample markers -->
       <l-marker v-for="o in obs" :lat-lng="[o.decimalLatitude,o.decimalLongitude]" :options="{riseOnHover:true}" @click="clickMarker(o.uuid)" :key="o.uuid" :z-index-offset="bounceMarkerId==o.uuid ? 30 : 0">
@@ -103,7 +103,7 @@
     data() {
       return {
         map:null,
-        mapCenter: null,
+        mapCenter: {lat: -25.344490, lng: 131.035431},
         mapOptions: { attributionControl: false, 
                       zoomControl:false, 
                       doubleClickZoom:false, 
@@ -167,7 +167,17 @@
             this.$emit('mapready')
             this.bounds = this.$refs.map.leafletObject.getBounds();
             this.$refs.map.leafletObject.on("zoom", this.updateHandlePos);
+            this.fitRadiusBounds();
             this.mapIsReady = true;
+          },
+
+          fitRadiusBounds(){
+              let posEast = this.destinationFromPoint(this.localCenter,270,this.filterRadiusMeters);
+              let posNorth = this.destinationFromPoint(this.localCenter,0,this.filterRadiusMeters);
+              let posWest = this.destinationFromPoint(this.localCenter,90,this.filterRadiusMeters);
+              let posSouth = this.destinationFromPoint(this.localCenter,180,this.filterRadiusMeters);
+              let bounds = [[posNorth.lat,posEast.lng],[posSouth.lat,posWest.lng]]
+              this.$refs.map.leafletObject.fitBounds(bounds, {paddingBottomRight: [0,80]})
           },
 
           clickMarker(id){
@@ -194,7 +204,7 @@
             this.mapCenter = center;
             this.radius = this.getViewRadius();
             this.checkRecenterButton();
-            this.updateHandlePos();
+            //this.updateHandlePos();
           },
 
           updateHandlePos(){

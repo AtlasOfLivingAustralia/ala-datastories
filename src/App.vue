@@ -245,7 +245,7 @@
           if (this.geoFilter){ // add the geo query fields to the hex map layer
             hq = hq + "&lat=" +this.queryParams.lat +"&lon=" +this.queryParams.lon + "&radius=" + this.queryParams.radius;
           }
-          console.log("hexquery " + hq)
+          // console.log("hexquery " + hq)
           return hq;
         },
         groupedOccurrences(){
@@ -314,14 +314,6 @@
         this.queryApi();
       },
 
-      getGeoFromMap(){
-        //let mapradius = this.$refs.hexmap.getViewRadius();
-        let mapradius = this.$refs.hexmap.localRadius;
-        let mapcenter = this.$refs.hexmap.filterCenter; 
-        this.setGeoFilter({lat: mapcenter.lat, lon:mapcenter.lng, radius: mapradius })
-        //this.$refs.hexmap.localCenter = mapcenter; // update the map's internal center point
-      },
-
       async getLocation() {
         return new Promise((resolve, reject) => {
           if(!("geolocation" in navigator)) {
@@ -341,7 +333,15 @@
           this.gettingUserLocation = false;
           this.userLocation = await this.getLocation();
           let mapradius = this.$refs.hexmap.getViewRadius();
+          
           this.setGeoFilter({lat: this.userLocation.coords.latitude, lon: this.userLocation.coords.longitude, radius:mapradius })
+          // zoom the map to the filter location
+          console.log("geolocation, fit radius")
+          this.$refs.hexmap.localCenter = {lat: this.userLocation.coords.latitude, lng: this.userLocation.coords.longitude}
+          this.$refs.hexmap.localRadius = mapradius;
+          this.$refs.hexmap.fitRadiusBounds();
+
+
         } catch(e) {
           this.gettingUserLocation = false;
           this.geoLocationError = e.message;
