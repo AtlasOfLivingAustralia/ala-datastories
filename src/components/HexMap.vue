@@ -250,7 +250,7 @@
             let halfh = this.getDistanceFromLatLonInKm(this.mapCenter.lat,this.mapCenter.lng, this.bounds._northEast.lat ,this.mapCenter.lng);
             let halfw = this.getDistanceFromLatLonInKm(this.mapCenter.lat,this.mapCenter.lng, this.mapCenter.lat ,this.bounds._northEast.lng)
             let mindist = Math.min(halfh,halfw)
-            return mindist * 0.8;
+            return mindist * 0.7;
           },
 
           getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
