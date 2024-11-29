@@ -428,7 +428,7 @@
     margin:0 0.25rem;
     cursor:pointer;
     position:absolute;
-    top:calc(50% - 20px - 30px);
+    top:calc(50% - 20px - 40px);
     left:calc(50% - 20px);
     padding:0;
     z-index:9999;
