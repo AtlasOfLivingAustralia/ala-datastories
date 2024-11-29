@@ -225,6 +225,7 @@
             let clickLatLng = this.$refs.map.leafletObject.containerPointToLatLng([clickpos.x, clickpos.y ]);
             //this.mapCenter = clickLatLng;
             this.localCenter = clickLatLng;
+            this.localRadius = this.getViewRadius();
             this.$emit("setGeoFocus", {lat: clickLatLng.lat, lon: clickLatLng.lng, radius: this.localRadius })
           },
 
