@@ -113,26 +113,32 @@
 
 
 
-      <div class="hexbinLegend">
-        <div class="chip" v-for="b in mapBins" :style="{'background-color':b.csscol}">
-          <span>{{formatBinCount(b.count)}}</span>
+
+
+      <div class="mapFootWrapper">
+       
+        <div class="obsTileWrapper" ref="tilewrapper" v-if="occurrenceData">
+            <div class="obsTileLabel">
+              <p v-if="occurrenceData.totalRecords > occurrenceData.occurrences.length">Latest {{occurrenceData.occurrences.length}} occurrences</p>
+
+              <p v-if="occurrenceData.totalRecords == occurrenceData.occurrences.length">{{occurrenceData.occurrences.length}} occurrences</p>
+
+            </div>
+            <ObsTile v-for="o in occurrenceData.occurrences" :key="o.uuid" :obs-data="o" @tilehover="setTileHover" @show-modal="setObsModal"/>
+
+            <div class="obsTileLabel end" v-if="occurrenceData.totalRecords > occurrenceData.occurrences.length">
+
+              <p><a :href="'https://biocache.ala.org.au/occurrences/search?q='+apiState.query+'&lat='+geoFilter.lat+'&lon='+geoFilter.lon+'&radius='+geoFilter.radius" target="_blank" class="newtab">All {{occurrenceData.totalRecords}} occurrences</a></p>
+
+            </div>
         </div>
-      </div>
 
-      <div class="obsTileWrapper" v-if="occurrenceData">
-          <div class="obsTileLabel">
-            <p v-if="occurrenceData.totalRecords > occurrenceData.occurrences.length">Latest {{occurrenceData.occurrences.length}} occurrences</p>
-
-            <p v-if="occurrenceData.totalRecords == occurrenceData.occurrences.length">{{occurrenceData.occurrences.length}} occurrences</p>
-
+        <div class="hexbinLegend">
+          <div class="chip" v-for="b in mapBins" :style="{'background-color':b.csscol}">
+            <span>{{formatBinCount(b.count)}}</span>
           </div>
-          <ObsTile v-for="o in occurrenceData.occurrences" :key="o.uuid" :obs-data="o" @tilehover="setTileHover" @show-modal="setObsModal"/>
+        </div>
 
-          <div class="obsTileLabel end" v-if="occurrenceData.totalRecords > occurrenceData.occurrences.length">
-
-            <p><a :href="'https://biocache.ala.org.au/occurrences/search?q='+apiState.query+'&lat='+geoFilter.lat+'&lon='+geoFilter.lon+'&radius='+geoFilter.radius" target="_blank" class="newtab">All {{occurrenceData.totalRecords}} occurrences</a></p>
-
-          </div>
       </div>
 
 <!-- image modal  -->
@@ -234,7 +240,8 @@
                 modalObs:null,
                 mapBins:null,
                 showRecenterButton:false,
-                siteRoot: import.meta.env.BASE_URL
+                siteRoot: import.meta.env.BASE_URL,
+
               }
 
     },
@@ -272,6 +279,10 @@
           })
           // console.log(go);
           return go;
+        },
+
+        tileWrapHeight(){
+          return this.$refs.tilewrapper.clientHeight;
         }
     },
 
@@ -560,21 +571,24 @@
   }
 
   .mapWrapper{
-/*    border-bottom:0.5px solid rgba(0,0,0,0.4);*/
-/*    box-shadow: 0px 3px 12px rgba(0,0,0,0.2);*/
     position:relative;
     height:65vh;
   }
 
+  .mapFootWrapper{
+    width:100%;
+    position:absolute;
+    bottom:0;
+  }
+
   .dsLink{
-/*    margin:2rem;*/
     display: inline-block;
     margin: 2rem;
   }
 
   .hexbinLegend{
     position:absolute;
-    bottom:6rem;
+    top:-2.1rem;
     right:0.5rem;
     z-index:10000;
     display: flex;
