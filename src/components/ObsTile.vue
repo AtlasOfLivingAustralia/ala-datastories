@@ -118,6 +118,7 @@
     position:relative;
     cursor: pointer;
     border:1px solid transparent;
+    white-space: nowrap;
   }
 
   main.obsTile:hover{

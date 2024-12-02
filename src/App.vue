@@ -115,31 +115,35 @@
 
 
 
-      <div class="mapFootWrapper">
+
        
         <div class="obsTileWrapper" ref="tilewrapper" v-if="occurrenceData">
+
+          <div class="obsTiles">
             <div class="obsTileLabel">
               <p v-if="occurrenceData.totalRecords > occurrenceData.occurrences.length">Latest {{occurrenceData.occurrences.length}} occurrences</p>
 
               <p v-if="occurrenceData.totalRecords == occurrenceData.occurrences.length">{{occurrenceData.occurrences.length}} occurrences</p>
-
             </div>
+
             <ObsTile v-for="o in occurrenceData.occurrences" :key="o.uuid" :obs-data="o" @tilehover="setTileHover" @show-modal="setObsModal"/>
 
             <div class="obsTileLabel end" v-if="occurrenceData.totalRecords > occurrenceData.occurrences.length">
 
               <p><a :href="'https://biocache.ala.org.au/occurrences/search?q='+apiState.query+'&lat='+geoFilter.lat+'&lon='+geoFilter.lon+'&radius='+geoFilter.radius" target="_blank" class="newtab">All {{occurrenceData.totalRecords}} occurrences</a></p>
-
             </div>
-        </div>
-
-        <div class="hexbinLegend">
-          <div class="chip" v-for="b in mapBins" :style="{'background-color':b.csscol}">
-            <span>{{formatBinCount(b.count)}}</span>
           </div>
+
+          <div class="hexbinLegend">
+            <div class="chip" v-for="b in mapBins" :style="{'background-color':b.csscol}">
+              <span>{{formatBinCount(b.count)}}</span>
+            </div>
+          </div>
+
         </div>
 
-      </div>
+
+
 
 <!-- image modal  -->
       <div class="modalWrapper" v-if="modalObs">
@@ -575,12 +579,6 @@
     height:65vh;
   }
 
-  .mapFootWrapper{
-    width:100%;
-    position:absolute;
-    bottom:0;
-  }
-
   .dsLink{
     display: inline-block;
     margin: 2rem;
@@ -592,7 +590,7 @@
     right:0.5rem;
     z-index:10000;
     display: flex;
-    flex-direction: row;
+/*    flex-direction: row;*/
     background-color: white;
     padding: 1.0rem 0.25rem 0.25rem;
     border-radius:3px;
@@ -602,11 +600,11 @@
   .hexbinLegend .chip{
     width:1.5rem;
     height:0.5rem;
-    display: inline-block;
+    display: block;
   }
 
   .hexbinLegend .chip span{
-    display: inline-block;
+    display: inline;
     width:1.5rem;
     font-size: 0.66rem;
     position: relative;
@@ -688,28 +686,25 @@
       font-size: 100%;
     }
 
-
-  .mapFooter{
-    margin:0;
-    padding:0;
-    position:absolute;
-    bottom:0;
-    z-index:999;
-    width:100%;
-  }
-
   .obsTileWrapper{
 
-    display:flex;
-    flex-wrap: nowrap;
-    overflow-x: scroll;
-    white-space: nowrap;
-    padding-bottom:0.6em;
-    padding-top:0.2rem;
     position:absolute;
     width:100%;
     z-index:9999;
     bottom:0;
+    overflow: visible;
+  }
+
+  .obsTiles{
+
+    display:flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+
+    padding-bottom:0.6em;
+    padding-top:0.2rem;
+
+
   }
 
   .obsTileLabel{
