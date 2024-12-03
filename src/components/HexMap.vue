@@ -223,7 +223,6 @@
           resetGeoFocus(evt){
             let clickpos = this.relativeCoordsParent(evt);
             let clickLatLng = this.$refs.map.leafletObject.containerPointToLatLng([clickpos.x, clickpos.y ]);
-            //this.mapCenter = clickLatLng;
             this.localCenter = clickLatLng;
             this.localRadius = this.getViewRadius();
             this.$emit("setGeoFocus", {lat: clickLatLng.lat, lon: clickLatLng.lng, radius: this.localRadius })
@@ -429,7 +428,7 @@
     margin:0 0.25rem;
     cursor:pointer;
     position:absolute;
-    top:calc(50% - 20px - 40px);
+    top:calc(50% - 20px - 45px);
     left:calc(50% - 20px);
     padding:0;
     z-index:9999;
