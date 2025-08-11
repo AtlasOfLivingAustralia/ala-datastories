@@ -151,8 +151,8 @@
         <div class="modalInfo">
           <p><a target="_blank" class="newtab" :href="'https://biocache.ala.org.au/occurrences/'+modalObs.uuid">{{modalObs.vernacularName ? modalObs.vernacularName : modalObs.scientificName }}</a></p>
           <p v-if="modalObs.vernacularName"><em>{{modalObs.vernacularName ? modalObs.scientificName : '' }}</em></p>
-          <p class="sub">Observed by {{modalObs.collector[0]}}</p>
-          <p class="sub">{{modalObs.formattedDate}}</p>
+          <p class="sub" v-if="modalObs.collector">Observed by {{modalObs.collector[0]}}</p>
+          <p class="sub" v-if="modalObs.formattedDate">{{modalObs.formattedDate}}</p>
           <p><span class="close" @click="modalObs=null">×</span></p>
         </div>
       </div>
