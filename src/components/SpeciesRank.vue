@@ -41,7 +41,7 @@
 
 			<BubbleLayout :species-data="distinctiveRanks" :bubbleCount="10" :size="bubbleSize"></BubbleLayout>
 
-			<p class="explainer">Found more often in this area</p>
+			<p class="explainer">Observed<br/>more often in this area</p>
 
 		</div>
 
