@@ -2,7 +2,7 @@
 
 	<footer>
     <div class="credits">
-      ALA Lens is an outcome of <em>Redesigning Digital Biodiversity Experience</em>, a research project undertaken by Mitchell Whitelaw and Adrian Mackenzie of the Australian National University, supported by the Atlas of Living Australia. First published August 2024. Version 1.0.1, December 2024.
+      ALA Lens is an outcome of <em>Redesigning Digital Biodiversity Experience</em>, a research project undertaken by Mitchell Whitelaw and Adrian Mackenzie of the Australian National University, supported by the Atlas of Living Australia. First published August 2024. Version 1.0.2, October 2025.
     </div>
 	<hr>
 
